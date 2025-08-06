@@ -185,7 +185,7 @@ class _MarkDownToolViewState extends State<MarkDownToolView> {
                           ? (value) => widget.validators!(value)
                           : null,
                       style: widget.textStyle ??
-                          Theme.of(context).textTheme.bodyText1,
+                          Theme.of(context).textTheme.bodyLarge,
                       cursorColor:
                           widget.textStyle?.color ?? StyleTheme.gray102Color,
                       textDirection: widget.textDirection,

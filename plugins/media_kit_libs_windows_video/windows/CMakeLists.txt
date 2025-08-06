@@ -48,6 +48,7 @@ if(NOT EXISTS "${LIBMPV_SRC}")
   add_custom_target("${PROJECT_NAME}_LIBMPV_EXTRACT" ALL)
   add_custom_command(
     TARGET "${PROJECT_NAME}_LIBMPV_EXTRACT"
+    POST_BUILD
     COMMAND "${CMAKE_COMMAND}" -E tar xzf "\"${LIBMPV_ARCHIVE}\""
     COMMAND xcopy "\"${LIBMPV_SRC}/include/mpv\"" "\"${LIBMPV_SRC}/mpv\"" /E /H /C /I
     COMMAND rmdir "\"${LIBMPV_SRC}/include\"" /S /Q
@@ -92,6 +93,7 @@ if(NOT EXISTS "${ANGLE_SRC}")
   add_custom_target("${PROJECT_NAME}_ANGLE_EXTRACT" ALL)
   add_custom_command(
     TARGET "${PROJECT_NAME}_ANGLE_EXTRACT"
+    POST_BUILD
     COMMAND "${CMAKE_COMMAND}" -E tar xzf "\"${ANGLE_ARCHIVE}\""
     WORKING_DIRECTORY "${ANGLE_SRC}"
   )
@@ -133,6 +135,7 @@ if(NOT EXISTS "${INFLATECPP_SRC}")
   add_custom_target("${PROJECT_NAME}_INFLATECPP_EXTRACT" ALL)
   add_custom_command(
     TARGET "${PROJECT_NAME}_INFLATECPP_EXTRACT"
+    POST_BUILD
     COMMAND "${CMAKE_COMMAND}" -E tar xzf "\"${INFLATECPP_ARCHIVE}\""
     COMMAND "${CMAKE_COMMAND}" -E copy_directory "${INFLATECPP_SRC}/${INFLATECPP}" "${INFLATECPP_SRC}"
     WORKING_DIRECTORY "${INFLATECPP_SRC}"

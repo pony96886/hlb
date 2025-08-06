@@ -920,8 +920,7 @@ class __ExtClassicIndicatorState extends State<_ExtClassicIndicator>
     return widget.textBuilder?.call(context, widget.state, _currentText) ??
         Text(
           _currentText,
-          // ignore: deprecated_member_use
-          style: widget.textStyle ?? Theme.of(context).textTheme.subtitle1,
+          style: widget.textStyle ?? Theme.of(context).textTheme.titleMedium,
         );
   }
 
@@ -933,8 +932,7 @@ class __ExtClassicIndicatorState extends State<_ExtClassicIndicator>
           padding: const EdgeInsets.only(top: 4),
           child: Text(
             _messageText,
-            // ignore: deprecated_member_use
-            style: widget.messageStyle ?? Theme.of(context).textTheme.caption,
+            style: widget.messageStyle ?? Theme.of(context).textTheme.bodySmall,
           ),
         );
   }

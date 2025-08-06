@@ -226,7 +226,7 @@ class _PastPageState extends BaseWidgetState<PastPage> {
         return Theme(
           data: ThemeData(
               textButtonTheme: TextButtonThemeData(
-                  style: TextButton.styleFrom(primary: StyleTheme.orange255Color)),
+                  style: TextButton.styleFrom(foregroundColor: StyleTheme.orange255Color)),
               colorScheme: ColorScheme.light(
                 primary: StyleTheme.orange255Color,
                 onPrimary: Colors.white,
