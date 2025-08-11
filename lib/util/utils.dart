@@ -313,7 +313,7 @@ class Utils {
       }
     };
 
-    ConnectivityResult connectivityResult =
+    List<ConnectivityResult> connectivityResult =
         await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
       onFailed?.call();
