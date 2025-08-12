@@ -31,7 +31,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   void getData() {
-    elements = Provider.of<BaseStore>(context, listen: false).config?.plate_tab ?? [];
+    elements =
+        Provider.of<BaseStore>(context, listen: false).config?.plate_tab ?? [];
     _loading = false;
     if (mounted) setState(() {});
   }
@@ -62,6 +63,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (elements.isEmpty) return LoadStatus.noData();
     return _widget();
   }
+
   Widget _widget() {
     return Stack(children: [
       Positioned(

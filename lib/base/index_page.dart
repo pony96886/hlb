@@ -242,6 +242,7 @@ class _IndexPageState extends State<IndexPage> {
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
+
   @override
   State createState() => _MainPageState();
 }
@@ -314,8 +315,8 @@ class _MainPageState extends State<MainPage> {
       body: Container(
         width: 240.w,
         height: double.infinity,
-        color: StyleTheme.black29Color,
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        color: StyleTheme.black24Color,
+        padding: EdgeInsets.only(left: 11.w, right: 11.w, bottom: 40.w),
         // 避免橫向拉伸
         child: Column(children: [
           SizedBox(height: 50.w),
@@ -339,50 +340,49 @@ class _MainPageState extends State<MainPage> {
           Expanded(
             child: _buildOperationListWidget(),
           ),
-          SizedBox(height: 25.w),
-          GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () => _release(context),
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 16.w),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(27.w),
-                color: StyleTheme.orange255Color,
-              ),
-              width: double.infinity,
-              alignment: Alignment.center,
-              child: Text(
-                '发帖',
-                style: StyleTheme.font_black_0_17,
-              ),
-            ),
-          ),
+          // SizedBox(height: 25.w),
+          // GestureDetector(
+          //   behavior: HitTestBehavior.translucent,
+          //   onTap: () => _release(context),
+          //   child: Container(
+          //     padding: EdgeInsets.symmetric(vertical: 16.w),
+          //     decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.circular(27.w),
+          //       color: StyleTheme.orange255Color,
+          //     ),
+          //     width: double.infinity,
+          //     alignment: Alignment.center,
+          //     child: Text(
+          //       '发帖',
+          //       style: StyleTheme.font_black_0_17,
+          //     ),
+          //   ),
+          // ),
           SizedBox(height: 50.w), // 87.w
-          SizedBox(
-            height: 71.w,
-            child: Row(
-              children: [
-                Expanded(
-                  child: _BtnLinkWidget(
-                    link: config?.client_withdraw_tg,
-                    index: 0,
-                    image: 'hlw_mine_tg',
-                    text: '官方社群',
-                  ),
-                ),
-                SizedBox(width: 16.w),
-                Expanded(
-                  child: _BtnLinkWidget(
-                    link: config?.official_twitter,
-                    index: 1,
-                    image: 'hlw_twitter',
-                    text: '官方twitter',
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 20.w),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {},
+                child: LocalPNG(name: "icon-help", width: 30.w, height: 30.w),
+              ),
+              SizedBox(
+                width: 30.w,
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: LocalPNG(name: "icon-share", width: 30.w, height: 30.w),
+              ),
+              SizedBox(
+                width: 30.w,
+              ),
+              GestureDetector(
+                onTap: () {},
+                child:
+                    LocalPNG(name: "icon-telegram", width: 30.w, height: 30.w),
+              ),
+            ],
+          )
         ]),
       ),
     );
@@ -411,34 +411,34 @@ class _MainPageState extends State<MainPage> {
     String icon;
     String link = '';
     TextStyle style = _selectIndex == index
-        ? StyleTheme.font_white_255_13
-        : StyleTheme.font_gray_204_13;
+        ? StyleTheme.font_orange_249_18
+        : StyleTheme.font_gray_153_18;
     switch (index) {
       case 0: // 首页
-        text = '首页';
-        icon = 'hlw_tab_home${_selectIndex == index ? '_h' : ''}';
+        text = '黑料';
+        icon = 'hlw_tab_black_material${_selectIndex == index ? '_h' : ''}';
         break;
       case 1: // 黑料大事记
-        text = '黑料大事记';
-        icon = 'hlw_tab_past${_selectIndex == index ? '_h' : ''}';
+        text = '看片';
+        icon = 'hlw_tab_watch_movies${_selectIndex == index ? '_h' : ''}';
         break;
       case 2: // 黑料热点排行
-        text = '黑料热点排行';
-        icon = 'hlw_tab_rank${_selectIndex == index ? '_h' : ''}';
+        text = '圈子';
+        icon = 'hlw_tab_circle${_selectIndex == index ? '_h' : ''}';
         break;
       case 3: // 黑料官方APP
-        text = '黑料官方APP';
-        icon = 'hlw_tab_download';
+        text = '精选';
+        icon = 'hlw_tab_featured${_selectIndex == index ? '_h' : ''}';
         link = config?.office_site ?? '';
         break;
       case 4: // 黑料官方微信QQ群
-        text = '黑料官方微信QQ群';
-        icon = 'hlw_tab_group';
+        text = '历史';
+        icon = 'hlw_tab_history${_selectIndex == index ? '_h' : ''}';
         link = config?.official_wx ?? '';
         break;
       case 5: // 黑料精品福利站
-        text = '黑料精品福利站';
-        icon = 'hlw_tab_welfare${_selectIndex == index ? '_h' : ''}';
+        text = '热议';
+        icon = 'hlw_tab_hot${_selectIndex == index ? '_h' : ''}';
         break;
       case 6: // 黑料官方论坛
         text = '黑料官方论坛';
@@ -453,22 +453,22 @@ class _MainPageState extends State<MainPage> {
     Widget current = Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        LocalPNG(name: icon, width: 20.w, height: 20.w),
-        SizedBox(width: 10.w),
+        LocalPNG(name: icon, width: 30.w, height: 30.w),
+        SizedBox(width: 20.w),
         Text(text, style: style)
       ],
     );
 
     if (_selectIndex == index) {
       decoration = BoxDecoration(
-        borderRadius: BorderRadius.circular(12.w),
-        color: StyleTheme.gray51Color,
+        borderRadius: BorderRadius.circular(10.w),
+        color: StyleTheme.orange249Color2,
       );
     }
 
     current = Container(
-      padding: EdgeInsets.symmetric(vertical: 12.w, horizontal: 10.w),
-      height: 44.w,
+      padding: EdgeInsets.symmetric(horizontal: 9.w),
+      height: 54.w,
       alignment: Alignment.center,
       decoration: decoration,
       child: current,
@@ -481,7 +481,23 @@ class _MainPageState extends State<MainPage> {
         SplitView.of(context).setSecondary(customWidget(context));
         link.isNotEmpty ? Utils.openURL(link) : null;
       },
-      child: current,
+      child: Stack(
+        children: [
+          current,
+          if (_selectIndex == index)
+            Positioned(
+                left: 0,
+                top: 0,
+                child: Container(
+                  height: 54.w,
+                  width: 4.w,
+                  decoration: BoxDecoration(
+                    color: StyleTheme.orange249Color,
+                    borderRadius: BorderRadius.circular(10.w),
+                  ),
+                ))
+        ],
+      ),
     );
   }
 }
@@ -491,6 +507,7 @@ class _BtnLinkWidget extends StatelessWidget {
   final int index;
   final String image;
   final String text;
+
   const _BtnLinkWidget({
     Key? key,
     required this.link,

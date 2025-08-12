@@ -9,10 +9,13 @@ import 'package:hlw/util/desktop_extension.dart';
 class StyleTheme {
   //距离
   static double get margin => 13.w;
+
   //单一页面距离
   static double get singleMargin => 220.w;
+
   /*导航条高度*/
   static double get navHegiht => 44.w;
+
   static double get topHeight => kIsWeb
       ? 5.w
       : Utils.isPC
@@ -20,12 +23,16 @@ class StyleTheme {
           : MediaQuery.of(AppGlobal.context!).padding.top;
   static bool ipx = kIsWeb && (ScreenHeight / ScreenWidth >= 1.26);
   static double bottom = ipx ? 15.w : 0;
+
   /*底部导航条高度*/
   static double get botHegiht => 55.w;
+
   static double get pxBotHegiht => ipx ? (botHegiht + bottom) : botHegiht;
+
   /*内容页宽度*/
   static double get contentWidth =>
       Utils.isPC ? ScreenWidth - 90.w - 26.w - rightWidth : ScreenWidth;
+
   //右边模块宽度
   static double get rightWidth => 320.w;
 
@@ -35,6 +42,7 @@ class StyleTheme {
   static Color black0Color = Colors.black;
   static Color black0Color120 = const Color.fromRGBO(0, 0, 0, 0.120);
   static Color black0Color720 = const Color.fromRGBO(0, 0, 0, 0.720);
+  static Color black24Color = const Color.fromRGBO(24, 24, 24, 1);
   static Color black29Color = const Color.fromRGBO(29, 29, 29, 1);
   static Color black31Color = const Color.fromRGBO(31, 31, 31, 1);
   static Color black34Color = const Color.fromRGBO(34, 34, 34, 1);
@@ -75,6 +83,8 @@ class StyleTheme {
   static Color blue25Color = const Color.fromRGBO(25, 103, 210, 1);
   static Color yellow255Color = const Color.fromRGBO(255, 187, 59, 1);
   static Color orange255Color = const Color.fromRGBO(255, 144, 0, 1);
+  static Color orange249Color = const Color.fromRGBO(244, 154, 52, 1);
+  static Color orange249Color2 = const Color.fromRGBO(244, 154, 52, 0.2);
 
   static LinearGradient gradientLinarYellow = const LinearGradient(
     colors: [Color.fromRGBO(255, 210, 80, 1), Color.fromRGBO(247, 187, 13, 1)],
@@ -188,6 +198,9 @@ class StyleTheme {
   static TextStyle font_white_255_13 =
       font(size: 13, weight: FontWeight.normal, color: bgColor);
 
+  static TextStyle font_orange_249_18 =
+      font(size: 18, weight: FontWeight.normal, color: orange249Color);
+
   static TextStyle font_gray_151_13 =
       font(size: 13, weight: FontWeight.normal, color: gray151Color);
 
@@ -196,6 +209,9 @@ class StyleTheme {
 
   static TextStyle font_gray_204_13 =
       font(size: 13, weight: FontWeight.normal, color: gray204Color);
+
+  static TextStyle font_gray_153_18 =
+      font(size: 18, weight: FontWeight.normal, color: gray153Color);
 
   static TextStyle font_black_31_13_medium =
       font(size: 13, weight: FontWeight.w500, color: black31Color);
