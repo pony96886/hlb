@@ -313,9 +313,13 @@ class Utils {
       }
     };
 
-    ConnectivityResult connectivityResult =
-        await Connectivity().checkConnectivity();
-    if (connectivityResult == ConnectivityResult.none) {
+    // ConnectivityResult connectivityResult =
+    //     await Connectivity().checkConnectivity();
+    // if (connectivityResult == ConnectivityResult.none) {
+    List<ConnectivityResult> results = await Connectivity().checkConnectivity();
+    ConnectivityResult result =
+        results.isNotEmpty ? results.first : ConnectivityResult.none;
+    if (result == ConnectivityResult.none) {
       onFailed?.call();
     } else {
       for (var i = 0; i < unChecklines.length; i++) {
