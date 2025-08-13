@@ -16,6 +16,7 @@ class SearchBarWidget extends StatefulWidget {
   final bool showHead, isBackBtn;
   final String backTitle;
   final Widget? detailWidget;
+
   const SearchBarWidget(
       {Key? key,
       this.showHead = true,
@@ -94,6 +95,7 @@ class _TopBarWidget extends StatelessWidget {
   final bool isBackBtn, showHead;
   final String backTitle;
   final void Function() onVisibleMenuAction;
+
   const _TopBarWidget(
       {Key? key,
       this.detailWidget,
@@ -107,33 +109,41 @@ class _TopBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          bottom: BorderSide(color: StyleTheme.gray238Color, width: 1.w),
-        ),
+        color: StyleTheme.bgColor,
       ),
-      height: 64.w,
-      child: Stack(
-        alignment: AlignmentDirectional.center,
+      height: 90.w,
+      padding: EdgeInsets.symmetric(horizontal: 30.w),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Positioned(
-            left: 60.w,
-            child:
-                _PopBarItemWidget(isBackBtn: isBackBtn, backTitle: backTitle),
-          ),
-          Positioned(
-            left: detailWidget == null ? 255.w : null,
-            right: detailWidget == null ? 255.w : 340.w,
-            child: _ActionBarWidget(
-                detailWidget: detailWidget, isBackBtn: isBackBtn),
-          ),
-          Positioned(
-            right: 60.w,
-            child: _UserHeaderWidget(
-                showHead: showHead, onVisibleMenuAction: onVisibleMenuAction),
-          ),
+          // _PopBarItemWidget(isBackBtn: isBackBtn, backTitle: backTitle),
+          _ActionBarWidget(detailWidget: detailWidget, isBackBtn: isBackBtn),
+          _UserHeaderWidget(
+              showHead: showHead, onVisibleMenuAction: onVisibleMenuAction),
         ],
       ),
+
+      // Stack(
+      //   alignment: AlignmentDirectional.center,
+      //   children: [
+      //     Positioned(
+      //       left: 60.w,
+      //       child:
+      //       _PopBarItemWidget(isBackBtn: isBackBtn, backTitle: backTitle),
+      //     ),
+      //     Positioned(
+      //       left: detailWidget == null ? 255.w : null,
+      //       right: detailWidget == null ? 255.w : 340.w,
+      //       child: _ActionBarWidget(
+      //           detailWidget: detailWidget, isBackBtn: isBackBtn),
+      //     ),
+      //     Positioned(
+      //       right: 60.w,
+      //       child: _UserHeaderWidget(
+      //           showHead: showHead, onVisibleMenuAction: onVisibleMenuAction),
+      //     ),
+      //   ],
+      // )
     );
   }
 }
@@ -143,6 +153,7 @@ class _MenuBarWidget extends StatelessWidget {
   final void Function() onVisibleMenuAction;
   final Animation<double> animation;
   final bool isOpen;
+
   const _MenuBarWidget(
       {Key? key,
       required this.onVisibleMenuAction,
@@ -171,6 +182,7 @@ class _MenuBarWidget extends StatelessWidget {
 class _PopBarItemWidget extends StatelessWidget {
   final bool isBackBtn;
   final String backTitle;
+
   const _PopBarItemWidget(
       {Key? key, required this.isBackBtn, required this.backTitle})
       : super(key: key);
@@ -199,6 +211,7 @@ class _PopBarItemWidget extends StatelessWidget {
 class _ActionBarWidget extends StatelessWidget {
   final Widget? detailWidget;
   final bool isBackBtn;
+
   const _ActionBarWidget(
       {Key? key, required this.detailWidget, required this.isBackBtn})
       : super(key: key);
@@ -213,29 +226,42 @@ class _ActionBarWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Utils.navTo(context, "/homesearchpage/");
+        // Utils.navTo(context, "/homesearchpage/");
       },
       behavior: HitTestBehavior.translucent,
       child: Container(
-        width: 500.w,
-        height: 36.w,
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        width: 400.w,
+        height: 50.w,
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.w),
         decoration: BoxDecoration(
-          color: StyleTheme.gray247Color,
-          border: Border.all(color: StyleTheme.gray238Color, width: 1.w),
-          borderRadius: BorderRadius.circular(17.w),
+          color: StyleTheme.gray216Color2,
+          borderRadius: BorderRadius.circular(36.w),
         ),
         alignment: Alignment.centerLeft,
-        child: Row(children: [
+        child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
           LocalPNG(
             name: "hlw_label_search",
-            width: 20.w,
-            height: 20.w,
+            width: 24.w,
+            height: 24.w,
           ),
-          SizedBox(width: 20.w),
+          SizedBox(width: 10.w),
+          Expanded(
+              child: TextField(
+                  textAlignVertical: TextAlignVertical.center,
+                  style: StyleTheme.font_white_20,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    isDense: true,
+                    contentPadding: EdgeInsets.symmetric(vertical: 0),
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    hintText: Utils.txt('ssngxqd'),
+                    hintStyle: StyleTheme.font_gray_153_20,
+                  ))),
+          SizedBox(width: 10.w),
           Text(
-            Utils.txt('srsgjz'),
-            style: StyleTheme.font_gray_170_17,
+            "搜索",
+            style: StyleTheme.font_orange_249_20,
           )
         ]),
       ),
@@ -247,6 +273,7 @@ class _ActionBarWidget extends StatelessWidget {
 class _UserHeaderWidget extends StatelessWidget {
   final bool showHead;
   final void Function() onVisibleMenuAction;
+
   const _UserHeaderWidget({
     Key? key,
     required this.showHead,
@@ -261,8 +288,8 @@ class _UserHeaderWidget extends StatelessWidget {
     if (user?.username?.isEmpty == true) {
       current = LocalPNG(
         name: 'hlw_mine_head',
-        width: 36.w,
-        height: 36.w,
+        width: 40.w,
+        height: 40.w,
       );
     } else {
       current = NetImageTool(
@@ -276,6 +303,8 @@ class _UserHeaderWidget extends StatelessWidget {
       );
     }
     current = InkWell(onTap: onVisibleMenuAction, child: current);
-    return Ink(child: current);
+    return Row(
+      children: [Ink(child: current)],
+    );
   }
 }

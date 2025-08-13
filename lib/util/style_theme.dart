@@ -77,6 +77,7 @@ class StyleTheme {
   static Color gray153Color64 = const Color.fromRGBO(153, 153, 153, 0.64);
   static Color gray170Color = const Color.fromRGBO(170, 170, 170, 1);
   static Color gray186Color = const Color.fromRGBO(186, 186, 186, 1);
+  static Color gray216Color2 = const Color.fromRGBO(216, 216, 216, 0.2);
   static Color gray225Color = const Color.fromRGBO(225, 225, 225, 1);
   static Color gray229Color = const Color.fromRGBO(229, 229, 229, 1);
   static Color gray225Color45 = const Color.fromRGBO(225, 225, 225, 0.451);
@@ -215,6 +216,9 @@ class StyleTheme {
 
   static TextStyle font_gray_153_20 =
       font(size: 20, weight: FontWeight.bold, color: gray153Color);
+
+  static TextStyle font_white_20 =
+      font(size: 20, weight: FontWeight.bold, color: Colors.white);
 
   static TextStyle font_gray_194_20 =
       font(size: 20, weight: FontWeight.bold, color: gray194Color);

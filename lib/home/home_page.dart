@@ -67,7 +67,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget _widget() {
     return Stack(children: [
       Positioned(
-        top: 64.w + 5.w, // 5 边距
+        top: 90.w + 5.w, // 5 边距
         bottom: 0,
         left: 0,
         right: 0,
@@ -125,7 +125,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       }).toList(),
     );
     return Container(
-      padding: EdgeInsets.fromLTRB(60.w, 0, 60.w, 0),
+      padding: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
       child: current,
     );
   }
