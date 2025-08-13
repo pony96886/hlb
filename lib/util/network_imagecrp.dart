@@ -69,7 +69,10 @@ class NetworkImageCRP extends ImageProvider<NetworkImageCRP> {
   }
 
   @override
-  ImageStreamCompleter load(NetworkImageCRP key, decode) {
+  ImageStreamCompleter loadImage(
+      NetworkImageCRP key,
+      ImageDecoderCallback decode,
+      ) {
     return MultiFrameImageStreamCompleter(
       codec: _loadAsync(key),
       scale: key.scale,
