@@ -512,8 +512,6 @@ class _DialogPreview extends StatelessWidget {
                 }: CustomRender.widget(widget: (_context, parsedChild) {
                   String? cover =
                       _context.tree.element?.attributes["pic"] ?? "";
-                  String? play_url =
-                      _context.tree.element?.attributes["src"] ?? "";
                   if (cover.isNotEmpty) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

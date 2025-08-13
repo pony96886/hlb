@@ -1,5 +1,4 @@
 import 'package:hlw/base/base_store.dart';
-import 'package:hlw/base/request_api.dart';
 import 'package:hlw/model/user_model.dart';
 import 'package:hlw/util/eventbus_class.dart';
 import 'package:hlw/util/load_status.dart';
@@ -40,7 +39,6 @@ class _RightModuleUIState extends State<RightModuleUI> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     discrip = UtilEventbus().on<EventbusClass>().listen((event) {
       if (event.arg["name"] == 'rightBanner') {

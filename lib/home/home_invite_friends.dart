@@ -1,13 +1,8 @@
-import 'dart:io';
-
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:hlw/base/base_main_view.dart';
 import 'package:hlw/base/base_widget.dart';
 import 'package:hlw/model/user_model.dart';
-import 'package:hlw/util/device_info.dart';
 import 'package:hlw/util/local_png.dart';
 import 'package:hlw/util/style_theme.dart';
 import 'package:hlw/util/utils.dart';
@@ -19,11 +14,10 @@ import 'package:qr_flutter/qr_flutter.dart';
 import '../base/base_store.dart';
 
 class HomeInviteFriends extends BaseWidget {
-  HomeInviteFriends({Key? key}) : super(key: key);
+  const HomeInviteFriends({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> cState() {
-    // TODO: implement cState
     return _HomeInviteFriendsState();
   }
 }
@@ -31,7 +25,6 @@ class HomeInviteFriends extends BaseWidget {
 typedef GetLockParentWindow = Function(bool getLockParentWindow);
 
 class _HomeInviteFriendsState extends BaseWidgetState<HomeInviteFriends> {
-  String? _directoryName;
   bool _lockParentWindow = false;
   final GlobalKey _globalKey = GlobalKey();
 

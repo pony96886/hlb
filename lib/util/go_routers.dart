@@ -31,23 +31,26 @@ class GoRouters {
     //二级页面
     final List<GoRoute> childTwoRouters = [
       GoRoute(
-          path: 'web/:url',
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-              key: state.pageKey,
-              barrierDismissible: true,
-              child: NormalWeb(url: state.params['url']),
-              transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-          ),
+        path: 'web/:url',
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+            key: state.pageKey,
+            barrierDismissible: true,
+            child: NormalWeb(url: state.params['url']),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
       ),
       //播放页
       GoRoute(
-          path: 'homeplayerpage/:cover/:url',
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-              key: state.pageKey,
-              barrierDismissible: true,
-              child: HomePlayerPage(cover: state.params['cover'], url: state.params['url']),
-              transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-          ),
+        path: 'homeplayerpage/:cover/:url',
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+            key: state.pageKey,
+            barrierDismissible: true,
+            child: HomePlayerPage(
+                cover: state.params['cover'], url: state.params['url']),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
       ),
       //图片预览
       GoRoute(
@@ -55,9 +58,12 @@ class GoRouters {
         pageBuilder: (context, state) => CustomTransitionPage<void>(
             key: state.pageKey,
             barrierDismissible: true,
-            child: HomePreviewViewPage(url: state.params['url'] ?? "",),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-        ),
+            child: HomePreviewViewPage(
+              url: state.params['url'] ?? "",
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
       ),
       //详情
       GoRoute(
@@ -66,31 +72,34 @@ class GoRouters {
             key: state.pageKey,
             barrierDismissible: true,
             child: HomeContentDetailPage(cid: state.params['cid'] ?? "0"),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-        ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
       ),
       //更新文本信息
       GoRoute(
-          path: 'mineupdatepage/:type/:title',
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-              key: state.pageKey,
-              barrierDismissible: true,
-              child: MineUpdatePage(
-                type: state.params['type'],
-                title: state.params['title'],
-              ),
-              transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-          ),
+        path: 'mineupdatepage/:type/:title',
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+            key: state.pageKey,
+            barrierDismissible: true,
+            child: MineUpdatePage(
+              type: state.params['type'],
+              title: state.params['title'],
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
       ),
       //常见问题
       GoRoute(
-          path: 'minenorquestionpage',
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-              key: state.pageKey,
-              barrierDismissible: true,
-              child: MineNorquestionPage(),
-              transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-          ),
+        path: 'minenorquestionpage',
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+            key: state.pageKey,
+            barrierDismissible: true,
+            child: MineNorquestionPage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
       ),
       //邀請好友
       GoRoute(
@@ -98,9 +107,12 @@ class GoRouters {
         pageBuilder: (context, state) => CustomTransitionPage<void>(
             key: state.pageKey,
             barrierDismissible: true,
-            child: HomePreviewViewPage(url: state.params['url'] ?? "",),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-        ),
+            child: HomePreviewViewPage(
+              url: state.params['url'] ?? "",
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
         builder: (context, state) => HomeInviteFriends(),
       ),
       //選擇帳號
@@ -110,21 +122,23 @@ class GoRouters {
             key: state.pageKey,
             barrierDismissible: true,
             child: MineWithdrawalNowAccount(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-        ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
       ),
     ];
 
     //一级页面
     final List<GoRoute> childOneRouters = [
       GoRoute(
-          path: 'home',
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-              key: state.pageKey,
-              barrierDismissible: true,
-              child: const HomePage(),
-              transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-          ),
+        path: 'home',
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+            key: state.pageKey,
+            barrierDismissible: true,
+            child: const HomePage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
       ),
       //WEB页面
       GoRoute(
@@ -133,8 +147,9 @@ class GoRouters {
             key: state.pageKey,
             barrierDismissible: true,
             child: NormalWeb(url: state.params['url']),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-        ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
         routes: childTwoRouters,
       ),
       //搜索页面
@@ -144,8 +159,9 @@ class GoRouters {
               key: state.pageKey,
               barrierDismissible: true,
               child: HomeSearchPage(tag: state.params['tag'] ?? ''),
-              transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-          ),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) =>
+                      ScaleTransition(scale: animation, child: child)),
           routes: childTwoRouters),
       //详情
       GoRoute(
@@ -154,8 +170,9 @@ class GoRouters {
             key: state.pageKey,
             barrierDismissible: true,
             child: HomeContentDetailPage(cid: state.params['cid'] ?? "0"),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-        ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
         routes: childTwoRouters,
       ),
       //登录页
@@ -164,9 +181,10 @@ class GoRouters {
         pageBuilder: (context, state) => CustomTransitionPage<void>(
             key: state.pageKey,
             barrierDismissible: true,
-            child: MineLoginPage(login : state.params['login'] ?? "false"),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-        ),
+            child: MineLoginPage(login: state.params['login'] ?? "false"),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
         routes: childTwoRouters,
       ),
       //个人设置
@@ -176,8 +194,9 @@ class GoRouters {
             key: state.pageKey,
             barrierDismissible: true,
             child: MineSetPage(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-        ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
         routes: childTwoRouters,
       ),
       GoRoute(
@@ -186,8 +205,9 @@ class GoRouters {
             key: state.pageKey,
             barrierDismissible: true,
             child: MineSharePage(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-        ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
         routes: childTwoRouters,
       ),
       //车友群
@@ -196,9 +216,12 @@ class GoRouters {
           pageBuilder: (context, state) => CustomTransitionPage<void>(
               key: state.pageKey,
               barrierDismissible: true,
-              child: HomePreviewViewPage(url: state.params['url'] ?? "",),
-              transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-          ),
+              child: HomePreviewViewPage(
+                url: state.params['url'] ?? "",
+              ),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) =>
+                      ScaleTransition(scale: animation, child: child)),
           builder: (context, state) => MineGroupsPage()),
       //评论回复
       GoRoute(
@@ -207,8 +230,9 @@ class GoRouters {
             key: state.pageKey,
             barrierDismissible: true,
             child: MineRepliedCommentsPage(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-        ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
         routes: childTwoRouters,
       ),
       //在线客服
@@ -218,8 +242,9 @@ class GoRouters {
             key: state.pageKey,
             barrierDismissible: true,
             child: MineServicePage(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-        ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
         routes: childTwoRouters,
       ),
       //我的收藏
@@ -229,8 +254,9 @@ class GoRouters {
             key: state.pageKey,
             barrierDismissible: true,
             child: MineCollectPage(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-        ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
         routes: childTwoRouters,
       ),
       //发帖
@@ -239,9 +265,12 @@ class GoRouters {
         pageBuilder: (context, state) => CustomTransitionPage<void>(
             key: state.pageKey,
             barrierDismissible: true,
-            child: HomeEditorPage(id: state.params['id'] ?? "",),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) => ScaleTransition(scale: animation, child: child)
-        ),
+            child: HomeEditorPage(
+              id: state.params['id'] ?? "",
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
         routes: childTwoRouters,
       ),
     ];
@@ -266,6 +295,7 @@ class GoRouters {
       ],
       redirect: (state) {
         Utils.log(state.location);
+        return null;
       },
     );
   }

@@ -1,6 +1,5 @@
 // ignore_for_file: unnecessary_null_comparison
 import 'dart:async';
-import 'dart:typed_data';
 import 'dart:ui' as ui show instantiateImageCodec, Codec;
 import 'package:hlw/util/image_request_async.dart';
 import 'package:flutter/foundation.dart';
@@ -32,6 +31,7 @@ class NetworkImageCRP extends ImageProvider<NetworkImageCRP> {
   }
 
   @override
+  // ignore: non_nullable_equals_parameter
   bool operator ==(dynamic other) {
     if (other.runtimeType != runtimeType) return false;
     final NetworkImageCRP typedOther = other;
@@ -47,7 +47,6 @@ class NetworkImageCRP extends ImageProvider<NetworkImageCRP> {
   @override
   void resolveStreamForKey(ImageConfiguration configuration, ImageStream stream,
       NetworkImageCRP key, ImageErrorListener handleError) {
-    //TODO: implement resolveStreamForKey
     if (stream.completer != null ||
         PaintingBinding.instance.imageCache.containsKey(key)) {
       super.resolveStreamForKey(configuration, stream, key, handleError);
@@ -70,9 +69,9 @@ class NetworkImageCRP extends ImageProvider<NetworkImageCRP> {
 
   @override
   ImageStreamCompleter loadImage(
-      NetworkImageCRP key,
-      ImageDecoderCallback decode,
-      ) {
+    NetworkImageCRP key,
+    ImageDecoderCallback decode,
+  ) {
     return MultiFrameImageStreamCompleter(
       codec: _loadAsync(key),
       scale: key.scale,

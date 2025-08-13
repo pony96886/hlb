@@ -10,7 +10,6 @@ import 'package:hlw/util/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hlw/util/desktop_extension.dart';
 import 'package:video_player/video_player.dart';
 import 'package:universal_html/html.dart' as html;
@@ -64,6 +63,7 @@ mixin NVideoURLMinxin<T extends StatefulWidget> on State<T> {
         return VideoPlayerController.network(url);
       });
     }
+    return null;
   }
 
   Map payIcons = {

@@ -38,7 +38,6 @@ class _WindowsPullRefreshState extends State<WindowsPullRefresh> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setupData();
   }
@@ -47,91 +46,91 @@ class _WindowsPullRefreshState extends State<WindowsPullRefresh> {
   Widget build(BuildContext context) {
     return widget.isSliver
         ? EasyRefresh(
-      controller: _controller,
-      child: CustomScrollView(
-        slivers: [
-          widget.child ?? SliverToBoxAdapter(child: Container()),
-          const FooterLocator.sliver(),
-        ],
-      ),
-      header: widget.onRefresh == null
-          ? null
-          : ExtClassicHeader(
-        textStyle: StyleTheme.font(size: 14, color: Colors.white),
-        showMessage: false,
-        showText: false,
-        spacing: 5,
-        safeArea: false,
-      ),
-      footer: widget.onLoading == null
-          ? null
-          : ExtClassicFooter(
-        textStyle: StyleTheme.font(size: 14, color: Colors.white),
-        showMessage: true,
-        showText: true,
-        spacing: 5,
-        position: IndicatorPosition.locator,
-      ),
-      onRefresh: widget.onRefresh == null
-          ? null
-          : () async {
-        await widget.onRefresh?.call();
-        if (!mounted) return;
-        _controller.finishRefresh();
-        _controller.resetFooter();
-        setState(() {});
-      },
-      onLoad: widget.onLoading == null
-          ? null
-          : () async {
-        bool noMore = await widget.onLoading?.call() ?? false;
-        if (!mounted) return;
-        _controller.finishLoad(noMore
-            ? IndicatorResult.noMore
-            : IndicatorResult.success);
-        setState(() {});
-      },
-    )
+            controller: _controller,
+            child: CustomScrollView(
+              slivers: [
+                widget.child ?? SliverToBoxAdapter(child: Container()),
+                const FooterLocator.sliver(),
+              ],
+            ),
+            header: widget.onRefresh == null
+                ? null
+                : ExtClassicHeader(
+                    textStyle: StyleTheme.font(size: 14, color: Colors.white),
+                    showMessage: false,
+                    showText: false,
+                    spacing: 5,
+                    safeArea: false,
+                  ),
+            footer: widget.onLoading == null
+                ? null
+                : ExtClassicFooter(
+                    textStyle: StyleTheme.font(size: 14, color: Colors.white),
+                    showMessage: true,
+                    showText: true,
+                    spacing: 5,
+                    position: IndicatorPosition.locator,
+                  ),
+            onRefresh: widget.onRefresh == null
+                ? null
+                : () async {
+                    await widget.onRefresh?.call();
+                    if (!mounted) return;
+                    _controller.finishRefresh();
+                    _controller.resetFooter();
+                    setState(() {});
+                  },
+            onLoad: widget.onLoading == null
+                ? null
+                : () async {
+                    bool noMore = await widget.onLoading?.call() ?? false;
+                    if (!mounted) return;
+                    _controller.finishLoad(noMore
+                        ? IndicatorResult.noMore
+                        : IndicatorResult.success);
+                    setState(() {});
+                  },
+          )
         : EasyRefresh(
-      controller: _controller,
-      child: widget.child ?? Container(),
-      header: widget.onRefresh == null
-          ? null
-          : ExtClassicHeader(
-        textStyle: StyleTheme.font(size: 14, color: Colors.white),
-        showMessage: false,
-        showText: false,
-        spacing: 5,
-        safeArea: false,
-      ),
-      footer: widget.onLoading == null
-          ? null
-          : ExtClassicFooter(
-        textStyle: StyleTheme.font(size: 14, color: Colors.white),
-        showMessage: true,
-        showText: true,
-        spacing: 5,
-      ),
-      onRefresh: widget.onRefresh == null
-          ? null
-          : () async {
-        await widget.onRefresh?.call();
-        if (!mounted) return;
-        _controller.finishRefresh();
-        _controller.resetFooter();
-        setState(() {});
-      },
-      onLoad: widget.onLoading == null
-          ? null
-          : () async {
-        bool noMore = await widget.onLoading?.call() ?? false;
-        if (!mounted) return;
-        _controller.finishLoad(noMore
-            ? IndicatorResult.noMore
-            : IndicatorResult.success);
-        setState(() {});
-      },
-    );
+            controller: _controller,
+            child: widget.child ?? Container(),
+            header: widget.onRefresh == null
+                ? null
+                : ExtClassicHeader(
+                    textStyle: StyleTheme.font(size: 14, color: Colors.white),
+                    showMessage: false,
+                    showText: false,
+                    spacing: 5,
+                    safeArea: false,
+                  ),
+            footer: widget.onLoading == null
+                ? null
+                : ExtClassicFooter(
+                    textStyle: StyleTheme.font(size: 14, color: Colors.white),
+                    showMessage: true,
+                    showText: true,
+                    spacing: 5,
+                  ),
+            onRefresh: widget.onRefresh == null
+                ? null
+                : () async {
+                    await widget.onRefresh?.call();
+                    if (!mounted) return;
+                    _controller.finishRefresh();
+                    _controller.resetFooter();
+                    setState(() {});
+                  },
+            onLoad: widget.onLoading == null
+                ? null
+                : () async {
+                    bool noMore = await widget.onLoading?.call() ?? false;
+                    if (!mounted) return;
+                    _controller.finishLoad(noMore
+                        ? IndicatorResult.noMore
+                        : IndicatorResult.success);
+                    setState(() {});
+                  },
+          );
   }
 
   @override
@@ -277,23 +276,23 @@ class ExtClassicHeader extends Header {
     this.progressIndicatorSize,
     this.progressIndicatorStrokeWidth,
   }) : super(
-    triggerOffset: triggerOffset,
-    clamping: clamping,
-    processedDuration: processedDuration,
-    spring: spring,
-    readySpringBuilder: readySpringBuilder,
-    springRebound: springRebound,
-    frictionFactor: frictionFactor,
-    safeArea: safeArea,
-    infiniteOffset: infiniteOffset,
-    hitOver: hitOver,
-    infiniteHitOver: infiniteHitOver,
-    position: position,
-    hapticFeedback: hapticFeedback,
-    triggerWhenReach: triggerWhenReach,
-    triggerWhenRelease: triggerWhenRelease,
-    maxOverOffset: maxOverOffset,
-  );
+          triggerOffset: triggerOffset,
+          clamping: clamping,
+          processedDuration: processedDuration,
+          spring: spring,
+          readySpringBuilder: readySpringBuilder,
+          springRebound: springRebound,
+          frictionFactor: frictionFactor,
+          safeArea: safeArea,
+          infiniteOffset: infiniteOffset,
+          hitOver: hitOver,
+          infiniteHitOver: infiniteHitOver,
+          position: position,
+          hapticFeedback: hapticFeedback,
+          triggerWhenReach: triggerWhenReach,
+          triggerWhenRelease: triggerWhenRelease,
+          maxOverOffset: maxOverOffset,
+        );
 
   @override
   Widget build(BuildContext context, IndicatorState state) {
@@ -468,23 +467,23 @@ class ExtClassicFooter extends Footer {
     this.progressIndicatorSize,
     this.progressIndicatorStrokeWidth,
   }) : super(
-    triggerOffset: triggerOffset,
-    clamping: clamping,
-    processedDuration: processedDuration,
-    spring: spring,
-    readySpringBuilder: readySpringBuilder,
-    springRebound: springRebound,
-    frictionFactor: frictionFactor,
-    safeArea: safeArea,
-    infiniteOffset: infiniteOffset,
-    hitOver: hitOver,
-    infiniteHitOver: infiniteHitOver,
-    position: position,
-    hapticFeedback: hapticFeedback,
-    triggerWhenReach: triggerWhenReach,
-    triggerWhenRelease: triggerWhenRelease,
-    maxOverOffset: maxOverOffset,
-  );
+          triggerOffset: triggerOffset,
+          clamping: clamping,
+          processedDuration: processedDuration,
+          spring: spring,
+          readySpringBuilder: readySpringBuilder,
+          springRebound: springRebound,
+          frictionFactor: frictionFactor,
+          safeArea: safeArea,
+          infiniteOffset: infiniteOffset,
+          hitOver: hitOver,
+          infiniteHitOver: infiniteHitOver,
+          position: position,
+          hapticFeedback: hapticFeedback,
+          triggerWhenReach: triggerWhenReach,
+          triggerWhenRelease: triggerWhenRelease,
+          maxOverOffset: maxOverOffset,
+        );
 
   @override
   Widget build(BuildContext context, IndicatorState state) {
@@ -671,10 +670,10 @@ class _ExtClassicIndicator extends StatefulWidget {
     this.progressIndicatorSize,
     this.progressIndicatorStrokeWidth,
   })  : assert(
-  mainAxisAlignment == MainAxisAlignment.start ||
-      mainAxisAlignment == MainAxisAlignment.center ||
-      mainAxisAlignment == MainAxisAlignment.end,
-  'Only supports [MainAxisAlignment.center], [MainAxisAlignment.start] and [MainAxisAlignment.end].'),
+            mainAxisAlignment == MainAxisAlignment.start ||
+                mainAxisAlignment == MainAxisAlignment.center ||
+                mainAxisAlignment == MainAxisAlignment.end,
+            'Only supports [MainAxisAlignment.center], [MainAxisAlignment.start] and [MainAxisAlignment.end].'),
         super(key: key);
 
   @override
@@ -856,11 +855,11 @@ class __ExtClassicIndicatorState extends State<_ExtClassicIndicator>
           child: Icon(
             widget.reverse
                 ? (_axis == Axis.vertical
-                ? Icons.arrow_upward
-                : Icons.arrow_back)
+                    ? Icons.arrow_upward
+                    : Icons.arrow_back)
                 : (_axis == Axis.vertical
-                ? Icons.arrow_downward
-                : Icons.arrow_forward),
+                    ? Icons.arrow_downward
+                    : Icons.arrow_forward),
             color: Colors.white,
             weight: 0.5.w,
             size: 20.w,
@@ -887,14 +886,13 @@ class __ExtClassicIndicatorState extends State<_ExtClassicIndicator>
         child: _result == IndicatorResult.noMore && widget.noMoreIcon == null
             ? Container()
             : Container(
-            height: 40.w,
-            width: 120.w,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: StyleTheme.gray102Color,
-                borderRadius: BorderRadius.all(Radius.circular(20.w))),
-            child: icon
-        ),
+                height: 40.w,
+                width: 120.w,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: StyleTheme.gray102Color,
+                    borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                child: icon),
       ),
     );
   }
@@ -917,17 +915,12 @@ class __ExtClassicIndicatorState extends State<_ExtClassicIndicator>
         ),
       ),
     );
-    return widget.textBuilder?.call(context, widget.state, _currentText) ??
-        Text(
-          _currentText,
-          style: widget.textStyle ?? Theme.of(context).textTheme.titleMedium,
-        );
   }
 
   /// Build text.
   Widget _buildMessage() {
     return widget.messageBuilder
-        ?.call(context, widget.state, widget.messageText, _updateTime) ??
+            ?.call(context, widget.state, widget.messageText, _updateTime) ??
         Padding(
           padding: const EdgeInsets.only(top: 4),
           child: Text(
@@ -947,7 +940,10 @@ class __ExtClassicIndicatorState extends State<_ExtClassicIndicator>
               left: 0,
               right: 0,
               top: _offset < _actualTriggerOffset
-                  ? -(_actualTriggerOffset - _offset + (widget.reverse ? _safeOffset : -_safeOffset)) / 2
+                  ? -(_actualTriggerOffset -
+                          _offset +
+                          (widget.reverse ? _safeOffset : -_safeOffset)) /
+                      2
                   : (!widget.reverse ? _safeOffset : 0),
               bottom: _offset < _actualTriggerOffset
                   ? null
@@ -955,8 +951,7 @@ class __ExtClassicIndicatorState extends State<_ExtClassicIndicator>
               // height: _offset < _actualTriggerOffset ? _actualTriggerOffset : null,
               child: Center(
                 child: _buildVerticalBody(),
-              )
-          ),
+              )),
         if (_mainAxisAlignment != MainAxisAlignment.center)
           Positioned(
             left: 0,
@@ -1015,7 +1010,10 @@ class __ExtClassicIndicatorState extends State<_ExtClassicIndicator>
         if (_mainAxisAlignment == MainAxisAlignment.center)
           Positioned(
             left: _offset < _actualTriggerOffset
-                ? -(_actualTriggerOffset - _offset + (widget.reverse ? _safeOffset : -_safeOffset)) / 2
+                ? -(_actualTriggerOffset -
+                        _offset +
+                        (widget.reverse ? _safeOffset : -_safeOffset)) /
+                    2
                 : (!widget.reverse ? _safeOffset : 0),
             right: _offset < _actualTriggerOffset
                 ? null
@@ -1090,7 +1088,9 @@ class __ExtClassicIndicatorState extends State<_ExtClassicIndicator>
       color: widget.backgroundColor,
       width: _axis == Axis.vertical ? double.infinity : offset,
       height: _axis == Axis.horizontal ? double.infinity : offset,
-      child: _axis == Axis.vertical ? _buildVerticalWidget() : _buildHorizontalWidget(),
+      child: _axis == Axis.vertical
+          ? _buildVerticalWidget()
+          : _buildHorizontalWidget(),
     );
   }
 }

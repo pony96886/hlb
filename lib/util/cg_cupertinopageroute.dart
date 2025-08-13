@@ -12,10 +12,7 @@ class CGCupertinoPageRoute<T> extends PageRoute<T>
     RouteSettings? settings,
     this.maintainState = true,
     bool fullscreenDialog = false,
-  })  : assert(builder != null),
-        assert(maintainState != null),
-        assert(fullscreenDialog != null),
-        super(settings: settings, fullscreenDialog: fullscreenDialog) {}
+  }) : super(settings: settings, fullscreenDialog: fullscreenDialog);
 
   /// Builds the primary contents of the route.
   final WidgetBuilder builder;

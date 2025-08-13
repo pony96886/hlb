@@ -1,14 +1,11 @@
 // ignore_for_file: prefer_function_declarations_over_variables
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-// import 'dart:developer' as dev;
 import 'package:bot_toast/bot_toast.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:hlw/base/base_store.dart';
-import 'package:hlw/model/config_model.dart';
 import 'package:hlw/util/go_split_routers.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -1211,7 +1208,6 @@ class Utils {
 
   //nav搜索UI
   static Widget navModuleUI(BuildContext context, {int spacer = 40}) {
-    ConfigModel? cf = Provider.of<BaseStore>(context, listen: false).config;
     return Container(
       color: Colors.transparent,
       child: Column(

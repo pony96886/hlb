@@ -1,8 +1,6 @@
 import 'package:hlw/model/imchat_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'general_ads_model.dart';
-
 // @JsonSerializable(explicitToJson: true)
 // class UserModel {
 //   UserModel({

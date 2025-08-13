@@ -1,16 +1,12 @@
-import 'package:hlw/base/base_store.dart';
 import 'package:hlw/base/base_widget.dart';
-import 'package:hlw/model/config_model.dart';
-import 'package:hlw/util/load_status.dart';
 import 'package:hlw/util/style_theme.dart';
 import 'package:hlw/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hlw/util/desktop_extension.dart';
 import 'package:hlw/widget/search_bar_widget.dart';
-import 'package:provider/provider.dart';
 
 class MineNorquestionPage extends BaseWidget {
-  MineNorquestionPage({Key? key}) : super(key: key);
+  const MineNorquestionPage({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> cState() {
@@ -20,8 +16,7 @@ class MineNorquestionPage extends BaseWidget {
 
 class _MineNorquestionPageState extends BaseWidgetState<MineNorquestionPage> {
   @override
-  void onCreate() {
-  }
+  void onCreate() {}
 
   @override
   Widget appbar() {
@@ -33,7 +28,6 @@ class _MineNorquestionPageState extends BaseWidgetState<MineNorquestionPage> {
 
   @override
   Widget pageBody(BuildContext context) {
-    ConfigModel? cf = Provider.of<BaseStore>(context, listen: false).config;
     return Stack(
       children: [
         SingleChildScrollView(

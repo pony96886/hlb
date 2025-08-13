@@ -50,9 +50,6 @@ Future createServer(String url) async {
   } else {
     if (!_flag) {
       // 创建服务器
-      var _server = await shelf_io.serve(
-          proxyHandler(domainStr), '127.0.0.1', current_port,
-          shared: true);
       servers.add({domainStr: current_port});
       current_port++;
       return {

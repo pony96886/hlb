@@ -15,10 +15,10 @@ import 'package:hlw/util/utils.dart';
 import '../base/base_main_view.dart';
 
 class PastPage extends BaseWidget {
-  PastPage({Key? key, this.isShow = false, this.type = 'past'})
+  const PastPage({Key? key, this.isShow = false, this.type = 'past'})
       : super(key: key);
-  bool isShow;
-  String type;
+  final bool isShow;
+  final String type;
   @override
   cState() => _PastPageState();
 }
@@ -43,7 +43,7 @@ class _PastPageState extends BaseWidgetState<PastPage> {
     final bool isToday =
         selectDay == DateUtil.formatDate(DateTime.now(), format: "yyyy-MM-dd");
     ResponseModel<dynamic>? res =
-    await pastList(page: page, date: isToday ? '' : selectDay);
+        await pastList(page: page, date: isToday ? '' : selectDay);
     if (res?.data == null) {
       networkErr = true;
       if (mounted) setState(() {});
@@ -101,30 +101,31 @@ class _PastPageState extends BaseWidgetState<PastPage> {
       paddingBottom: 30.w,
       leftWidget: networkErr
           ? LoadStatus.netErrorWork(onTap: () {
-        networkErr = false;
-        _getData();
-      })
+              networkErr = false;
+              _getData();
+            })
           : SizedBox(
-        height: ScreenHeight - 124.w,
-        width: 640.w,
-        child: isHud
-            ? LoadStatus.showLoading(mounted)
-            : _dataList.isEmpty
-            ? LoadStatus.noData()
-            : _RefreshWidget(
-          data: _dataList,
-          onRefresh: () {
-            keys = [];
-            page = 1;
-            return _getData();
-          },
-          onLoading: () {
-            page++;
-            return _getData();
-          },
-        ),
-      ),
-      dateWidget: _DateWidget(showAlertDate: showAlertDate, selectDay: selectDay),
+              height: ScreenHeight - 124.w,
+              width: 640.w,
+              child: isHud
+                  ? LoadStatus.showLoading(mounted)
+                  : _dataList.isEmpty
+                      ? LoadStatus.noData()
+                      : _RefreshWidget(
+                          data: _dataList,
+                          onRefresh: () {
+                            keys = [];
+                            page = 1;
+                            return _getData();
+                          },
+                          onLoading: () {
+                            page++;
+                            return _getData();
+                          },
+                        ),
+            ),
+      dateWidget:
+          _DateWidget(showAlertDate: showAlertDate, selectDay: selectDay),
     );
   }
 
@@ -226,12 +227,12 @@ class _PastPageState extends BaseWidgetState<PastPage> {
         return Theme(
           data: ThemeData(
               textButtonTheme: TextButtonThemeData(
-                  style: TextButton.styleFrom(foregroundColor: StyleTheme.orange255Color)),
+                  style: TextButton.styleFrom(
+                      foregroundColor: StyleTheme.orange255Color)),
               colorScheme: ColorScheme.light(
                 primary: StyleTheme.orange255Color,
                 onPrimary: Colors.white,
-              )
-          ),
+              )),
           child: child!,
         );
       },
@@ -243,13 +244,17 @@ class _PastPageState extends BaseWidgetState<PastPage> {
       _getData(isShow: true);
     });
   }
-
 }
 
 class _RefreshWidget extends StatelessWidget {
   final List data;
   final Future<bool> Function() onRefresh, onLoading;
-  const _RefreshWidget ({Key? key, required this.data, required this.onRefresh, required this.onLoading}) : super(key: key);
+  const _RefreshWidget(
+      {Key? key,
+      required this.data,
+      required this.onRefresh,
+      required this.onLoading})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -272,11 +277,11 @@ class _RefreshWidget extends StatelessWidget {
               separatorBuilder: (context, index) => SizedBox(height: 10.w),
               itemBuilder: (context, index) => index == data.length - 1
                   ? Column(
-                children: [
-                  _PastItem(e: data[index], index: index),
-                  SizedBox(height: 20.w),
-                ],
-              )
+                      children: [
+                        _PastItem(e: data[index], index: index),
+                        SizedBox(height: 20.w),
+                      ],
+                    )
                   : _PastItem(e: data[index], index: index),
               itemCount: data.length,
             ),
@@ -314,7 +319,7 @@ class _DateWidget extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                   border:
-                  Border.all(color: StyleTheme.gray238Color, width: 1.w),
+                      Border.all(color: StyleTheme.gray238Color, width: 1.w),
                   borderRadius: BorderRadius.all(Radius.circular(10.w))),
               padding: EdgeInsets.all(10.w),
               child: Row(
@@ -351,13 +356,13 @@ class _PastItem extends StatelessWidget {
           e["date"] == null
               ? Container()
               : Center(
-            key: ValueKey(e["date"]),
-            child: Text(
-              DateUtil.formatDateStr("${e["date"]}",
-                  format: "yyyy-MM-dd"),
-              style: StyleTheme.font_black_0_20,
-            ),
-          ),
+                  key: ValueKey(e["date"]),
+                  child: Text(
+                    DateUtil.formatDateStr("${e["date"]}",
+                        format: "yyyy-MM-dd"),
+                    style: StyleTheme.font_black_0_20,
+                  ),
+                ),
           SizedBox(height: e["date"] == null ? 0 : 20.w),
           GestureDetector(
             onTap: () {

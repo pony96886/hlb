@@ -30,13 +30,10 @@ abstract class BaseWidgetState<T extends BaseWidget> extends State<T>
   Color _navColor = StyleTheme.navColor;
   Color _lineColor = Colors.transparent;
   bool _navBack = false;
-  bool _isOverscroll = false;
-  BuildContext? _mContext;
   Widget? _rightW;
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     // 这个跑起来要报错 先注释了
     ModalRoute<dynamic>? route = ModalRoute.of<dynamic>(context);
@@ -48,16 +45,12 @@ abstract class BaseWidgetState<T extends BaseWidget> extends State<T>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     onCreate();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build 统一布局基础页面
-    _mContext = context;
-
     if (kIsWeb) {
       return Scaffold(
         backgroundColor: _bgColor,

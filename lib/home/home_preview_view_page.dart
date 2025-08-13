@@ -10,8 +10,8 @@ import 'package:photo_view/photo_view_gallery.dart';
 import 'dart:convert' as convert;
 
 class HomePreviewViewPage extends StatefulWidget {
-  HomePreviewViewPage({Key? key, this.url = ""}) : super(key: key);
-  String url;
+  const HomePreviewViewPage({Key? key, this.url = ""}) : super(key: key);
+  final String url;
 
   @override
   _HomePreviewViewPageState createState() => _HomePreviewViewPageState();

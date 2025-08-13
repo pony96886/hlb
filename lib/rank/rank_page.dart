@@ -16,10 +16,13 @@ import '../util/easy_pull_refresh.dart';
 import '../util/pageviewmixin.dart';
 
 class RankPage extends BaseWidget {
-  RankPage({Key? key, this.isShow = false, this.type = 'past'})
-      : super(key: key);
-  bool isShow;
-  String type;
+  const RankPage({
+    Key? key,
+    this.isShow = false,
+    this.type = 'past',
+  }) : super(key: key);
+  final bool isShow;
+  final String type;
   @override
   cState() => _RankPageState();
 }
@@ -84,61 +87,64 @@ class _RankPageState extends BaseWidgetState<RankPage> {
         height: ScreenHeight - 102.w,
         child: networkErr
             ? LoadStatus.netErrorWork(onTap: () {
-          networkErr = false;
-          _getData();
-        })
+                networkErr = false;
+                _getData();
+              })
             : isHud
-            ? LoadStatus.showLoading(mounted)
-            : _dataList.isEmpty
-            ? LoadStatus.noData()
-            : GenCustomNav(
-          isCenter: false,
-          titles: const [
-            '热贴浏览榜',
-            '热贴评论榜',
-          ],
-          pages: _dataList
-              .map((e) => PageViewMixin(
-                    child: _buildWidget(e),
-                  ))
-              .toList(),
-        ),
+                ? LoadStatus.showLoading(mounted)
+                : _dataList.isEmpty
+                    ? LoadStatus.noData()
+                    : GenCustomNav(
+                        isCenter: false,
+                        titles: const [
+                          '热贴浏览榜',
+                          '热贴评论榜',
+                        ],
+                        pages: _dataList
+                            .map((e) => PageViewMixin(
+                                  child: _buildWidget(e),
+                                ))
+                            .toList(),
+                      ),
       ),
     );
   }
-
 }
 
 class _RefreshWidget extends StatelessWidget {
   final List list;
   final Future<bool> Function() onRefresh;
-  const _RefreshWidget ({Key? key, required this.list, required this.onRefresh}) : super(key: key);
+  const _RefreshWidget({Key? key, required this.list, required this.onRefresh})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(top: 10.w, bottom: 20.w),
-        padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
-        decoration: BoxDecoration(color: StyleTheme.gray245Color, borderRadius: BorderRadius.all(Radius.circular(5.w))),
-        child: Column(
-          children: [
-            Expanded(
-              child: EasyPullRefresh(
-                onRefresh: onRefresh,
-                sameChild: ListView.separated(
-                  addAutomaticKeepAlives: false,
-                  addRepaintBoundaries: false,
-                  shrinkWrap: true,
-                  cacheExtent: ScreenHeight * 3,
-                  separatorBuilder: (context, index) => SizedBox(height: 15.w),
-                  itemBuilder: (context, index) => _PastWidget(index: index, e: list[index]),
-                  itemCount: list.length,
-                ),
+      margin: EdgeInsets.only(top: 10.w, bottom: 20.w),
+      padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
+      decoration: BoxDecoration(
+          color: StyleTheme.gray245Color,
+          borderRadius: BorderRadius.all(Radius.circular(5.w))),
+      child: Column(
+        children: [
+          Expanded(
+            child: EasyPullRefresh(
+              onRefresh: onRefresh,
+              sameChild: ListView.separated(
+                addAutomaticKeepAlives: false,
+                addRepaintBoundaries: false,
+                shrinkWrap: true,
+                cacheExtent: ScreenHeight * 3,
+                separatorBuilder: (context, index) => SizedBox(height: 15.w),
+                itemBuilder: (context, index) =>
+                    _PastWidget(index: index, e: list[index]),
+                itemCount: list.length,
               ),
             ),
-            SizedBox(height: 20.w),
-          ],
-        ),
+          ),
+          SizedBox(height: 20.w),
+        ],
+      ),
     );
   }
 }
