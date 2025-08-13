@@ -449,14 +449,14 @@ class _MainPageState extends State<MainPage> {
     int len = 7;
     if (config?.client_forum_bbs?.isEmpty ?? true) len = 6;
     return GridView.builder(
-      padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 25.w),
+      padding: EdgeInsets.fromLTRB(0, 0, 0, 25.w),
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       itemCount: len,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         childAspectRatio: 200 / 44,
         crossAxisCount: 1,
-        mainAxisSpacing: 10.w,
+        mainAxisSpacing: 18.w,
       ),
       itemBuilder: _buildOperationItemWidget,
     );
@@ -473,29 +473,34 @@ class _MainPageState extends State<MainPage> {
     switch (index) {
       case 0: // 首页
         text = '黑料';
-        icon = 'hlw_tab_black_material${_selectIndex == index ? '_h' : ''}';
+        icon = 'hlw_tab_0_black_${_selectIndex == index ? 'h' : 'n'}';
         break;
       case 1: // 黑料大事记
         text = '看片';
-        icon = 'hlw_tab_watch_movies${_selectIndex == index ? '_h' : ''}';
+        icon = 'hlw_tab_0_watch_${_selectIndex == index ? 'h' : 'n'}';
         break;
       case 2: // 黑料热点排行
         text = '圈子';
-        icon = 'hlw_tab_circle${_selectIndex == index ? '_h' : ''}';
+        icon = 'hlw_tab_0_circle_${_selectIndex == index ? 'h' : 'n'}';
         break;
       case 3: // 黑料官方APP
         text = '精选';
-        icon = 'hlw_tab_featured${_selectIndex == index ? '_h' : ''}';
+        icon = 'hlw_tab_0_featured_${_selectIndex == index ? 'h' : 'n'}';
         link = config?.office_site ?? '';
         break;
       case 4: // 黑料官方微信QQ群
         text = '历史';
-        icon = 'hlw_tab_history${_selectIndex == index ? '_h' : ''}';
+        icon = 'hlw_tab_0_history_${_selectIndex == index ? 'h' : 'n'}';
         link = config?.official_wx ?? '';
         break;
       case 5: // 黑料精品福利站
         text = '热议';
-        icon = 'hlw_tab_hot${_selectIndex == index ? '_h' : ''}';
+        icon = 'hlw_tab_0_hot_${_selectIndex == index ? 'h' : 'n'}';
+        break;
+      case 6: // 黑料官方论坛
+        text = '黑料官方论坛';
+        icon = 'hlw_tab_0_forum';
+        link = config?.client_forum_bbs ?? '';
         break;
       default:
         text = '测试天';
@@ -505,9 +510,16 @@ class _MainPageState extends State<MainPage> {
     Widget current = Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        LocalPNG(name: icon, width: 28.w, height: 28.w),
+        SizedBox(width: 17.w),
+        // Container(width: 28.w, height: 30.w, color: Colors.red),
+        LocalPNG(
+            name: icon,
+            width: 28.w,
+            height: 30.w,
+            scale: 3,
+            fit: BoxFit.fitWidth),
         SizedBox(width: 32.w),
-        Text(text, style: style)
+        Expanded(child: Text(text, style: style))
       ],
     );
 
@@ -519,7 +531,7 @@ class _MainPageState extends State<MainPage> {
     }
 
     current = Container(
-      padding: EdgeInsets.symmetric(horizontal: 17.w),
+      padding: EdgeInsets.fromLTRB(15.w, 0, 30.w, 0),
       height: 50.w,
       alignment: Alignment.center,
       decoration: decoration,

@@ -43,7 +43,9 @@ Future<void> _initPCSize() async {
   if (Platform.isMacOS || Platform.isWindows) {
     doWhenWindowReady(() {
       final win = appWindow;
-      const initialSize = Size(1280, 800);
+      const initialSize = Size(1920 * 0.75, 1080 * 0.75);
+      // const initialSize = Size(960, 540);
+      // const initialSize = Size(1280, 800);
       win.minSize = initialSize;
       win.size = initialSize;
       win.alignment = Alignment.center;

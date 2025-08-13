@@ -90,6 +90,10 @@ class StyleTheme {
   static Color orange249Color = const Color.fromRGBO(244, 154, 52, 1);
   static Color orange249Color2 = const Color.fromRGBO(244, 154, 52, 0.2);
 
+  static Color tabColor_n = const Color.fromRGBO(194, 202, 217, 1);
+  static TextStyle tab_font =
+      font(size: 20, weight: FontWeight.w500, color: tabColor_n);
+
   static LinearGradient gradientLinarYellow = const LinearGradient(
     colors: [Color.fromRGBO(255, 210, 80, 1), Color.fromRGBO(247, 187, 13, 1)],
     begin: Alignment.centerLeft,
