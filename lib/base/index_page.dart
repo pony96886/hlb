@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:hlw/base/update_sysalert.dart';
 import 'package:hlw/home/home_page.dart';
 import 'package:hlw/model/config_model.dart';
@@ -232,11 +233,12 @@ class _IndexPageState extends State<IndexPage> {
   }
 
   Widget pcWidget(BuildContext context) {
-    return SplitView.material(
-      childWidth: 240.w,
-      breakpoint: ScreenWidth - 240.w,
+    return Expanded(
+        child: SplitView.material(
+      childWidth: 305.w,
+      breakpoint: ScreenWidth - 305.w,
       child: const MainPage(),
-    );
+    ));
   }
 }
 
@@ -313,75 +315,130 @@ class _MainPageState extends State<MainPage> {
     config = Provider.of<BaseStore>(context, listen: false).config;
     return Scaffold(
       body: Container(
-        width: 240.w,
+        width: 305.w,
         height: double.infinity,
-        color: StyleTheme.black24Color,
-        padding: EdgeInsets.only(left: 11.w, right: 11.w, bottom: 40.w),
+        decoration: BoxDecoration(
+          color: StyleTheme.black0Color,
+        ),
+        padding: EdgeInsets.only(top: 18.5.w),
         // 避免橫向拉伸
-        child: Column(children: [
-          SizedBox(height: 50.w),
-          GestureDetector(
-            // 官網
-            behavior: HitTestBehavior.translucent,
-            onTap: () {
-              final _url = config?.pc_site_url;
-              _url != null && _url.isNotEmpty == true
-                  ? Utils.openURL(_url)
-                  : Utils.showText(Utils.txt('cccwl') + '');
-              // Platform.isMacOS ? Utils.openWebViewMacos(PresentationStyle.sheet, _url) : Utils.navTo(context, '/web/$_url');
-            },
-            child: LocalPNG(
-              name: 'hlw_logo',
-              width: 84.w,
-              height: 50.w,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (Platform.isMacOS) ...[
+                  WindowTitleBarBox(
+                    child: Row(
+                      children: [
+                        MinimizeWindowButton(),
+                        MaximizeWindowButton(),
+                        CloseWindowButton(),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 26.w,
+                  ),
+                ],
+                GestureDetector(
+                  // 官網
+                  behavior: HitTestBehavior.translucent,
+                  onTap: () {
+                    final _url = config?.pc_site_url;
+                    _url != null && _url.isNotEmpty == true
+                        ? Utils.openURL(_url)
+                        : Utils.showText(Utils.txt('cccwl') + '');
+                    // Platform.isMacOS ? Utils.openWebViewMacos(PresentationStyle.sheet, _url) : Utils.navTo(context, '/web/$_url');
+                  },
+                  child: LocalPNG(
+                    name: 'hlw_logo',
+                    width: 138.w,
+                    height: 32.w,
+                  ),
+                )
+              ],
             ),
           ),
-          SizedBox(height: 25.w),
+          SizedBox(
+            height: 34.w,
+          ),
           Expanded(
             child: _buildOperationListWidget(),
           ),
-          // SizedBox(height: 25.w),
-          // GestureDetector(
-          //   behavior: HitTestBehavior.translucent,
-          //   onTap: () => _release(context),
-          //   child: Container(
-          //     padding: EdgeInsets.symmetric(vertical: 16.w),
-          //     decoration: BoxDecoration(
-          //       borderRadius: BorderRadius.circular(27.w),
-          //       color: StyleTheme.orange255Color,
-          //     ),
-          //     width: double.infinity,
-          //     alignment: Alignment.center,
-          //     child: Text(
-          //       '发帖',
-          //       style: StyleTheme.font_black_0_17,
-          //     ),
-          //   ),
-          // ),
-          SizedBox(height: 50.w), // 87.w
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {},
-                child: LocalPNG(name: "icon-help", width: 30.w, height: 30.w),
+          Container(
+            height: 1.w,
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(vertical: 40.w),
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(
+                  color: StyleTheme.gray255Color2,
+                  width: 1.w,
+                ),
               ),
-              SizedBox(
-                width: 30.w,
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: LocalPNG(name: "icon-share", width: 30.w, height: 30.w),
-              ),
-              SizedBox(
-                width: 30.w,
-              ),
-              GestureDetector(
-                onTap: () {},
-                child:
-                    LocalPNG(name: "icon-telegram", width: 30.w, height: 30.w),
-              ),
-            ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 40.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  onTap: () {},
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 32.w),
+                    child: Row(
+                      children: [
+                        LocalPNG(name: "icon-help", width: 28.w, height: 28.w),
+                        SizedBox(
+                          width: 32.w,
+                        ),
+                        Text("常见问题", style: StyleTheme.font_gray_194_20)
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 40.w,
+                ),
+                GestureDetector(
+                  onTap: () {},
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 32.w),
+                    child: Row(
+                      children: [
+                        LocalPNG(name: "icon-share", width: 28.w, height: 28.w),
+                        SizedBox(
+                          width: 32.w,
+                        ),
+                        Text("分享", style: StyleTheme.font_gray_194_20)
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 40.w,
+                ),
+                GestureDetector(
+                  onTap: () {},
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 32.w),
+                    child: Row(
+                      children: [
+                        LocalPNG(
+                            name: "icon-telegram", width: 28.w, height: 28.w),
+                        SizedBox(
+                          width: 32.w,
+                        ),
+                        Text("TG群", style: StyleTheme.font_gray_194_20)
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           )
         ]),
       ),
@@ -392,7 +449,7 @@ class _MainPageState extends State<MainPage> {
     int len = 7;
     if (config?.client_forum_bbs?.isEmpty ?? true) len = 6;
     return GridView.builder(
-      padding: EdgeInsets.fromLTRB(0, 25.w, 0, 25.w),
+      padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 25.w),
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       itemCount: len,
@@ -411,8 +468,8 @@ class _MainPageState extends State<MainPage> {
     String icon;
     String link = '';
     TextStyle style = _selectIndex == index
-        ? StyleTheme.font_orange_249_18
-        : StyleTheme.font_gray_153_18;
+        ? StyleTheme.font_orange_249_20
+        : StyleTheme.font_gray_194_20;
     switch (index) {
       case 0: // 首页
         text = '黑料';
@@ -440,11 +497,6 @@ class _MainPageState extends State<MainPage> {
         text = '热议';
         icon = 'hlw_tab_hot${_selectIndex == index ? '_h' : ''}';
         break;
-      case 6: // 黑料官方论坛
-        text = '黑料官方论坛';
-        icon = 'hlw_tab_forum';
-        link = config?.client_forum_bbs ?? '';
-        break;
       default:
         text = '测试天';
         icon = 'hlw_tab_forum'; // 仅仅占位
@@ -453,22 +505,22 @@ class _MainPageState extends State<MainPage> {
     Widget current = Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        LocalPNG(name: icon, width: 30.w, height: 30.w),
-        SizedBox(width: 20.w),
+        LocalPNG(name: icon, width: 28.w, height: 28.w),
+        SizedBox(width: 32.w),
         Text(text, style: style)
       ],
     );
 
     if (_selectIndex == index) {
       decoration = BoxDecoration(
-        borderRadius: BorderRadius.circular(10.w),
+        borderRadius: BorderRadius.circular(12.w),
         color: StyleTheme.orange249Color2,
       );
     }
 
     current = Container(
-      padding: EdgeInsets.symmetric(horizontal: 9.w),
-      height: 54.w,
+      padding: EdgeInsets.symmetric(horizontal: 17.w),
+      height: 50.w,
       alignment: Alignment.center,
       decoration: decoration,
       child: current,
@@ -482,21 +534,7 @@ class _MainPageState extends State<MainPage> {
         link.isNotEmpty ? Utils.openURL(link) : null;
       },
       child: Stack(
-        children: [
-          current,
-          if (_selectIndex == index)
-            Positioned(
-                left: 0,
-                top: 0,
-                child: Container(
-                  height: 54.w,
-                  width: 4.w,
-                  decoration: BoxDecoration(
-                    color: StyleTheme.orange249Color,
-                    borderRadius: BorderRadius.circular(10.w),
-                  ),
-                ))
-        ],
+        children: [current],
       ),
     );
   }
