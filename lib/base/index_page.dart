@@ -356,28 +356,39 @@ class _MainPageState extends State<MainPage> {
           //     ),
           //   ),
           // ),
-          SizedBox(height: 50.w), // 87.w
-          Row(
+          SizedBox(height: 20.w),
+          Container(
+            color: const Color(0x33FFFFFF),
+            width: double.infinity,
+            height: 0.5.w,
+          ),
+          SizedBox(height: 20.w),
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               GestureDetector(
                 onTap: () {},
-                child: LocalPNG(name: "icon-help", width: 30.w, height: 30.w),
-              ),
-              SizedBox(
-                width: 30.w,
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: LocalPNG(name: "icon-share", width: 30.w, height: 30.w),
-              ),
-              SizedBox(
-                width: 30.w,
+                child: Container(
+                  padding: EdgeInsets.only(top: 20.w, bottom: 20.w),
+                  height: 68.w,
+                  child: LocalPNG(name: "icon-help", width: 28.w),
+                ),
               ),
               GestureDetector(
                 onTap: () {},
-                child:
-                    LocalPNG(name: "icon-telegram", width: 30.w, height: 30.w),
+                child: Container(
+                  padding: EdgeInsets.only(top: 20.w, bottom: 20.w),
+                  height: 68.w,
+                  child: LocalPNG(name: "icon-share", width: 28.w),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                  padding: EdgeInsets.only(top: 20.w, bottom: 20.w),
+                  height: 68.w,
+                  child: LocalPNG(name: "icon-telegram", width: 28.w),
+                ),
               ),
             ],
           )
