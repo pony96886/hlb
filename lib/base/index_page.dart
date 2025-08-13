@@ -332,9 +332,9 @@ class _MainPageState extends State<MainPage> {
                   WindowTitleBarBox(
                     child: Row(
                       children: [
+                        CloseWindowButton(),
                         MinimizeWindowButton(),
                         MaximizeWindowButton(),
-                        CloseWindowButton(),
                       ],
                     ),
                   ),
