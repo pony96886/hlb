@@ -362,7 +362,7 @@ class _SearchBar extends StatelessWidget {
             child: Row(
               children: [
                 LocalPNG(
-                  name: "hlw_label_search",
+                  name: "hlw_top_search",
                   width: 20.w,
                   height: 20.w,
                 ),

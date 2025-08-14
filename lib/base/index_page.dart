@@ -468,7 +468,7 @@ class _MainPageState extends State<MainPage> {
     String icon;
     String link = '';
     TextStyle style = _selectIndex == index
-        ? StyleTheme.font_orange_249_20
+        ? StyleTheme.font_orange_244_20
         : StyleTheme.font_gray_194_20;
     switch (index) {
       case 0: // 首页

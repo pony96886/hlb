@@ -87,7 +87,7 @@ class StyleTheme {
   static Color blue25Color = const Color.fromRGBO(25, 103, 210, 1);
   static Color yellow255Color = const Color.fromRGBO(255, 187, 59, 1);
   static Color orange255Color = const Color.fromRGBO(255, 144, 0, 1);
-  static Color orange249Color = const Color.fromRGBO(244, 154, 52, 1);
+  static Color orange244Color = const Color.fromRGBO(244, 154, 52, 1);
   static Color orange249Color2 = const Color.fromRGBO(244, 154, 52, 0.2);
 
   static Color tabColor_n = const Color.fromRGBO(194, 202, 217, 1);
@@ -206,8 +206,8 @@ class StyleTheme {
   static TextStyle font_white_255_13 =
       font(size: 13, weight: FontWeight.normal, color: bgColor);
 
-  static TextStyle font_orange_249_20 =
-      font(size: 20, weight: FontWeight.bold, color: orange249Color);
+  static TextStyle font_orange_244_20 =
+      font(size: 20, weight: FontWeight.bold, color: orange244Color);
 
   static TextStyle font_gray_151_13 =
       font(size: 13, weight: FontWeight.normal, color: gray151Color);

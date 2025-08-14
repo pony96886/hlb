@@ -17,13 +17,13 @@ class SearchBarWidget extends StatefulWidget {
   final String backTitle;
   final Widget? detailWidget;
 
-  const SearchBarWidget(
-      {Key? key,
-      this.showHead = true,
-      this.isBackBtn = false,
-      this.backTitle = "",
-      this.detailWidget})
-      : super(key: key);
+  const SearchBarWidget({
+    super.key,
+    this.showHead = true,
+    this.isBackBtn = false,
+    this.backTitle = "",
+    this.detailWidget,
+  });
 
   @override
   State createState() => _SearchBarWidgetState();
@@ -76,15 +76,17 @@ class _SearchBarWidgetState extends State<SearchBarWidget>
   Widget build(BuildContext context) {
     return Stack(children: [
       _TopBarWidget(
-          detailWidget: widget.detailWidget,
-          isBackBtn: widget.isBackBtn,
-          backTitle: widget.backTitle,
-          showHead: widget.showHead,
-          onVisibleMenuAction: onVisibleMenuAction),
+        detailWidget: widget.detailWidget,
+        isBackBtn: widget.isBackBtn,
+        backTitle: widget.backTitle,
+        showHead: widget.showHead,
+        onVisibleMenuAction: onVisibleMenuAction,
+      ),
       _MenuBarWidget(
-          onVisibleMenuAction: onVisibleMenuAction,
-          animation: _animation,
-          isOpen: _isOpen),
+        onVisibleMenuAction: onVisibleMenuAction,
+        animation: _animation,
+        isOpen: _isOpen,
+      ),
     ]);
   }
 }
@@ -96,54 +98,69 @@ class _TopBarWidget extends StatelessWidget {
   final String backTitle;
   final void Function() onVisibleMenuAction;
 
-  const _TopBarWidget(
-      {Key? key,
-      this.detailWidget,
-      required this.isBackBtn,
-      required this.backTitle,
-      required this.showHead,
-      required this.onVisibleMenuAction})
-      : super(key: key);
+  const _TopBarWidget({
+    this.detailWidget,
+    required this.isBackBtn,
+    required this.backTitle,
+    required this.showHead,
+    required this.onVisibleMenuAction,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: StyleTheme.bgColor,
-      ),
+      decoration: BoxDecoration(color: StyleTheme.bgColor),
       height: 90.w,
       padding: EdgeInsets.symmetric(horizontal: 30.w),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // _PopBarItemWidget(isBackBtn: isBackBtn, backTitle: backTitle),
-          _ActionBarWidget(detailWidget: detailWidget, isBackBtn: isBackBtn),
-          _UserHeaderWidget(
-              showHead: showHead, onVisibleMenuAction: onVisibleMenuAction),
-        ],
-      ),
-
-      // Stack(
-      //   alignment: AlignmentDirectional.center,
-      //   children: [
-      //     Positioned(
-      //       left: 60.w,
-      //       child:
-      //       _PopBarItemWidget(isBackBtn: isBackBtn, backTitle: backTitle),
-      //     ),
-      //     Positioned(
-      //       left: detailWidget == null ? 255.w : null,
-      //       right: detailWidget == null ? 255.w : 340.w,
-      //       child: _ActionBarWidget(
-      //           detailWidget: detailWidget, isBackBtn: isBackBtn),
-      //     ),
-      //     Positioned(
-      //       right: 60.w,
-      //       child: _UserHeaderWidget(
-      //           showHead: showHead, onVisibleMenuAction: onVisibleMenuAction),
-      //     ),
-      //   ],
-      // )
+      child: Row(children: [
+        _ActionBarWidget(
+          detailWidget: detailWidget,
+          isBackBtn: isBackBtn,
+        ),
+        GestureDetector(
+          onTap: () {},
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            height: 50.w,
+            width: 56.w,
+            child: const LocalPNG(
+              name: 'hlw_top_refresh',
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {},
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            height: 50.w,
+            width: 56.w,
+            child: const LocalPNG(
+              name: 'hlw_top_problem',
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {},
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            height: 50.w,
+            width: 56.w,
+            child: const LocalPNG(
+              name: 'hlw_top_setting',
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
+        _UserHeaderWidget(
+          showHead: showHead,
+          onVisibleMenuAction: onVisibleMenuAction,
+        ),
+      ]),
     );
   }
 }
@@ -154,12 +171,11 @@ class _MenuBarWidget extends StatelessWidget {
   final Animation<double> animation;
   final bool isOpen;
 
-  const _MenuBarWidget(
-      {Key? key,
-      required this.onVisibleMenuAction,
-      required this.animation,
-      required this.isOpen})
-      : super(key: key);
+  const _MenuBarWidget({
+    required this.onVisibleMenuAction,
+    required this.animation,
+    required this.isOpen,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -183,27 +199,25 @@ class _PopBarItemWidget extends StatelessWidget {
   final bool isBackBtn;
   final String backTitle;
 
-  const _PopBarItemWidget(
-      {Key? key, required this.isBackBtn, required this.backTitle})
-      : super(key: key);
+  const _PopBarItemWidget({
+    required this.isBackBtn,
+    required this.backTitle,
+  });
 
   @override
   Widget build(BuildContext context) {
     if (!isBackBtn) return SizedBox(width: 225.w);
     Widget current = GestureDetector(
       onTap: () {
-        // UtilEventbus().fire(EventbusClass({"login": "login"})); //收起菜單
         Utils.splitPopView(context);
       },
       child: Row(children: [
-        // SizedBox(width: 60.w),
         LocalPNG(name: "hlw_arrow_left", width: 20.w, height: 20.w),
         SizedBox(width: 20.w),
         Text(backTitle, style: StyleTheme.font_black_34_15),
       ]),
     );
     return current;
-    // return SizedBox(width: 225.w, child: current);
   }
 }
 
@@ -212,9 +226,10 @@ class _ActionBarWidget extends StatelessWidget {
   final Widget? detailWidget;
   final bool isBackBtn;
 
-  const _ActionBarWidget(
-      {Key? key, required this.detailWidget, required this.isBackBtn})
-      : super(key: key);
+  const _ActionBarWidget({
+    required this.detailWidget,
+    required this.isBackBtn,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -230,39 +245,41 @@ class _ActionBarWidget extends StatelessWidget {
       },
       behavior: HitTestBehavior.translucent,
       child: Container(
-        width: 400.w,
+        width: 600.w,
         height: 50.w,
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.w),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
         decoration: BoxDecoration(
-          color: StyleTheme.gray216Color2,
+          color: const Color.fromRGBO(216, 216, 216, .2),
           borderRadius: BorderRadius.circular(36.w),
         ),
         alignment: Alignment.centerLeft,
         child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
           LocalPNG(
-            name: "hlw_label_search",
+            name: "hlw_top_search",
             width: 24.w,
             height: 24.w,
           ),
           SizedBox(width: 10.w),
           Expanded(
-              child: TextField(
-                  textAlignVertical: TextAlignVertical.center,
-                  style: StyleTheme.font_white_20,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    isDense: true,
-                    contentPadding: EdgeInsets.symmetric(vertical: 0),
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    hintText: Utils.txt('ssngxqd'),
-                    hintStyle: StyleTheme.font_gray_153_20,
-                  ))),
+            child: TextField(
+              textAlignVertical: TextAlignVertical.center,
+              style: StyleTheme.font_white_20,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                isDense: true,
+                contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                hintText: Utils.txt('ssngxqd'),
+                hintStyle: StyleTheme.font_gray_153_20,
+              ),
+            ),
+          ),
           SizedBox(width: 10.w),
           Text(
             "搜索",
-            style: StyleTheme.font_orange_249_20,
-          )
+            style: StyleTheme.font_orange_244_20,
+          ),
         ]),
       ),
     );
@@ -275,10 +292,9 @@ class _UserHeaderWidget extends StatelessWidget {
   final void Function() onVisibleMenuAction;
 
   const _UserHeaderWidget({
-    Key? key,
     required this.showHead,
     required this.onVisibleMenuAction,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

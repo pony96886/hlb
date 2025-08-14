@@ -1235,7 +1235,7 @@ class Utils {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         LocalPNG(
-                          name: "hlw_label_search",
+                          name: "hlw_top_search",
                           width: 20.w,
                           height: 20.w,
                         ),

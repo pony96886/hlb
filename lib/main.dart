@@ -43,10 +43,8 @@ Future<void> _initPCSize() async {
   if (Platform.isMacOS || Platform.isWindows) {
     doWhenWindowReady(() {
       final win = appWindow;
-      const initialSize = Size(1920 * 0.75, 1080 * 0.75);
-      // const initialSize = Size(960, 540);
-      // const initialSize = Size(1280, 800);
-      win.minSize = initialSize;
+      const initialSize = Size(1280, 800);
+      win.minSize = const Size(800, 600);
       win.size = initialSize;
       win.alignment = Alignment.center;
       win.title = "黑料网";
@@ -162,11 +160,20 @@ class _RootPageState extends State<RootPage> {
         });
   }
 
+  // 判断是否为桌面端
+  bool _isDesktop(BuildContext context) {
+    return Platform.isWindows || Platform.isMacOS || Platform.isLinux;
+  }
+
   //mac and windows init widegt
   Widget pcWidget(BuildContext context) {
     final botToastBuilder = BotToastInit();
     //final win = appWindow;
     return ScreenUtilInit(
+      // designSize: _isDesktop(context)
+      // ? const Size(800, 812) // PC 基准宽度
+      // : const Size(375, 812), // 移动端基准宽度（设计稿）
+      // minTextAdapt: true,
       designSize: const Size(1280, 800),
       builder: (context, child) => MaterialApp(
         // localeListResolutionCallback: (locales, supportedLocales) {
