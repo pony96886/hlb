@@ -1135,14 +1135,32 @@ class Utils {
     if (style == 2) {
       current = Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SizedBox(
-          width: 440.w,
-          height: 150.w,
+          width: 374,
+          height: 200,
           // width: (StyleTheme.contentWidth - 5.w) / 2,
           // height: (StyleTheme.contentWidth - 5.w) / 2 / 375 * 130,
           child: Stack(children: [
             NetImageTool(
-              radius: BorderRadius.all(Radius.circular(3.w)),
+              radius: BorderRadius.all(Radius.circular(12.w)),
               url: e['thumb'],
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: Container(
+                height: 88,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    colors: [
+                      Colors.transparent,
+                      Colors.black,
+                    ],
+                  ),
+                ),
+              ),
             ),
             Positioned(
               right: 0,
