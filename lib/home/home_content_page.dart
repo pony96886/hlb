@@ -9,6 +9,8 @@ import 'package:hlw/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hlw/util/desktop_extension.dart';
 
+import 'post_item_widget.dart';
+
 class HomeContentPage extends StatefulWidget {
   final int id;
   final dynamic banners;
@@ -108,25 +110,25 @@ class _HomeContentPageState extends State<HomeContentPage> {
   }
 
   Widget _buildContainerWidget() {
-    return ListView(
-        children: [
-          _buildBannerWidget(),
-          _buildGridViewWidget(),
-        ]);
+    return ListView(children: [
+      _buildBannerWidget(),
+      _buildGridViewWidget(),
+    ]);
   }
 
   Widget _buildBannerWidget() {
     return Visibility(
-        visible: banners.isNotEmpty,
-        child: Utils.bannerScaleExtSwiper(
-          data: banners,
-          itemWidth: 710.w, // 图片宽
-          itemHeight: 240.w, // 图片高(240) + 23 + 10
-          viewportFraction: 0.777, // （710 + 5）/ 920 // 1040 - 120
-          scale: 1,
-          spacing: 5.w,
-          lineWidth: 20.w,
-        ));
+      visible: banners.isNotEmpty,
+      child: Utils.bannerScaleExtSwiper(
+        data: banners,
+        itemWidth: 710.w, // 图片宽
+        itemHeight: 240.w, // 图片高(240) + 23 + 10
+        viewportFraction: 0.777, // （710 + 5）/ 920 // 1040 - 120
+        scale: 1,
+        spacing: 5.w,
+        lineWidth: 20.w,
+      ),
+    );
   }
 
   Widget _buildGridViewWidget() {
@@ -141,7 +143,9 @@ class _HomeContentPageState extends State<HomeContentPage> {
       mainAxisSpacing: 5.w,
       crossAxisSpacing: 40.w,
       childAspectRatio: 440 / 260,
-      children: tps.map((e) => Utils.newsModuleUI(context, e, style: 2)).toList(),
+      children: tps.map((e) {
+        return PostItemWidget(e, style: 2);
+      }).toList(),
     );
   }
 }

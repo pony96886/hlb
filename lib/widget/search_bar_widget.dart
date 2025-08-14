@@ -109,14 +109,15 @@ class _TopBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: StyleTheme.bgColor),
+      color: StyleTheme.bgColor,
       height: 90.w,
-      padding: EdgeInsets.symmetric(horizontal: 30.w),
       child: Row(children: [
+        SizedBox(width: 30.w),
         _ActionBarWidget(
           detailWidget: detailWidget,
           isBackBtn: isBackBtn,
         ),
+        const Expanded(child: SizedBox()),
         GestureDetector(
           onTap: () {},
           behavior: HitTestBehavior.opaque,
@@ -156,10 +157,12 @@ class _TopBarWidget extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(width: 12.w),
         _UserHeaderWidget(
           showHead: showHead,
           onVisibleMenuAction: onVisibleMenuAction,
         ),
+        SizedBox(width: 30.w),
       ]),
     );
   }

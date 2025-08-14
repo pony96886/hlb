@@ -77,43 +77,6 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     ]);
   }
 
-  // Widget _buildContainerWidget() {
-  //   // return CustomExpandedWidget(
-  //   //   expandedWidget: Container(
-  //   //     padding: EdgeInsets.only(bottom: 40.w),
-  //   //     child: Utils.bannerScaleExtSwiper(
-  //   //       data: banners,
-  //   //       itemWidth: 710.w, // 图片宽
-  //   //       itemHeight: 240.w, // 图片高(240) + 23 + 10
-  //   //       viewportFraction: 0.6827, // 710 / 1040
-  //   //       scale: 1,
-  //   //       spacing: 5.w,
-  //   //       lineWidth: 20.w,
-  //   //     ),
-  //   //   ),
-  //   //   titles: elements.map((e) => e["name"].toString()).toList(),
-  //   //   pages: elements
-  //   //       .map((e) => PageViewMixin(child: Padding(padding: EdgeInsets.symmetric(horizontal: 60.w),
-  //   //       child: HomeContentPage(id: e["id"]))))
-  //   //       .toList(),
-  //   // );
-  //   Widget ads = Utils.bannerScaleExtSwiper(
-  //     data: banners,
-  //     itemWidth: 710.w, // 图片宽
-  //     itemHeight: 220.w, // 图片高(240) + 23 + 10
-  //     viewportFraction: 0.6827, // 710 / 1040
-  //     scale: 1,
-  //     spacing: 5.w,
-  //     lineWidth: 20.w,
-  //   );
-  //   return Column(children: [
-  //     ads,
-  //     Expanded(
-  //       child: _buildPostWidget(),
-  //     ),
-  //   ]);
-  // }
-
   Widget _buildPostWidget() {
     Widget current = GenCustomNav(
       isCenter: false,

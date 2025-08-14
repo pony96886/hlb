@@ -235,11 +235,12 @@ class _IndexPageState extends State<IndexPage> {
 
   Widget pcWidget(BuildContext context) {
     return Expanded(
-        child: SplitView.material(
-      childWidth: 305.w,
-      breakpoint: ScreenWidth - 305.w,
-      child: const MainPage(),
-    ));
+      child: SplitView.material(
+        childWidth: 203.w, // 1920 / 1280 * 305
+        breakpoint: ScreenWidth - 203.w,
+        child: const MainPage(),
+      ),
+    );
   }
 }
 
@@ -316,7 +317,7 @@ class _MainPageState extends State<MainPage> {
     config = Provider.of<BaseStore>(context, listen: false).config;
     return Scaffold(
       body: Container(
-        width: 305.w,
+        width: 203.w, // 1920 / 1280 * 305
         height: double.infinity,
         decoration: BoxDecoration(
           color: StyleTheme.black0Color,
@@ -331,17 +332,13 @@ class _MainPageState extends State<MainPage> {
               children: [
                 if (Platform.isMacOS) ...[
                   WindowTitleBarBox(
-                    child: Row(
-                      children: [
-                        CloseWindowButton(),
-                        MinimizeWindowButton(),
-                        MaximizeWindowButton(),
-                      ],
-                    ),
+                    child: Row(children: [
+                      CloseWindowButton(),
+                      MinimizeWindowButton(),
+                      MaximizeWindowButton(),
+                    ]),
                   ),
-                  SizedBox(
-                    height: 26.w,
-                  ),
+                  SizedBox(height: 26.w),
                 ],
                 GestureDetector(
                   // 官網
@@ -362,12 +359,8 @@ class _MainPageState extends State<MainPage> {
               ],
             ),
           ),
-          SizedBox(
-            height: 34.w,
-          ),
-          Expanded(
-            child: _buildOperationListWidget(),
-          ),
+          SizedBox(height: 34.w),
+          Expanded(child: _buildOperationListWidget()),
           Container(
             height: 1.w,
             width: double.infinity,
