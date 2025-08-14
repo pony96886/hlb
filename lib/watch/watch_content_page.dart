@@ -108,11 +108,13 @@ class _WatchContentPageState extends State<WatchContentPage> {
   }
 
   Widget _buildContainerWidget() {
-    return ListView(children: [
-      _buildBannerWidget(),
-      _buildFilterWidget(),
-      _buildGridViewWidget(),
-    ]);
+    return ListView(
+        padding: EdgeInsets.symmetric(horizontal: 29.5.w),
+        children: [
+          _buildBannerWidget(),
+          _buildFilterWidget(),
+          _buildGridViewWidget(),
+        ]);
   }
 
   Widget _buildFilterWidget() {

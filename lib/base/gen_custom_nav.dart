@@ -21,7 +21,9 @@ class GenCustomNav extends StatefulWidget {
     this.isCover = false,
     this.isGuide = false,
     this.labelPadding = const EdgeInsets.only(right: 40),
+    this.titlePadding = const EdgeInsets.all(0),
   }) : super(key: key);
+  final EdgeInsets titlePadding;
   final EdgeInsets labelPadding;
   final List<String> titles;
   final List<Widget> pages;
@@ -46,25 +48,26 @@ class _GenCustomNavState extends State<GenCustomNav>
   late TextStyle _selectStyle;
 
   Widget _dealTabs() {
-    return Theme(
-        data: ThemeData(
-            hoverColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent),
-        child: Transform.translate(
-          offset: Offset(-70.w, 0),
+    return Padding(
+      padding: widget.titlePadding,
+      child: Theme(
+          data: ThemeData(
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent),
           child: TabBar(
             onTap: (index) {
               _isSelect = true;
               _isOnTab = true;
               _onTabPageChange(index, isOnTab: true);
             },
-            overlayColor: MaterialStatePropertyAll(Colors.transparent),
+            overlayColor: const MaterialStatePropertyAll(Colors.transparent),
             indicator: BoxDecoration(),
             labelPadding: widget.labelPadding,
             padding: EdgeInsets.zero,
             dividerColor: Colors.transparent,
             isScrollable: true,
+            indicatorPadding: EdgeInsets.zero,
             physics: const BouncingScrollPhysics(),
             tabs: widget.titles.asMap().keys.map((x) {
               _isSelect = _selectIndex == x;
@@ -109,8 +112,8 @@ class _GenCustomNavState extends State<GenCustomNav>
                         ));
             }).toList(),
             controller: _tabController,
-          ),
-        ));
+          )),
+    );
   }
 
   void _onTabPageChange(index, {bool isOnTab = false}) {

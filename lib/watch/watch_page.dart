@@ -79,6 +79,7 @@ class WatchPageState extends State<WatchPage> with TickerProviderStateMixin {
   Widget _buildWatchWidget() {
     Widget current = GenCustomNav(
       isCenter: false,
+      titlePadding: EdgeInsets.symmetric(horizontal: 29.5.w),
       titles: elements.map((e) => e["name"].toString()).toList(),
       pages: elements.map((e) {
         return PageViewMixin(
@@ -87,7 +88,6 @@ class WatchPageState extends State<WatchPage> with TickerProviderStateMixin {
       }).toList(),
     );
     return Container(
-      padding: EdgeInsets.fromLTRB(29.5.w, 0, 29.5.w, 0),
       child: current,
     );
   }
