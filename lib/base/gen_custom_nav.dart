@@ -49,67 +49,65 @@ class _GenCustomNavState extends State<GenCustomNav>
             hoverColor: Colors.transparent,
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent),
-        child: TabBar(
-          onTap: (index) {
-            _isSelect = true;
-            _isOnTab = true;
-            _onTabPageChange(index, isOnTab: true);
-          },
-          indicator: BoxDecoration(),
-          labelPadding: EdgeInsets.symmetric(horizontal: 20.w),
-          dividerColor: Colors.transparent,
-          isScrollable: true,
-          physics: const BouncingScrollPhysics(),
-          tabs: widget.titles.asMap().keys.map((x) {
-            _isSelect = _selectIndex == x;
-            return Tab(
-                child: widget.isCover
-                    ? Container(
-                        height: StyleTheme.navHegiht,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: _selectIndex == x
-                              ? StyleTheme.red245Color
-                              : StyleTheme.gray242Color,
-                          borderRadius: x == 0
-                              ? BorderRadius.only(
-                                  topLeft: Radius.circular(15.w),
-                                  bottomLeft: Radius.circular(15.w),
-                                )
-                              : x == widget.titles.length - 1
-                                  ? BorderRadius.only(
-                                      topRight: Radius.circular(15.w),
-                                      bottomRight: Radius.circular(15.w),
-                                    )
-                                  : null,
-                        ),
-                        child: Text(
-                          widget.titles[x],
-                          style:
-                              _selectIndex == x ? _selectStyle : _defaultStyle,
-                        ),
-                      )
-                    : Row(
-                        children: [
-                          if (_selectIndex == x) ...[
-                            LocalPNG(
-                              name: "icon_tab_select",
-                              width: 16.w,
-                              height: 16.w,
-                              fit: BoxFit.contain,
-                            ),
-                            SizedBox(width: 12.w),
-                          ],
-                          Text(
+        child: Transform.translate(
+          offset: Offset(-72.0, 0), // 往左移去掉左边空白
+          child: TabBar(
+            onTap: (index) {
+              _isSelect = true;
+              _isOnTab = true;
+              _onTabPageChange(index, isOnTab: true);
+            },
+            overlayColor: MaterialStatePropertyAll(Colors.transparent),
+            indicator: BoxDecoration(),
+            labelPadding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.zero,
+            dividerColor: Colors.transparent,
+            isScrollable: true,
+            physics: const BouncingScrollPhysics(),
+            tabs: widget.titles.asMap().keys.map((x) {
+              _isSelect = _selectIndex == x;
+              return Tab(
+                  child: widget.isCover
+                      ? Container(
+                          height: StyleTheme.navHegiht,
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(horizontal: 20.w),
+                          decoration: BoxDecoration(
+                            color: _selectIndex == x
+                                ? StyleTheme.orange47Color
+                                : StyleTheme.gray255Color1,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(40.w)),
+                          ),
+                          child: Text(
                             widget.titles[x],
                             style: _selectIndex == x
                                 ? _selectStyle
                                 : _defaultStyle,
-                          )
-                        ],
-                      ));
-          }).toList(),
-          controller: _tabController,
+                          ),
+                        )
+                      : Row(
+                          children: [
+                            if (_selectIndex == x) ...[
+                              LocalPNG(
+                                name: "icon_tab_select",
+                                width: 16.w,
+                                height: 16.w,
+                                fit: BoxFit.contain,
+                              ),
+                              SizedBox(width: 12.w),
+                            ],
+                            Text(
+                              widget.titles[x],
+                              style: _selectIndex == x
+                                  ? _selectStyle
+                                  : _defaultStyle,
+                            )
+                          ],
+                        ));
+            }).toList(),
+            controller: _tabController,
+          ),
         ));
   }
 
@@ -124,8 +122,11 @@ class _GenCustomNavState extends State<GenCustomNav>
       setState(() {});
       if (widget.indexFunc != null) widget.indexFunc!(_selectIndex);
     } else {
-      _pageController.animateToPage(_selectIndex,
-          duration: const Duration(milliseconds: 200), curve: Curves.linear);
+      if (widget.pages.isNotEmpty) {
+        _pageController.animateToPage(_selectIndex,
+            duration: const Duration(milliseconds: 200), curve: Curves.linear);
+      }
+
       //等待滑动解锁
       Future.delayed(const Duration(milliseconds: 200), () {
         _isOnTab = false;
@@ -180,17 +181,19 @@ class _GenCustomNavState extends State<GenCustomNav>
 
     return Column(children: [
       curNavigationBar,
-      SizedBox(height: 28.w),
-      Expanded(
-        child: PageView(
-          physics: const BouncingScrollPhysics(),
-          onPageChanged: (index) {
-            if (!_isOnTab) _onTabPageChange(index, isOnTab: false);
-          },
-          controller: _pageController,
-          children: widget.pages,
+      if (widget.pages.isNotEmpty) ...[
+        SizedBox(height: 28.w),
+        Expanded(
+          child: PageView(
+            physics: const BouncingScrollPhysics(),
+            onPageChanged: (index) {
+              if (!_isOnTab) _onTabPageChange(index, isOnTab: false);
+            },
+            controller: _pageController,
+            children: widget.pages,
+          ),
         ),
-      ),
+      ],
     ]);
   }
 }
