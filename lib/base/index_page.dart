@@ -11,6 +11,7 @@ import 'package:hlw/util/load_status.dart';
 import 'package:hlw/util/local_png.dart';
 import 'package:hlw/util/style_theme.dart';
 import 'package:hlw/util/utils.dart';
+import 'package:hlw/watch/watch_page.dart';
 import 'package:hlw/welfare/welfare_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -265,7 +266,7 @@ class _MainPageState extends State<MainPage> {
   Widget selectMainWidget() {
     switch (_selectIndex) {
       case 1:
-        return PastPage(isShow: true);
+        return WatchPage(isShow: true);
       case 2:
         return RankPage(isShow: true);
       case 5:
@@ -449,12 +450,12 @@ class _MainPageState extends State<MainPage> {
     int len = 7;
     if (config?.client_forum_bbs?.isEmpty ?? true) len = 6;
     return GridView.builder(
-      padding: EdgeInsets.fromLTRB(0, 0, 0, 25.w),
+      padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0.w),
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       itemCount: len,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        childAspectRatio: 200 / 44,
+        childAspectRatio: 260 / 50,
         crossAxisCount: 1,
         mainAxisSpacing: 18.w,
       ),
@@ -545,9 +546,7 @@ class _MainPageState extends State<MainPage> {
         SplitView.of(context).setSecondary(customWidget(context));
         link.isNotEmpty ? Utils.openURL(link) : null;
       },
-      child: Stack(
-        children: [current],
-      ),
+      child: current,
     );
   }
 }

@@ -14,7 +14,7 @@ class StyleTheme {
   static double get singleMargin => 220.w;
 
   /*导航条高度*/
-  static double get navHegiht => 44.w;
+  static double get navHegiht => 40.w;
 
   static double get topHeight => kIsWeb
       ? 5.w
@@ -75,6 +75,7 @@ class StyleTheme {
   static Color gray153Color = const Color.fromRGBO(153, 153, 153, 1);
   static Color gray194Color = const Color.fromRGBO(194, 202, 217, 1);
   static Color gray153Color64 = const Color.fromRGBO(153, 153, 153, 0.64);
+  static Color gray161Color64 = const Color.fromRGBO(161, 161, 161, 1);
   static Color gray170Color = const Color.fromRGBO(170, 170, 170, 1);
   static Color gray186Color = const Color.fromRGBO(186, 186, 186, 1);
   static Color gray216Color2 = const Color.fromRGBO(216, 216, 216, 0.2);
@@ -208,6 +209,12 @@ class StyleTheme {
 
   static TextStyle font_orange_244_20 =
       font(size: 20, weight: FontWeight.bold, color: orange244Color);
+
+  static TextStyle font_white_255_24_600 =
+      font(size: 24, weight: FontWeight.w600, color: Colors.white);
+
+  static TextStyle font_white_161_20_bold =
+      font(size: 20, weight: FontWeight.bold, color: gray161Color64);
 
   static TextStyle font_gray_151_13 =
       font(size: 13, weight: FontWeight.normal, color: gray151Color);
