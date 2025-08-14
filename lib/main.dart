@@ -167,7 +167,7 @@ class _RootPageState extends State<RootPage> {
     final botToastBuilder = BotToastInit();
     //final win = appWindow;
     return ScreenUtilInit(
-      designSize: const Size(1280, 800),
+      designSize: const Size(1920, 1080),
       builder: (context, child) => MaterialApp(
         // localeListResolutionCallback: (locales, supportedLocales) {
         //   return const Locale('zh');
