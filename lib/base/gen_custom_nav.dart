@@ -20,7 +20,9 @@ class GenCustomNav extends StatefulWidget {
     this.indexFunc,
     this.isCover = false,
     this.isGuide = false,
+    this.labelPadding = const EdgeInsets.only(right: 40),
   }) : super(key: key);
+  final EdgeInsets labelPadding;
   final List<String> titles;
   final List<Widget> pages;
   final TextStyle? defaultStyle;
@@ -50,7 +52,7 @@ class _GenCustomNavState extends State<GenCustomNav>
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent),
         child: Transform.translate(
-          offset: Offset(-72.0, 0), // 往左移去掉左边空白
+          offset: Offset(-70.w, 0),
           child: TabBar(
             onTap: (index) {
               _isSelect = true;
@@ -59,7 +61,7 @@ class _GenCustomNavState extends State<GenCustomNav>
             },
             overlayColor: MaterialStatePropertyAll(Colors.transparent),
             indicator: BoxDecoration(),
-            labelPadding: EdgeInsets.symmetric(horizontal: 20.w),
+            labelPadding: widget.labelPadding,
             padding: EdgeInsets.zero,
             dividerColor: Colors.transparent,
             isScrollable: true,

@@ -466,6 +466,15 @@ class StyleTheme {
   static TextStyle font_black_34_17_bold =
       font(size: 17, weight: FontWeight.bold, color: black34Color);
 
+  static TextStyle font_white_255_22_bold =
+      font(size: 22, weight: FontWeight.bold, color: Colors.white);
+
+  static TextStyle font_white_255_24_bold =
+      font(size: 22, weight: FontWeight.bold, color: Colors.white);
+
+  static TextStyle font_white_255_20 =
+      font(size: 22, weight: FontWeight.normal, color: Colors.white);
+
   static TextStyle font_black_51_17 =
       font(size: 17, weight: FontWeight.normal, color: gray51Color);
 
@@ -534,6 +543,9 @@ class StyleTheme {
 
   static TextStyle font_gray_153_14 =
       font(size: 14, weight: FontWeight.normal, color: gray153Color);
+
+  static TextStyle font_gray_153_18 =
+      font(size: 18, weight: FontWeight.normal, color: gray153Color);
 
   static TextStyle font_gray_153_14_medium =
       font(size: 14, weight: FontWeight.w500, color: gray153Color);

@@ -230,7 +230,7 @@ class _ActionBarWidget extends StatelessWidget {
       },
       behavior: HitTestBehavior.translucent,
       child: Container(
-        width: 400.w,
+        width: 800.w,
         height: 50.w,
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.w),
         decoration: BoxDecoration(

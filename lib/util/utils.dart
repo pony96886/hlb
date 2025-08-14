@@ -35,6 +35,7 @@ import '../model/general_ads_model.dart';
 class Utils {
   static Map _cacheJSON = {}; //全局使用
   static bool isPC = Platform.isMacOS || Platform.isWindows;
+
   //字符串转MD5
   static String toMD5(String data) {
     return EncryptUtil.encodeMd5(data);
@@ -1134,68 +1135,114 @@ class Utils {
     }
     if (style == 2) {
       current = Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        SizedBox(
-          width: 374,
-          height: 200,
-          // width: (StyleTheme.contentWidth - 5.w) / 2,
-          // height: (StyleTheme.contentWidth - 5.w) / 2 / 375 * 130,
+        Expanded(
           child: Stack(children: [
             NetImageTool(
-              radius: BorderRadius.all(Radius.circular(12.w)),
-              url: e['thumb'],
+              radius: BorderRadius.circular(12.w),
+              url: e['thumb'] ?? '',
             ),
             Positioned(
               left: 0,
               right: 0,
-              bottom: 0,
+              bottom: -1,
               child: Container(
-                height: 88,
+                padding: EdgeInsets.only(
+                    left: 20.w, right: 20.w, top: 40.w, bottom: 24.w),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                     colors: [
-                      Colors.transparent,
                       Colors.black,
+                      Colors.black.withOpacity(0),
                     ],
                   ),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(12.w),
+                    bottomRight: Radius.circular(12.w),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        LocalPNG(name: "icon_play", width: 18.w, height: 16.w),
+                        SizedBox(
+                          width: 8.w,
+                        ),
+                        Text(
+                          '1.6w',
+                          style: StyleTheme.font_white_255_20,
+                          maxLines: 1,
+                        )
+                      ],
+                    ),
+                    Text(
+                      '97:11',
+                      style: StyleTheme.font_white_255_20,
+                      maxLines: 1,
+                    ),
+                  ],
                 ),
               ),
             ),
             Positioned(
-              right: 0,
+              left: 0,
               top: 0,
-              child: (e['is_hot'] != 1 || e['is_ad'] == 1)
-                  ? Container()
-                  : LocalPNG(name: "hlw_new_hot", width: 54.w, height: 43.w),
+              child: Container(
+                width: 72.w,
+                height: 40.w,
+                alignment: Alignment.center,
+                child: Stack(
+                  children: [
+                    LocalPNG(name: "news_tag_bg", width: 72.w, height: 40.w),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '30',
+                          style: StyleTheme.font_white_255_24_bold,
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
             ),
           ]),
         ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 8.w),
-              Text(
-                e['is_ad'] == 1 &&
-                        e['ad'] is Map &&
-                        e['ad']['name'] != null &&
-                        e['ad']['name'] != ''
-                    ? '${e['ad']['name']}'
-                    : '${e["title"]}',
-                style: StyleTheme.font_black_34_17_bold,
-                maxLines: 2,
-              ),
-              SizedBox(height: 10.w),
-              Expanded(
-                child: Text(
-                  plates,
-                  style: StyleTheme.font_gray_153_14,
-                  maxLines: 1,
-                ),
-              ),
-            ],
+        SizedBox(height: 16.w),
+        SizedBox(
+          height: 56.w,
+          child: Text(
+            e['is_ad'] == 1 &&
+                    e['ad'] is Map &&
+                    e['ad']['name'] != null &&
+                    e['ad']['name'] != ''
+                ? '${e['ad']['name']}'
+                : '${e["title"]}',
+            style: StyleTheme.font_white_255_22_bold,
+            maxLines: 2,
           ),
+        ),
+        SizedBox(height: 16.w),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "2天",
+              style: StyleTheme.font_gray_153_18,
+              maxLines: 1,
+            ),
+            Text(
+              "10评论",
+              style: StyleTheme.font_gray_153_18,
+              maxLines: 1,
+            )
+          ],
         ),
       ]);
     }
