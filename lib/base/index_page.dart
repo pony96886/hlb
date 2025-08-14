@@ -11,6 +11,7 @@ import 'package:hlw/util/load_status.dart';
 import 'package:hlw/util/local_png.dart';
 import 'package:hlw/util/style_theme.dart';
 import 'package:hlw/util/utils.dart';
+import 'package:hlw/watch/watch_page.dart';
 import 'package:hlw/welfare/welfare_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -265,7 +266,7 @@ class _MainPageState extends State<MainPage> {
   Widget selectMainWidget() {
     switch (_selectIndex) {
       case 1:
-        return PastPage(isShow: true);
+        return WatchPage(isShow: true);
       case 2:
         return RankPage(isShow: true);
       case 5:

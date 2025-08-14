@@ -55,12 +55,9 @@ class _GenCustomNavState extends State<GenCustomNav>
             _isOnTab = true;
             _onTabPageChange(index, isOnTab: true);
           },
-          indicatorPadding: EdgeInsets.only(right: 30.w),
-          indicatorSize: TabBarIndicatorSize.tab,
-          indicatorColor: _selectIndex == 0 || _isSelect
-              ? StyleTheme.black34Color
-              : Colors.transparent,
-          labelPadding: EdgeInsets.only(right: 30.w),
+          indicator: BoxDecoration(),
+          labelPadding: EdgeInsets.symmetric(horizontal: 20.w),
+          dividerColor: Colors.transparent,
           isScrollable: true,
           physics: const BouncingScrollPhysics(),
           tabs: widget.titles.asMap().keys.map((x) {
@@ -68,9 +65,8 @@ class _GenCustomNavState extends State<GenCustomNav>
             return Tab(
                 child: widget.isCover
                     ? Container(
-                        height: 30,
+                        height: StyleTheme.navHegiht,
                         alignment: Alignment.center,
-                        // padding: EdgeInsets.symmetric(horizontal: 20.w),
                         decoration: BoxDecoration(
                           color: _selectIndex == x
                               ? StyleTheme.red245Color
@@ -93,32 +89,25 @@ class _GenCustomNavState extends State<GenCustomNav>
                               _selectIndex == x ? _selectStyle : _defaultStyle,
                         ),
                       )
-                    : Text(
-                        widget.titles[x],
-                        style: _selectIndex == x ? _selectStyle : _defaultStyle,
-                      )
-                // Row(
-                //         children: [
-                //           _selectIndex == x
-                //               ? Padding(
-                //                   key: ValueKey(_selectIndex == x),
-                //                   padding: EdgeInsets.only(right: 3.5.w, top: 2.w),
-                //                   child: LocalPNG(
-                //                     name: "51_dot_n",
-                //                     width: 11.w,
-                //                     height: 11.w,
-                //                   ),
-                //                 )
-                //               : Container(),
-                //           Text(
-                //             widget.titles[x],
-                //             style: _selectIndex == x
-                //                 ? _selectStyle
-                //                 : _defaultStyle,
-                //           )
-                //         ],
-                //       ),
-                );
+                    : Row(
+                        children: [
+                          if (_selectIndex == x) ...[
+                            LocalPNG(
+                              name: "icon_tab_select",
+                              width: 16.w,
+                              height: 16.w,
+                              fit: BoxFit.contain,
+                            ),
+                            SizedBox(width: 12.w),
+                          ],
+                          Text(
+                            widget.titles[x],
+                            style: _selectIndex == x
+                                ? _selectStyle
+                                : _defaultStyle,
+                          )
+                        ],
+                      ));
           }).toList(),
           controller: _tabController,
         ));
@@ -151,8 +140,8 @@ class _GenCustomNavState extends State<GenCustomNav>
     super.initState();
     //设置默认字体
     if (widget.defaultStyle == null || widget.selectStyle == null) {
-      _defaultStyle = StyleTheme.font_gray_153_17;
-      _selectStyle = StyleTheme.font_orange_255_17;
+      _defaultStyle = StyleTheme.font_white_161_20_bold;
+      _selectStyle = StyleTheme.font_white_255_24_600;
     } else {
       _defaultStyle = widget.defaultStyle!;
       _selectStyle = widget.selectStyle!;
@@ -191,7 +180,7 @@ class _GenCustomNavState extends State<GenCustomNav>
 
     return Column(children: [
       curNavigationBar,
-      SizedBox(height: 10.w),
+      SizedBox(height: 28.w),
       Expanded(
         child: PageView(
           physics: const BouncingScrollPhysics(),
@@ -209,6 +198,7 @@ class _GenCustomNavState extends State<GenCustomNav>
 class _UserHeaderWidget extends StatelessWidget {
   final Widget navigationBar;
   final String url;
+
   const _UserHeaderWidget({
     Key? key,
     required this.navigationBar,
