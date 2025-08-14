@@ -316,7 +316,6 @@ class _MainPageState extends State<MainPage> {
     config = Provider.of<BaseStore>(context, listen: false).config;
     return Scaffold(
       body: Container(
-        width: 305.w,
         height: double.infinity,
         decoration: BoxDecoration(
           color: StyleTheme.black0Color,

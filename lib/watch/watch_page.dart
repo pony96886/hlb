@@ -66,7 +66,7 @@ class WatchPageState extends State<WatchPage> with TickerProviderStateMixin {
   Widget _widget() {
     return Stack(children: [
       Positioned(
-        top: 90.w + 5.w, // 5 边距
+        top: 90.w,
         bottom: 0,
         left: 0,
         right: 0,
