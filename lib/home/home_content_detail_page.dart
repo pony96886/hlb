@@ -22,6 +22,7 @@ import 'package:hlw/util/desktop_extension.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 import '../util/eventbus_class.dart';
+import '../widget/search_bar_widget.dart';
 
 class HomeContentDetailPage extends BaseWidget {
   HomeContentDetailPage({Key? key, this.cid = "0"}) : super(key: key);
@@ -204,8 +205,7 @@ class _HomeContentDetailPageState
     _streamSubscription = UtilEventbus().on<EventbusClass>().listen((event) {
       if (event.arg["GoTop"] == 'GoTop' && controller.offset > 0) {
         controller.animateTo(0,
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.easeIn);
+            duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
       }
     });
   }
@@ -239,6 +239,39 @@ class _HomeContentDetailPageState
 
   @override
   Widget pageBody(BuildContext context) {
+    return Column(children: [
+      const SearchBarWidget(),
+      Expanded(
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          SizedBox(width: 30.w),
+          GestureDetector(
+            onTap: () {},
+            child: Container(
+              padding: EdgeInsets.fromLTRB(3.w, 0, 15.w, 8.w),
+              // color: Colors.orange,
+              width: 40.w,
+              height: 40.w,
+              alignment: Alignment.center,
+              child: const LocalPNG(
+                name: 'hlw_nav_back_w',
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 985,
+            child: _buildLeftWidget(),
+          ),
+          SizedBox(width: 30.w),
+          Expanded(
+            flex: 500,
+            child: _buildRightWidget(),
+          ),
+          SizedBox(width: 30.w),
+        ]),
+      ),
+    ]);
+
     return BaseMainView(
       paddingTop: 94.w,
       dataDetail: data,
@@ -251,156 +284,243 @@ class _HomeContentDetailPageState
         width: 640.w,
         child: netError
             ? LoadStatus.netErrorWork(onTap: () {
-          netError = false;
-          getData();
-        })
+                netError = false;
+                getData();
+              })
             : isHud
-            ? LoadStatus.showLoading(mounted)
-            : data == null
-            ? LoadStatus.noData()
-            : Stack(
-          children: [
-            Positioned(
-              top: 0,
-              bottom: 60.w,
-              left: 0,
-              right: 0,
-              child: EasyPullRefresh(
-              child: _CheckCommentsBar(data: data),
-              onRefresh: () {
-                page = 1;
-                return getData();
-              },
-              onLoading: () {
-                page++;
-                return getReviewData();
-              },
-              sameChild: ListView(
-                addRepaintBoundaries: false,
-                addAutomaticKeepAlives: false,
-                cacheExtent: ScreenHeight * 5,
-                scrollDirection: Axis.vertical,
-                controller: controller,
-                children: [
-                  Text(
-                    Utils.convertEmojiAndHtml("${data["title"] ?? ""}"),
-                    style: StyleTheme.font_black_31_30_semi,
-                    maxLines: 3,
-                  ),
-                  netErrorTag || dataTag.isEmpty
-                      ? Container()
-                      : _TagsCategoriesWidget(
-                    key: ValueKey(dataTag),
-                    data: data,
-                    tags: dataTag,
-                    // categories: data['plates'],
-                  ),
-                  SizedBox(height: 30.w),
-                  Text(
-                    "${Utils.txt('fbsj')}•${DateUtil.formatDateStr(data["created_at"] ?? " 2023-06-05 20:11:55", format: "yyyy年MM月dd日")}",
-                    style: StyleTheme.font_gray_153_15,
-                  ),
-                  SizedBox(height: 20.w),
-                  Divider(
-                    height: 1.w,
-                    color: StyleTheme.gray238Color,
-                  ),
-                  //网页内容
-                  _HtmlWidget(data: data, picMap: picMap),
-                  Container(
-                    margin: EdgeInsets.only(top: 20.w),
-                    color: StyleTheme.gray238Color,
-                    height: 1.w,
-                  ),
-                  SizedBox(height: 15.w),
-                  Text(
-                    Utils.txt('plly') + " ${data["comment_ct"]}",
-                    style: StyleTheme.font_black_34_30,
-                  ),
-                  SizedBox(height: 15.w),
-                  isHud
-                      ? Column(
-                        children: [
-                         LoadStatus.showLoading(mounted),
-                         SizedBox(height: 30.w),
-                       ],
-                      )
-                      : comments.isEmpty
-                      ? Column(
-                        children: [
-                          LoadStatus.noData(),
-                          SizedBox(height: 30.w),
-                        ],
-                      )
-                      : ListView.builder(
-                      addRepaintBoundaries: true,
-                      addAutomaticKeepAlives: true,
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: comments.length,
-                      itemBuilder: (context, index) {
-                        return HomeCommentsPage(
-                          data: comments[index],
-                          replyCall: (dp, cmid) {
-                            if (dp.isNotEmpty) {
-                              isReplay = true;
-                              tip = dp;
-                              commid = cmid;
-                              focusNode.requestFocus();
-                              if (mounted) setState(() {});
-                            } else {
-                              resetXcfocusNode();
-                            }
-                          },
-                          resetCall: () {
-                            resetXcfocusNode();
-                          },
-                        );
-                      }),
-                  ],
-                ),
-              )
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: SizedBox(
-                height: 55.w,
-                width: double.infinity,
-                child: InputContainer(
-                  width: double.infinity,
-                  focusNode: focusNode,
-                  hintText: '快留下您的评论',
-                  childPrefix: RichText(
-                      text: TextSpan(children: [
-                        TextSpan(text: tip[0], style: StyleTheme.font_black_0_15),
-                        TextSpan(text: tip[1], style: StyleTheme.font_gray_153_15),
-                      ])),
-                  onEditingCompleteText: (value) {
-                    if (isReplay) {
-                      inputTxt(2, commid, value);
-                      isReplay = false;
-                      tip = [Utils.txt("wyddxf") + '：', ""];
-                      getData();
-                    } else {
-                      inputTxt(1, widget.cid, value);
-                    }
-                  },
-                  onOutEventComplete: () {
-                    resetXcfocusNode();
-                  },
-                  isCollect: data["is_favorite"] == 1,
-                  // onCollectEventComplete: () {
-                  //   postCollectData();
-                  // },
-                  child: Container(),
-                ),
-              ),
-            )
-          ],
-        ),
+                ? LoadStatus.showLoading(mounted)
+                : data == null
+                    ? LoadStatus.noData()
+                    : Stack(children: [
+                        Positioned(
+                            top: 0,
+                            bottom: 60.w,
+                            left: 0,
+                            right: 0,
+                            child: EasyPullRefresh(
+                              child: _CheckCommentsBar(data: data),
+                              onRefresh: () {
+                                page = 1;
+                                return getData();
+                              },
+                              onLoading: () {
+                                page++;
+                                return getReviewData();
+                              },
+                              sameChild: ListView(
+                                addRepaintBoundaries: false,
+                                addAutomaticKeepAlives: false,
+                                cacheExtent: ScreenHeight * 5,
+                                scrollDirection: Axis.vertical,
+                                controller: controller,
+                                children: [
+                                  Text(
+                                    Utils.convertEmojiAndHtml(
+                                        "${data["title"] ?? ""}"),
+                                    style: StyleTheme.font_black_31_30_semi,
+                                    maxLines: 3,
+                                  ),
+                                  netErrorTag || dataTag.isEmpty
+                                      ? Container()
+                                      : _TagsCategoriesWidget(
+                                          key: ValueKey(dataTag),
+                                          data: data,
+                                          tags: dataTag,
+                                          // categories: data['plates'],
+                                        ),
+                                  SizedBox(height: 30.w),
+                                  Text(
+                                    "${Utils.txt('fbsj')}•${DateUtil.formatDateStr(data["created_at"] ?? " 2023-06-05 20:11:55", format: "yyyy年MM月dd日")}",
+                                    style: StyleTheme.font_gray_153_15,
+                                  ),
+                                  SizedBox(height: 20.w),
+                                  Divider(
+                                    height: 1.w,
+                                    color: StyleTheme.gray238Color,
+                                  ),
+                                  //网页内容
+                                  _HtmlWidget(data: data, picMap: picMap),
+                                  Container(
+                                    margin: EdgeInsets.only(top: 20.w),
+                                    color: StyleTheme.gray238Color,
+                                    height: 1.w,
+                                  ),
+                                  SizedBox(height: 15.w),
+                                  Text(
+                                    Utils.txt('plly') +
+                                        " ${data["comment_ct"]}",
+                                    style: StyleTheme.font_black_34_30,
+                                  ),
+                                  SizedBox(height: 15.w),
+                                  isHud
+                                      ? Column(children: [
+                                          LoadStatus.showLoading(mounted),
+                                          SizedBox(height: 30.w),
+                                        ])
+                                      : comments.isEmpty
+                                          ? Column(children: [
+                                              LoadStatus.noData(),
+                                              SizedBox(height: 30.w),
+                                            ])
+                                          : ListView.builder(
+                                              addRepaintBoundaries: true,
+                                              addAutomaticKeepAlives: true,
+                                              padding: EdgeInsets.zero,
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemCount: comments.length,
+                                              itemBuilder: (context, index) {
+                                                return HomeCommentsPage(
+                                                  data: comments[index],
+                                                  replyCall: (dp, cmid) {
+                                                    if (dp.isNotEmpty) {
+                                                      isReplay = true;
+                                                      tip = dp;
+                                                      commid = cmid;
+                                                      focusNode.requestFocus();
+                                                      if (mounted)
+                                                        setState(() {});
+                                                    } else {
+                                                      resetXcfocusNode();
+                                                    }
+                                                  },
+                                                  resetCall: () {
+                                                    resetXcfocusNode();
+                                                  },
+                                                );
+                                              }),
+                                ],
+                              ),
+                            )),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: SizedBox(
+                            height: 55.w,
+                            width: double.infinity,
+                            child: InputContainer(
+                              width: double.infinity,
+                              focusNode: focusNode,
+                              hintText: '快留下您的评论',
+                              childPrefix: RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                    text: tip[0],
+                                    style: StyleTheme.font_black_0_15),
+                                TextSpan(
+                                    text: tip[1],
+                                    style: StyleTheme.font_gray_153_15),
+                              ])),
+                              onEditingCompleteText: (value) {
+                                if (isReplay) {
+                                  inputTxt(2, commid, value);
+                                  isReplay = false;
+                                  tip = [Utils.txt("wyddxf") + '：', ""];
+                                  getData();
+                                } else {
+                                  inputTxt(1, widget.cid, value);
+                                }
+                              },
+                              onOutEventComplete: () {
+                                resetXcfocusNode();
+                              },
+                              isCollect: data["is_favorite"] == 1,
+                              // onCollectEventComplete: () {
+                              //   postCollectData();
+                              // },
+                              child: Container(),
+                            ),
+                          ),
+                        )
+                      ]),
       ),
     );
+  }
+
+  Widget _buildLeftWidget() {
+    if (netError) {
+      return LoadStatus.netErrorWork(onTap: () {
+        netError = false;
+        getData();
+      });
+    }
+    if (isHud) return LoadStatus.showLoading(mounted);
+    if (data == null) return LoadStatus.noData();
+    return SingleChildScrollView(
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+        SizedBox(
+          width: double.infinity,
+          child: Text(
+            "${data["title"] ?? ""}",
+            style: StyleTheme.font_white_255_28_medium,
+          ),
+        ),
+        SizedBox(height: 20.w),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Text(
+            '作者',
+            style: StyleTheme.font_gray_153_18,
+          ),
+          Text(
+            DateUtil.formatDateStr(data["created_at"] ?? " 2023-06-05 20:11:55",
+                format: "yyyy年MM月dd日"),
+            style: StyleTheme.font_gray_153_18,
+          ),
+        ]),
+        SizedBox(height: 28.w),
+        //网页内容
+        _HtmlWidget(data: data, picMap: picMap),
+        SizedBox(height: 40.w),
+      ]),
+    );
+  }
+
+  Widget _buildRightWidget() {
+    return Column(children: [
+      SizedBox(
+        width: double.infinity,
+        child: Text(
+          '热门推荐',
+          style: StyleTheme.font_orange_244_28_medium,
+        ),
+      ),
+      Expanded(
+        child: ListView.builder(
+          padding: EdgeInsets.zero,
+          itemCount: 10,
+          physics: const BouncingScrollPhysics(),
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: EdgeInsets.symmetric(vertical: 15.w),
+              child: GestureDetector(
+                onTap: () {},
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.w),
+                    color: const Color(0x0BFFFFFF),
+                  ),
+                  padding: EdgeInsets.all(24.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'data',
+                        style: StyleTheme.font_white_255_22_bold,
+                      ),
+                      SizedBox(height: 5.w),
+                      Text(
+                        'data',
+                        style: StyleTheme.font_gray_209_18,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      )
+    ]);
   }
 }
 
@@ -434,8 +554,7 @@ class _CheckCommentsBar extends StatelessWidget {
               ),
             ),
           ],
-        )
-    );
+        ));
   }
 }
 
@@ -443,13 +562,12 @@ class _TagsCategoriesWidget extends StatelessWidget {
   final dynamic data;
   final List tags;
   // final Map categories;
-  const _TagsCategoriesWidget(
-      {Key? key,
-        required this.data,
-        required this.tags,
-        // required this.categories
-      })
-      : super(key: key);
+  const _TagsCategoriesWidget({
+    Key? key,
+    required this.data,
+    required this.tags,
+    // required this.categories
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -516,14 +634,14 @@ class _HtmlWidget extends StatelessWidget {
         data: html,
         style: {
           "*": Style(
-            color: StyleTheme.black31Color,
+            color: StyleTheme.gray199Color,
             lineHeight: LineHeight.rem(1.8),
             margin: Margins.zero,
           ),
           "a": Style(color: StyleTheme.blue25Color)
         },
         customRenders: {
-              (_context) {
+          (_context) {
             return _context.tree.element?.localName == 'img';
           }: CustomRender.widget(widget: (_context, parsedChild) {
             String className = _context.tree.element?.attributes["class"] ?? "";
@@ -550,7 +668,7 @@ class _HtmlWidget extends StatelessWidget {
               child: NetImageTool(url: url, fit: BoxFit.contain),
             );
           }),
-              (_context) {
+          (_context) {
             return _context.tree.element?.localName == 'span';
           }: CustomRender.widget(widget: (_context, parsedChild) {
             String className = _context.tree.element?.attributes["class"] ?? "";
@@ -587,7 +705,7 @@ class _HtmlWidget extends StatelessWidget {
               return _context.buildContext.widget;
             }
           }),
-              (_context) {
+          (_context) {
             return _context.tree.element?.localName == 'div';
           }: CustomRender.widget(widget: (_context, parsedChild) {
             String? play_type =
@@ -604,8 +722,7 @@ class _HtmlWidget extends StatelessWidget {
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
                   if (Utils.unFocusNode(context)) {
-                    Utils.navTo(
-                        context,
+                    Utils.navTo(context,
                         "/homeplayerpage/${Uri.encodeComponent(cover)}/${Uri.encodeComponent(url)}");
                   }
                 },

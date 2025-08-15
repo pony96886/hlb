@@ -189,18 +189,19 @@ class BaseMainViewState extends State<BaseMainView> {
                   width: 220.w,
                   padding: EdgeInsets.only(top: widget.rightPadding),
                   child: ListView(
-                    children: widget.dataDetail == null
-                        ? [
-                            _buildDateWidget(),
-                            _buildBannerWidget(),
-                            _LinkWidget(list: listMap),
-                          ]
-                        : [
-                            _buildBannerWidget(),
-                            _buildArticleWidget(),
-                            _LinkWidget(list: listMap),
-                            _RedBagWidget(configModel: cf),
-                          ],
+                    children: [],
+                    //             children: widget.dataDetail == null
+                    //                 ? [
+                    //                     _buildDateWidget(),
+                    //                     _buildBannerWidget(),
+                    //                     _LinkWidget(list: listMap),
+                    //                   ]
+                    //                 : [
+                    //                     _buildBannerWidget(),
+                    //                     _buildArticleWidget(),
+                    //                     _LinkWidget(list: listMap),
+                    //                     _RedBagWidget(configModel: cf),
+                    //                   ],
                   ),
                 ),
               ],
@@ -245,9 +246,7 @@ class BaseMainViewState extends State<BaseMainView> {
                                 ? StyleTheme.gray153Color
                                 : StyleTheme.orange255Color,
                         tap: postCollectData),
-                    SizedBox(
-                      width: 20.w,
-                    ),
+                    SizedBox(width: 20.w),
                     _BtnDetailWidget(
                       text: Utils.txt('fenxag'),
                       image: "hlw_nav_share_info",
