@@ -1041,6 +1041,7 @@ class Utils {
   // state 1 已分布 2 通过/待回调 3 待审核 4 被拒绝
   static Widget newsModuleUI(BuildContext context, dynamic e,
       {int style = 1, int state = 1}) {
+    String JsonStr = e.toString();
     String plates =
         DateUtil.formatDateStr(e["created_date"], format: "yyyy年MM日dd");
     if (e["plates"] is Map && (e["plates"] as Map).isNotEmpty) {
