@@ -4,7 +4,6 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:hlw/base/update_sysalert.dart';
 import 'package:hlw/home/home_page.dart';
 import 'package:hlw/model/config_model.dart';
-import 'package:hlw/past/past_page.dart';
 import 'package:hlw/util/app_global.dart';
 import 'package:hlw/util/image_request_async.dart';
 import 'package:hlw/util/load_status.dart';
@@ -22,16 +21,21 @@ import 'package:flutter_split_view/flutter_split_view.dart';
 import 'package:provider/provider.dart';
 import "package:universal_html/html.dart" as html;
 
+import '../circle/circle_index_page.dart';
+import '../feature/feature_index_page.dart';
 import '../model/general_ads_model.dart';
 import '../model/user_model.dart';
-import '../rank/rank_page.dart';
+import '../past/history_index_page.dart';
+
 import 'base_store.dart';
 
+double kNavBarWidth = 305.w;
+
 class IndexPage extends StatefulWidget {
-  const IndexPage({Key? key}) : super(key: key);
+  const IndexPage({super.key});
 
   @override
-  State<IndexPage> createState() => _IndexPageState();
+  State createState() => _IndexPageState();
 }
 
 class _IndexPageState extends State<IndexPage> {
@@ -236,8 +240,8 @@ class _IndexPageState extends State<IndexPage> {
   Widget pcWidget(BuildContext context) {
     return Expanded(
       child: SplitView.material(
-        childWidth: 203.w, // 1920 / 1280 * 305
-        breakpoint: ScreenWidth - 203.w,
+        childWidth: kNavBarWidth,
+        breakpoint: ScreenWidth - kNavBarWidth,
         child: const MainPage(),
       ),
     );
@@ -266,14 +270,21 @@ class _MainPageState extends State<MainPage> {
 
   Widget selectMainWidget() {
     switch (_selectIndex) {
-      case 1:
-        return WatchPage(isShow: true);
-      case 2:
-        return RankPage(isShow: true);
-      case 5:
+      case 0: // 黑料
+        return const HomePage();
+      case 1: // 看片
+        return const WatchPage();
+      case 2: // 圈子
+        // return RankPage(isShow: true);
+        return const CircleIndexPage();
+      case 3: // 精选
+        return const FeatureIndexPage();
+      case 4: // 历史
+        return const HistoryIndexPage();
+      case 5: // 热议
         return const WelfarePage(isShow: true);
       default:
-        return const HomePage();
+        return const SizedBox();
     }
   }
 
@@ -317,11 +328,7 @@ class _MainPageState extends State<MainPage> {
     config = Provider.of<BaseStore>(context, listen: false).config;
     return Scaffold(
       body: Container(
-        width: 203.w, // 1920 / 1280 * 305
-        height: double.infinity,
-        decoration: BoxDecoration(
-          color: StyleTheme.black0Color,
-        ),
+        decoration: BoxDecoration(color: StyleTheme.black0Color),
         padding: EdgeInsets.only(top: 18.5.w),
         // 避免橫向拉伸
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -359,81 +366,46 @@ class _MainPageState extends State<MainPage> {
               ],
             ),
           ),
-          SizedBox(height: 34.w),
+          SizedBox(height: 25.w),
           Expanded(child: _buildOperationListWidget()),
           Container(
+            color: const Color.fromRGBO(255, 255, 255, .2),
             height: 1.w,
             width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 40.w),
-            decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  color: StyleTheme.gray255Color2,
-                  width: 1.w,
-                ),
-              ),
-            ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 40.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  onTap: () {},
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 32.w),
-                    child: Row(
-                      children: [
-                        LocalPNG(name: "icon-help", width: 28.w, height: 28.w),
-                        SizedBox(
-                          width: 32.w,
-                        ),
-                        Text("常见问题", style: StyleTheme.font_gray_194_20)
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 40.w,
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 32.w),
-                    child: Row(
-                      children: [
-                        LocalPNG(name: "icon-share", width: 28.w, height: 28.w),
-                        SizedBox(
-                          width: 32.w,
-                        ),
-                        Text("分享", style: StyleTheme.font_gray_194_20)
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 40.w,
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 32.w),
-                    child: Row(
-                      children: [
-                        LocalPNG(
-                            name: "icon-telegram", width: 28.w, height: 28.w),
-                        SizedBox(
-                          width: 32.w,
-                        ),
-                        Text("TG群", style: StyleTheme.font_gray_194_20)
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+          Column(mainAxisSize: MainAxisSize.min, children: [
+            SizedBox(height: 40.w),
+            GestureDetector(
+              onTap: () {},
+              child: Row(children: [
+                SizedBox(width: 15.w + 17.w),
+                LocalPNG(name: "icon-help", width: 28.w, height: 28.w),
+                SizedBox(width: 32.w),
+                Text("常见问题", style: StyleTheme.font_gray_194_20)
+              ]),
             ),
-          )
+            SizedBox(height: 40.w),
+            GestureDetector(
+              onTap: () {},
+              child: Row(children: [
+                SizedBox(width: 15.w + 17.w),
+                LocalPNG(name: "icon-share", width: 28.w, height: 28.w),
+                SizedBox(width: 32.w),
+                Text("分享", style: StyleTheme.font_gray_194_20)
+              ]),
+            ),
+            SizedBox(height: 40.w),
+            GestureDetector(
+              onTap: () {},
+              child: Row(children: [
+                SizedBox(width: 15.w + 17.w),
+                LocalPNG(name: "icon-telegram", width: 28.w, height: 28.w),
+                SizedBox(width: 32.w),
+                Text("TG群", style: StyleTheme.font_gray_194_20)
+              ]),
+            ),
+            SizedBox(height: 40.w),
+          ]),
         ]),
       ),
     );
@@ -443,21 +415,20 @@ class _MainPageState extends State<MainPage> {
     int len = 7;
     if (config?.client_forum_bbs?.isEmpty ?? true) len = 6;
     return GridView.builder(
-      padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0.w),
-      shrinkWrap: true,
+      padding: EdgeInsets.zero,
+      shrinkWrap: false,
       physics: const BouncingScrollPhysics(),
       itemCount: len,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        childAspectRatio: 260 / 50,
+        childAspectRatio: kNavBarWidth / 68.w,
         crossAxisCount: 1,
-        mainAxisSpacing: 18.w,
+        mainAxisSpacing: 0,
       ),
       itemBuilder: _buildOperationItemWidget,
     );
   }
 
   Widget _buildOperationItemWidget(context, int index) {
-    Decoration? decoration;
     String text;
     String icon;
     String link = '';
@@ -480,12 +451,10 @@ class _MainPageState extends State<MainPage> {
       case 3: // 黑料官方APP
         text = '精选';
         icon = 'hlw_tab_0_featured_${_selectIndex == index ? 'h' : 'n'}';
-        link = config?.office_site ?? '';
         break;
       case 4: // 黑料官方微信QQ群
         text = '历史';
         icon = 'hlw_tab_0_history_${_selectIndex == index ? 'h' : 'n'}';
-        link = config?.official_wx ?? '';
         break;
       case 5: // 黑料精品福利站
         text = '热议';
@@ -505,18 +474,13 @@ class _MainPageState extends State<MainPage> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(width: 17.w),
-        // Container(width: 28.w, height: 30.w, color: Colors.red),
-        LocalPNG(
-            name: icon,
-            width: 28.w,
-            height: 30.w,
-            scale: 3,
-            fit: BoxFit.fitWidth),
+        LocalPNG(name: icon, width: 28.w, fit: BoxFit.fitWidth),
         SizedBox(width: 32.w),
         Expanded(child: Text(text, style: style))
       ],
     );
 
+    Decoration? decoration;
     if (_selectIndex == index) {
       decoration = BoxDecoration(
         borderRadius: BorderRadius.circular(12.w),
@@ -525,8 +489,7 @@ class _MainPageState extends State<MainPage> {
     }
 
     current = Container(
-      padding: EdgeInsets.fromLTRB(15.w, 0, 30.w, 0),
-      height: 50.w,
+      margin: EdgeInsets.fromLTRB(15.w, 9.w, 30.w, 9.w),
       alignment: Alignment.center,
       decoration: decoration,
       child: current,
@@ -540,49 +503,6 @@ class _MainPageState extends State<MainPage> {
         link.isNotEmpty ? Utils.openURL(link) : null;
       },
       child: current,
-    );
-  }
-}
-
-class _BtnLinkWidget extends StatelessWidget {
-  final String? link;
-  final int index;
-  final String image;
-  final String text;
-
-  const _BtnLinkWidget({
-    Key? key,
-    required this.link,
-    required this.index,
-    required this.image,
-    required this.text,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        link != null && link?.isNotEmpty == true
-            ? Utils.openURL(link!)
-            : Utils.showText(Utils.txt('cccwl') + '');
-        // final _url = link!;
-        // Platform.isMacOS ? Utils.openWebViewMacos(PresentationStyle.sheet, _url) : Utils.navTo(context, '/web/$_url');
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: StyleTheme.gray51Color, width: 1.w),
-          borderRadius: BorderRadius.all(Radius.circular(10.w)),
-        ),
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            LocalPNG(name: image, width: 24.w, height: 24.w),
-            SizedBox(height: 8.w),
-            Text(text, style: StyleTheme.font_white_255_12),
-          ],
-        ),
-      ),
     );
   }
 }
