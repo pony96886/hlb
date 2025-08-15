@@ -248,7 +248,7 @@ class _ActionBarWidget extends StatelessWidget {
       },
       behavior: HitTestBehavior.translucent,
       child: Container(
-        width: 600.w,
+        width: 800.w,
         height: 50.w,
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         decoration: BoxDecoration(
@@ -323,7 +323,33 @@ class _UserHeaderWidget extends StatelessWidget {
     }
     current = InkWell(onTap: onVisibleMenuAction, child: current);
     return Row(
-      children: [Ink(child: current)],
+      children: [
+        LocalPNG(
+          name: "icon_refresh",
+          width: 32.w,
+          height: 32.w,
+        ),
+        SizedBox(
+          width: 20.w,
+        ),
+        LocalPNG(
+          name: "icon_customer_service",
+          width: 32.w,
+          height: 32.w,
+        ),
+        SizedBox(
+          width: 20.w,
+        ),
+        LocalPNG(
+          name: "icon_setting",
+          width: 32.w,
+          height: 32.w,
+        ),
+        SizedBox(
+          width: 20.w,
+        ),
+        Ink(child: current)
+      ],
     );
   }
 }

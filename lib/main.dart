@@ -170,11 +170,7 @@ class _RootPageState extends State<RootPage> {
     final botToastBuilder = BotToastInit();
     //final win = appWindow;
     return ScreenUtilInit(
-      // designSize: _isDesktop(context)
-      // ? const Size(800, 812) // PC 基准宽度
-      // : const Size(375, 812), // 移动端基准宽度（设计稿）
-      // minTextAdapt: true,
-      designSize: const Size(1280, 800),
+      designSize: const Size(1920, 1080),
       builder: (context, child) => MaterialApp(
         // localeListResolutionCallback: (locales, supportedLocales) {
         //   return const Locale('zh');

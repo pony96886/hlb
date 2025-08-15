@@ -1,13 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hlw/base/gen_custom_nav.dart';
 import 'package:hlw/base/request_api.dart';
 import 'package:hlw/util/desktop_extension.dart';
 import 'package:hlw/util/easy_pull_refresh.dart';
 import 'package:hlw/util/load_status.dart';
+import 'package:hlw/util/style_theme.dart';
 import 'package:hlw/util/utils.dart';
 
 class WatchContentPage extends StatefulWidget {
   final int id;
   final dynamic banners;
+
   const WatchContentPage({
     super.key,
     this.id = 0,
@@ -104,10 +108,28 @@ class _WatchContentPageState extends State<WatchContentPage> {
   }
 
   Widget _buildContainerWidget() {
-    return ListView(children: [
-      _buildBannerWidget(),
-      _buildGridViewWidget(),
-    ]);
+    return ListView(
+        padding: EdgeInsets.symmetric(horizontal: 29.5.w),
+        children: [
+          _buildBannerWidget(),
+          _buildFilterWidget(),
+          _buildGridViewWidget(),
+        ]);
+  }
+
+  Widget _buildFilterWidget() {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 32.w),
+      child: GenCustomNav(
+        labelPadding: EdgeInsets.only(right: 16.w),
+        defaultStyle: StyleTheme.font_gray_161_20_bold,
+        selectStyle: StyleTheme.font_orange_244_20_600,
+        isCenter: false,
+        isCover: true,
+        titles: ["热门推荐", "本周最新", "最多观看"],
+        pages: [],
+      ),
+    );
   }
 
   Widget _buildBannerWidget() {
@@ -115,9 +137,12 @@ class _WatchContentPageState extends State<WatchContentPage> {
         visible: banners.isNotEmpty,
         child: Utils.bannerScaleExtSwiper(
           data: banners,
-          itemWidth: 710.w, // 图片宽
-          itemHeight: 240.w, // 图片高(240) + 23 + 10
-          viewportFraction: 0.777, // （710 + 5）/ 920 // 1040 - 120
+          itemWidth: 710.w,
+          // 图片宽
+          itemHeight: 240.w,
+          // 图片高(240) + 23 + 10
+          viewportFraction: 0.777,
+          // （710 + 5）/ 920 // 1040 - 120
           scale: 1,
           spacing: 5.w,
           lineWidth: 20.w,
@@ -126,16 +151,15 @@ class _WatchContentPageState extends State<WatchContentPage> {
 
   Widget _buildGridViewWidget() {
     return GridView.count(
-      padding: EdgeInsets.fromLTRB(0, 15.w, 0, 10.w),
       addRepaintBoundaries: false,
       addAutomaticKeepAlives: false,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       cacheExtent: ScreenHeight * 3,
-      crossAxisCount: 2,
-      mainAxisSpacing: 5.w,
-      crossAxisSpacing: 40.w,
-      childAspectRatio: 440 / 260,
+      crossAxisCount: 4,
+      mainAxisSpacing: 52.w,
+      crossAxisSpacing: 20.w,
+      childAspectRatio: 374.w / 353.w,
       children:
           tps.map((e) => Utils.newsModuleUI(context, e, style: 2)).toList(),
     );

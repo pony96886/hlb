@@ -520,7 +520,7 @@ class _MainPageState extends State<MainPage> {
     if (_selectIndex == index) {
       decoration = BoxDecoration(
         borderRadius: BorderRadius.circular(12.w),
-        color: StyleTheme.orange249Color2,
+        color: StyleTheme.orange47Color,
       );
     }
 
