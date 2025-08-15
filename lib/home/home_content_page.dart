@@ -139,10 +139,10 @@ class _HomeContentPageState extends State<HomeContentPage> {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       cacheExtent: ScreenHeight * 3,
-      crossAxisCount: 2,
-      mainAxisSpacing: 5.w,
-      crossAxisSpacing: 40.w,
-      childAspectRatio: 440 / 260,
+      crossAxisCount: 3,
+      mainAxisSpacing: 30.w,
+      crossAxisSpacing: 20.w,
+      childAspectRatio: 505 / (265 + 112),
       children: tps.map((e) {
         return PostItemWidget(e, style: 2);
       }).toList(),

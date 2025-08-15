@@ -159,13 +159,11 @@ class PostItemWidget extends StatelessWidget {
   Widget _buildStyleTwoWidget(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SizedBox(
-        width: 440.w,
-        height: 150.w,
-        // width: (StyleTheme.contentWidth - 5.w) / 2,
-        // height: (StyleTheme.contentWidth - 5.w) / 2 / 375 * 130,
+        height: 265.w,
+        width: 505.w,
         child: Stack(children: [
           NetImageTool(
-            radius: BorderRadius.all(Radius.circular(3.w)),
+            radius: BorderRadius.circular(12.w),
             url: args['thumb'],
           ),
           Positioned(
@@ -189,14 +187,14 @@ class PostItemWidget extends StatelessWidget {
                       args['ad']['name'] != ''
                   ? '${args['ad']['name']}'
                   : '${args["title"]}',
-              style: StyleTheme.font_white_20,
+              style: StyleTheme.font_white_255_22_medium,
               maxLines: 2,
             ),
             SizedBox(height: 10.w),
             Expanded(
               child: Text(
                 plates,
-                style: StyleTheme.font_gray_153_17,
+                style: StyleTheme.font_gray_153_18,
                 maxLines: 1,
               ),
             ),
