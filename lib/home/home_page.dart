@@ -78,7 +78,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Widget _buildPostWidget() {
-    Widget current = GenCustomNav(
+    return GenCustomNav(
       isCenter: false,
       titles: elements.map((e) => e["name"].toString()).toList(),
       pages: elements.map((e) {
@@ -86,10 +86,6 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
           child: HomeContentPage(id: e["id"], banners: banners),
         );
       }).toList(),
-    );
-    return Container(
-      padding: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
-      child: current,
     );
   }
 }
