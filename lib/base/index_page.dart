@@ -238,12 +238,10 @@ class _IndexPageState extends State<IndexPage> {
   }
 
   Widget pcWidget(BuildContext context) {
-    return Expanded(
-      child: SplitView.material(
-        childWidth: kNavBarWidth,
-        breakpoint: ScreenWidth - kNavBarWidth,
-        child: const MainPage(),
-      ),
+    return SplitView.material(
+      childWidth: kNavBarWidth,
+      breakpoint: ScreenWidth - kNavBarWidth,
+      child: const MainPage(),
     );
   }
 }
@@ -289,7 +287,10 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget customWidget(BuildContext context) {
-    return selectMainWidget(); // 不要用Expanded包裹
+    return Container(
+      color: StyleTheme.bgColor,
+      child: selectMainWidget(),
+    ); // 不要用Expanded包裹
   }
 
   void _release(BuildContext context) {
