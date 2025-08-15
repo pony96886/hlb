@@ -10,19 +10,20 @@ import 'package:hlw/util/desktop_extension.dart';
 import 'package:provider/provider.dart';
 
 class GenCustomNav extends StatefulWidget {
-  const GenCustomNav({
-    Key? key,
-    required this.titles,
-    required this.pages,
-    this.defaultStyle,
-    this.selectStyle,
-    this.isCenter = false,
-    this.indexFunc,
-    this.isCover = false,
-    this.isGuide = false,
-    this.labelPadding = const EdgeInsets.only(right: 40),
-    this.titlePadding = const EdgeInsets.all(0),
-  }) : super(key: key);
+  const GenCustomNav(
+      {Key? key,
+      required this.titles,
+      required this.pages,
+      this.defaultStyle,
+      this.selectStyle,
+      this.isCenter = false,
+      this.indexFunc,
+      this.isCover = false,
+      this.isGuide = false,
+      this.labelPadding = const EdgeInsets.only(right: 40),
+      this.titlePadding = const EdgeInsets.all(0),
+      this.defaultSelectIndex = 0})
+      : super(key: key);
   final EdgeInsets titlePadding;
   final EdgeInsets labelPadding;
   final List<String> titles;
@@ -33,6 +34,7 @@ class GenCustomNav extends StatefulWidget {
   final bool isCover;
   final bool isGuide;
   final Function(int)? indexFunc;
+  final int defaultSelectIndex;
 
   @override
   State createState() => _GenCustomNavState();
@@ -152,6 +154,7 @@ class _GenCustomNavState extends State<GenCustomNav>
       _defaultStyle = widget.defaultStyle!;
       _selectStyle = widget.selectStyle!;
     }
+    _selectIndex = widget.defaultSelectIndex;
     _tabController = TabController(length: widget.titles.length, vsync: this);
     _pageController = PageController();
     setState(() {});
