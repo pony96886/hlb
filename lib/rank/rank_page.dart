@@ -19,7 +19,7 @@ class RankPage extends BaseWidget {
   const RankPage({
     Key? key,
     this.isShow = false,
-    this.type = 'past',
+    this.type = 'history',
   }) : super(key: key);
   final bool isShow;
   final String type;

@@ -15,7 +15,7 @@ import 'package:hlw/util/utils.dart';
 import '../base/base_main_view.dart';
 
 class PastPage extends BaseWidget {
-  const PastPage({Key? key, this.isShow = false, this.type = 'past'})
+  const PastPage({Key? key, this.isShow = false, this.type = 'history'})
       : super(key: key);
   final bool isShow;
   final String type;

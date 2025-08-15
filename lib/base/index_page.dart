@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:hlw/base/update_sysalert.dart';
+import 'package:hlw/history/history_index_page.dart';
 import 'package:hlw/home/home_page.dart';
 import 'package:hlw/model/config_model.dart';
 import 'package:hlw/util/app_global.dart';
@@ -25,7 +26,6 @@ import '../circle/circle_index_page.dart';
 import '../feature/feature_index_page.dart';
 import '../model/general_ads_model.dart';
 import '../model/user_model.dart';
-import '../past/history_index_page.dart';
 
 import 'base_store.dart';
 
