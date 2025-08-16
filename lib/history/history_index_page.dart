@@ -92,6 +92,9 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
   dynamic defaultItemData = {
     "id": 39668,
     "title": "黑料网最新入口，黑料回家路，黑料合集每日更新，回家路合集页",
+    "plates": {},
+    "created_date": "2025-05-01 00:00:00",
+    "is_ad": 0,
     "thumb":
         "https://new.fwvkjw.cn/upload_01/upload/20250813/2025081312034176716.png",
   };
@@ -114,7 +117,6 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
         defaultItemData,
         defaultItemData,
         defaultItemData,
-        defaultItemData
       ].map((e) => Utils.newsModuleUI(context, e, style: 2)).toList(),
     );
   }
