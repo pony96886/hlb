@@ -245,7 +245,8 @@ class _HomeContentDetailPageState
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           SizedBox(width: 30.w),
           GestureDetector(
-            onTap: () {},
+            onTap: () => Utils.splitPopView(context),
+            behavior: HitTestBehavior.opaque,
             child: Container(
               padding: EdgeInsets.fromLTRB(3.w, 0, 15.w, 8.w),
               // color: Colors.orange,

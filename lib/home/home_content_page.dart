@@ -88,32 +88,33 @@ class _HomeContentPageState extends State<HomeContentPage> {
     if (isHud) return LoadStatus.showLoading(mounted);
     if (tps.isEmpty) return LoadStatus.noData();
     return Builder(builder: (cx) {
-      return Column(
-        children: [
-          Expanded(
-            child: EasyPullRefresh(
-              onRefresh: () {
-                page = 1;
-                return getData();
-              },
-              onLoading: () {
-                page++;
-                return getData();
-              },
-              sameChild: _buildContainerWidget(),
-            ),
+      return Column(children: [
+        Expanded(
+          child: EasyPullRefresh(
+            onRefresh: () {
+              page = 1;
+              return getData();
+            },
+            onLoading: () {
+              page++;
+              return getData();
+            },
+            sameChild: _buildContainerWidget(),
           ),
-          SizedBox(height: 20.w),
-        ],
-      );
+        ),
+        SizedBox(height: 20.w),
+      ]);
     });
   }
 
   Widget _buildContainerWidget() {
-    return ListView(children: [
-      _buildBannerWidget(),
-      _buildGridViewWidget(),
-    ]);
+    return ListView(
+      padding: EdgeInsets.only(left: 30.w, right: 30.w),
+      children: [
+        _buildBannerWidget(),
+        _buildGridViewWidget(),
+      ],
+    );
   }
 
   Widget _buildBannerWidget() {
@@ -121,12 +122,13 @@ class _HomeContentPageState extends State<HomeContentPage> {
       visible: banners.isNotEmpty,
       child: Utils.bannerScaleExtSwiper(
         data: banners,
-        itemWidth: 710.w, // 图片宽
-        itemHeight: 240.w, // 图片高(240) + 23 + 10
-        viewportFraction: 0.777, // （710 + 5）/ 920 // 1040 - 120
+        itemWidth: 700.w, // 图片宽
+        itemHeight: 300.w, // 图片高(240) + 23 + 10
+        viewportFraction: 700 / 1508, // 1548 - 20 * 2
         scale: 1,
-        spacing: 5.w,
+        spacing: 20.w,
         lineWidth: 20.w,
+        autoplay: false,
       ),
     );
   }
@@ -139,10 +141,10 @@ class _HomeContentPageState extends State<HomeContentPage> {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       cacheExtent: ScreenHeight * 3,
-      crossAxisCount: 2,
-      mainAxisSpacing: 5.w,
-      crossAxisSpacing: 40.w,
-      childAspectRatio: 440 / 260,
+      crossAxisCount: 3,
+      mainAxisSpacing: 30.w,
+      crossAxisSpacing: 20.w,
+      childAspectRatio: 505 / (265 + 112),
       children: tps.map((e) {
         return PostItemWidget(e, style: 2);
       }).toList(),

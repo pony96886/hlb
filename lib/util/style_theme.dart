@@ -120,12 +120,6 @@ class StyleTheme {
   static TextStyle font_gray_151_15 =
       font(size: 15, weight: FontWeight.normal, color: gray151Color);
 
-  static TextStyle font_gray_153_15_medium =
-      font(size: 15, weight: FontWeight.w500, color: gray153Color);
-
-  static TextStyle font_gray_153_15 =
-      font(size: 15, weight: FontWeight.normal, color: gray153Color);
-
   static TextStyle font_gray_187_15 =
       font(size: 15, weight: FontWeight.normal, color: gray187Color);
 
@@ -161,12 +155,6 @@ class StyleTheme {
 
   static TextStyle font_gray_119_12 =
       font(size: 12, weight: FontWeight.normal, color: gray119Color);
-
-  static TextStyle font_gray_153_12 =
-      font(size: 12, weight: FontWeight.normal, color: gray153Color);
-
-  static TextStyle font_gray_153_12_semi =
-      font(size: 12, weight: FontWeight.w600, color: gray153Color);
 
   static TextStyle font_gray_204_12 =
       font(size: 12, weight: FontWeight.normal, color: gray204Color);
@@ -408,12 +396,6 @@ class StyleTheme {
   static TextStyle font_white_255_28_medium =
       font(size: 28, weight: FontWeight.w500);
 
-  static TextStyle font_gray_153_13 =
-      font(size: 13, weight: FontWeight.normal, color: gray153Color);
-
-  static TextStyle font_gray_153_13_64 =
-      font(size: 13, weight: FontWeight.normal, color: gray153Color64);
-
   static TextStyle font_gray_204_13_bold =
       font(size: 13, weight: FontWeight.bold, color: gray204Color);
 
@@ -465,9 +447,6 @@ class StyleTheme {
   static TextStyle font_gray_102_17 =
       font(size: 17, weight: FontWeight.normal, color: gray102Color);
 
-  static TextStyle font_gray_153_17 =
-      font(size: 17, weight: FontWeight.normal, color: gray153Color);
-
   static TextStyle font_gray_170_17 =
       font(size: 17, weight: FontWeight.normal, color: gray170Color);
 
@@ -482,6 +461,9 @@ class StyleTheme {
 
   static TextStyle font_black_34_17_bold =
       font(size: 17, weight: FontWeight.bold, color: black34Color);
+
+  static TextStyle font_white_255_22_medium =
+      font(size: 22, weight: FontWeight.w500, color: Colors.white);
 
   static TextStyle font_white_255_22_bold =
       font(size: 22, weight: FontWeight.bold, color: Colors.white);
@@ -549,35 +531,56 @@ class StyleTheme {
   static TextStyle font_gray_128_20 =
       font(size: 20, weight: FontWeight.normal, color: gray128Color);
 
+  static TextStyle font_gray_204_11_bold =
+      font(size: 11, weight: FontWeight.normal, color: gray204Color);
+
   static TextStyle font_gray_153_10 =
       font(size: 10, weight: FontWeight.normal, color: gray153Color);
 
   static TextStyle font_gray_153_11 =
       font(size: 11, weight: FontWeight.normal, color: gray153Color);
 
-  static TextStyle font_gray_204_11_bold =
-      font(size: 11, weight: FontWeight.normal, color: gray204Color);
+  static TextStyle font_gray_153_12 =
+      font(size: 12, weight: FontWeight.normal, color: gray153Color);
+
+  static TextStyle font_gray_153_12_bold =
+      font(size: 12, weight: FontWeight.w600, color: gray153Color);
+
+  static TextStyle font_gray_153_13 =
+      font(size: 13, weight: FontWeight.normal, color: gray153Color);
+
+  static TextStyle font_gray_153_13_64 =
+      font(size: 13, weight: FontWeight.normal, color: gray153Color64);
 
   static TextStyle font_gray_153_14 =
       font(size: 14, weight: FontWeight.normal, color: gray153Color);
 
-  static TextStyle font_gray_153_18 =
-      font(size: 18, weight: FontWeight.normal, color: gray153Color);
-
   static TextStyle font_gray_153_14_medium =
       font(size: 14, weight: FontWeight.w500, color: gray153Color);
 
-  static TextStyle font_gray_153_14_semi =
+  static TextStyle font_gray_153_14_bold =
       font(size: 14, weight: FontWeight.w600, color: gray153Color);
 
-  static TextStyle font_gray_230_16 =
-      font(size: 16, weight: FontWeight.normal, color: gray230Color);
+  static TextStyle font_gray_153_15 =
+      font(size: 15, weight: FontWeight.normal, color: gray153Color);
+
+  static TextStyle font_gray_153_15_medium =
+      font(size: 15, weight: FontWeight.w500, color: gray153Color);
+
+  static TextStyle font_gray_153_16 =
+      font(size: 16, weight: FontWeight.normal, color: gray153Color);
 
   static TextStyle font_gray_153_16_medium =
       font(size: 16, weight: FontWeight.w500, color: gray153Color);
 
-  static TextStyle font_gray_153_16 =
-      font(size: 16, weight: FontWeight.normal, color: gray153Color);
+  static TextStyle font_gray_153_17 =
+      font(size: 17, weight: FontWeight.normal, color: gray153Color);
+
+  static TextStyle font_gray_153_18 =
+      font(size: 18, weight: FontWeight.normal, color: gray153Color);
+
+  static TextStyle font_gray_230_16 =
+      font(size: 16, weight: FontWeight.normal, color: gray230Color);
 
   static TextStyle font_blue_30_12 =
       font(size: 12, weight: FontWeight.normal, color: blue25Color);

@@ -3,6 +3,7 @@ import 'package:hlw/util/desktop_extension.dart';
 import 'package:hlw/util/load_status.dart';
 import 'package:hlw/util/pageviewmixin.dart';
 import 'package:flutter/material.dart';
+import 'package:hlw/util/style_theme.dart';
 import 'package:hlw/widget/search_bar_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -78,7 +79,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Widget _buildPostWidget() {
-    Widget current = GenCustomNav(
+    return GenCustomNav(
       isCenter: false,
       titles: elements.map((e) => e["name"].toString()).toList(),
       pages: elements.map((e) {
@@ -86,10 +87,6 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
           child: HomeContentPage(id: e["id"], banners: banners),
         );
       }).toList(),
-    );
-    return Container(
-      padding: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
-      child: current,
     );
   }
 }
