@@ -121,7 +121,6 @@ class _WatchContentPageState extends State<WatchContentPage> {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 32.w),
       child: GenCustomNav(
-        labelPadding: EdgeInsets.only(right: 16.w),
         defaultStyle: StyleTheme.font_gray_161_20_bold,
         selectStyle: StyleTheme.font_orange_244_20_600,
         isCenter: false,

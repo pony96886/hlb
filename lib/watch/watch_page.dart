@@ -66,7 +66,7 @@ class WatchPageState extends State<WatchPage> with TickerProviderStateMixin {
   Widget _widget() {
     return Stack(children: [
       Positioned(
-        top: 90.w,
+        top: 90.w + 5.w, // 5 边距
         bottom: 0,
         left: 0,
         right: 0,
@@ -79,7 +79,6 @@ class WatchPageState extends State<WatchPage> with TickerProviderStateMixin {
   Widget _buildWatchWidget() {
     Widget current = GenCustomNav(
       isCenter: false,
-      titlePadding: EdgeInsets.symmetric(horizontal: 29.5.w),
       titles: elements.map((e) => e["name"].toString()).toList(),
       pages: elements.map((e) {
         return PageViewMixin(
