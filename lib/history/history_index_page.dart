@@ -43,7 +43,6 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
               child: GenCustomNav(
             isCenter: false,
             defaultSelectIndex: 2,
-            titlePadding: EdgeInsets.symmetric(horizontal: 29.5.w),
             titles: ["尘封", "往期", "往期"],
             pages: [],
           )),
