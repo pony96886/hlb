@@ -36,7 +36,7 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
   }
 
   Widget _buildHistoryWidget() {
-    Widget current = Padding(
+    return Padding(
       padding: EdgeInsets.symmetric(
         vertical: 32.w,
       ),
@@ -47,7 +47,13 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
             isCenter: false,
             defaultSelectIndex: 2,
             titles: ["尘封", "榜单", "往期"],
-            pages: [],
+            pages: [
+              HistoryContentPage(
+                index: 0,
+              ),
+              HistoryContentPage(index: 1),
+              HistoryContentPage(index: 2),
+            ],
             titleExtraWidget: InkWell(
               onTap: _pickDate,
               child: Row(
@@ -72,23 +78,23 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
         ],
       ),
     );
-    return Column(
-      children: [
-        current,
-        Expanded(
-          child: EasyPullRefresh(
-            onRefresh: () async {
-              return true;
-            },
-            onLoading: () async {
-              return true;
-            },
-            sameChild: HistoryContentPage(),
-          ),
-        ),
-        SizedBox(height: 20.w),
-      ],
-    );
+    // return Column(
+    //   children: [
+    //     current,
+    //     Expanded(
+    //       child: EasyPullRefresh(
+    //         onRefresh: () async {
+    //           return true;
+    //         },
+    //         onLoading: () async {
+    //           return true;
+    //         },
+    //         sameChild: HistoryContentPage(),
+    //       ),
+    //     ),
+    //     SizedBox(height: 20.w),
+    //   ],
+    // );
   }
 
   void _pickDate() async {
