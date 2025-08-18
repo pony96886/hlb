@@ -18,6 +18,8 @@ class HistoryIndexPage extends StatefulWidget {
 }
 
 class _HistoryIndexPageState extends State<HistoryIndexPage> {
+  DateTime? selectedDate = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
@@ -46,22 +48,25 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
             titles: ["尘封", "往期", "往期"],
             pages: [],
           )),
-          Row(
-            children: [
-              Text(
-                "2025-07-29",
-                style: StyleTheme.font_gray_194_20_bold,
-              ),
-              SizedBox(
-                width: 12.w,
-              ),
-              LocalPNG(
-                name: "icon_calendar",
-                width: 30.w,
-                height: 30.w,
-                fit: BoxFit.contain,
-              ),
-            ],
+          InkWell(
+            onTap: _pickDate,
+            child: Row(
+              children: [
+                Text(
+                  "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}",
+                  style: StyleTheme.font_gray_194_20_bold,
+                ),
+                SizedBox(
+                  width: 12.w,
+                ),
+                LocalPNG(
+                  name: "icon_calendar",
+                  width: 30.w,
+                  height: 30.w,
+                  fit: BoxFit.contain,
+                ),
+              ],
+            ),
           ),
           SizedBox(
             width: 29.5.w,
@@ -86,6 +91,21 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
         SizedBox(height: 20.w),
       ],
     );
+  }
+
+  void _pickDate() async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (picked != null) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
   }
 
   dynamic defaultItemData = {
