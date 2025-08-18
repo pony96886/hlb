@@ -30,7 +30,7 @@ class _WelfarePageState extends State<WelfarePage> {
         Provider.of<BaseStore>(context, listen: false).config;
     return Stack(children: [
       Positioned(
-        top: 64.w,
+        top: 100.w,
         left: 60.w,
         right: 60.w,
         bottom: 0,
@@ -300,7 +300,7 @@ class _AppGridWidget extends StatelessWidget {
                     height: 24.w,
                     child: Text(
                       e["name"] ?? '',
-                      style: StyleTheme.font_black_0_17,
+                      style: StyleTheme.font_white_255_17,
                     ),
                   ),
                   SizedBox(height: 1.w),
@@ -321,7 +321,7 @@ class _AppGridWidget extends StatelessWidget {
                   SizedBox(height: 20.w),
                   Divider(
                     height: 1.w,
-                    color: StyleTheme.gray233Color,
+                    color: StyleTheme.gray77Color,
                   ),
                 ],
               ),

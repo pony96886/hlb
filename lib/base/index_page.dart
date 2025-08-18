@@ -4,6 +4,8 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:hlw/base/update_sysalert.dart';
 import 'package:hlw/history/history_index_page.dart';
 import 'package:hlw/home/home_page.dart';
+import 'package:hlw/hot_discussion/hot_discussion_page.dart';
+import 'package:hlw/jinxuan/welfare_page.dart';
 import 'package:hlw/model/config_model.dart';
 import 'package:hlw/util/app_global.dart';
 import 'package:hlw/util/image_request_async.dart';
@@ -12,7 +14,6 @@ import 'package:hlw/util/local_png.dart';
 import 'package:hlw/util/style_theme.dart';
 import 'package:hlw/util/utils.dart';
 import 'package:hlw/watch/watch_page.dart';
-import 'package:hlw/welfare/welfare_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +24,6 @@ import 'package:provider/provider.dart';
 import "package:universal_html/html.dart" as html;
 
 import '../circle/circle_index_page.dart';
-import '../feature/feature_index_page.dart';
 import '../model/general_ads_model.dart';
 import '../model/user_model.dart';
 
@@ -276,11 +276,11 @@ class _MainPageState extends State<MainPage> {
         // return RankPage(isShow: true);
         return const CircleIndexPage();
       case 3: // 精选
-        return const FeatureIndexPage();
+        return const WelfarePage(isShow: true);
       case 4: // 历史
         return const HistoryIndexPage();
       case 5: // 热议
-        return const WelfarePage(isShow: true);
+        return const HotDiscussionPage();
       default:
         return const SizedBox();
     }

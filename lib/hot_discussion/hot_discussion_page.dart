@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../util/style_theme.dart';
 
-class FeatureIndexPage extends StatefulWidget {
+class HotDiscussionPage extends StatefulWidget {
   final dynamic args;
-  const FeatureIndexPage({super.key, this.args});
+  const HotDiscussionPage({super.key, this.args});
 
   @override
-  State createState() => _FeatureIndexPageState();
+  State createState() => _HotDiscussionPageState();
 }
 
-class _FeatureIndexPageState extends State<FeatureIndexPage> {
+class _HotDiscussionPageState extends State<HotDiscussionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
