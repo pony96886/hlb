@@ -58,16 +58,16 @@ class _StartupPageState extends State<StartupPage> {
               setState(() {});
             },
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 5.w, horizontal: 15.w),
-              height: 35.w,
+              padding: EdgeInsets.symmetric(vertical: 10.w, horizontal: 15.w),
+              height: 44.w,
               decoration: BoxDecoration(
                 color: const Color.fromRGBO(0, 0, 0, 0.5),
-                borderRadius: BorderRadius.circular(35.w),
+                borderRadius: BorderRadius.circular(22.w),
               ),
               child: Center(
                 child: Text(
                   '${count > 0 ? count : Utils.txt('tggg')}',
-                  style: StyleTheme.font(size: 15, weight: FontWeight.w500),
+                  style: StyleTheme.font(size: 20, weight: FontWeight.w500),
                 ),
               ),
             ),
@@ -171,7 +171,7 @@ class _WebWidget extends StatelessWidget {
                 Text(
                   Utils.txt('jcxlsd'),
                   style:
-                      StyleTheme.font(size: 14, color: StyleTheme.gray204Color),
+                      StyleTheme.font(size: 20, color: StyleTheme.gray204Color),
                 ),
                 SizedBox(height: 20.w),
                 Visibility(
@@ -182,7 +182,7 @@ class _WebWidget extends StatelessWidget {
                   },
                   child: Text(
                     Utils.txt('gwdzdz') + '：$webUrl',
-                    style: StyleTheme.font_orange_255_14,
+                    style: StyleTheme.font_orange_255_18,
                     maxLines: 3,
                     ),
                   )

@@ -20,12 +20,17 @@ class GenCustomNav extends StatefulWidget {
       this.indexFunc,
       this.isCover = false,
       this.isGuide = false,
-      this.labelPadding = const EdgeInsets.only(right: 40),
+      this.labelPadding = 30.0,
+      this.tabPadding = 30.0,
+      this.rightWidget,
       this.titlePadding = const EdgeInsets.all(0),
       this.defaultSelectIndex = 0})
       : super(key: key);
+
+  final Widget? rightWidget;
   final EdgeInsets titlePadding;
-  final EdgeInsets labelPadding;
+  final double labelPadding;
+  final double tabPadding;
   final List<String> titles;
   final List<Widget> pages;
   final TextStyle? defaultStyle;
@@ -64,9 +69,9 @@ class _GenCustomNavState extends State<GenCustomNav>
               _onTabPageChange(index, isOnTab: true);
             },
             overlayColor: const MaterialStatePropertyAll(Colors.transparent),
-            indicator: BoxDecoration(),
-            labelPadding: widget.labelPadding,
-            padding: EdgeInsets.symmetric(horizontal: 30.w),
+            indicator: const BoxDecoration(),
+            labelPadding: EdgeInsets.only(right: widget.labelPadding.w),
+            padding: EdgeInsets.symmetric(horizontal: widget.tabPadding.w),
             dividerColor: Colors.transparent,
             dividerHeight: 0,
             isScrollable: true,
@@ -170,7 +175,12 @@ class _GenCustomNavState extends State<GenCustomNav>
   Widget build(BuildContext context) {
     ConfigModel? cf = Provider.of<BaseStore>(context, listen: false).config;
     if (widget.titles.isEmpty) return const SizedBox();
-    Widget curNavigationBar = _dealTabs();
+    Widget curNavigationBar = Row(
+      children: [
+        Expanded(child: _dealTabs()),
+        widget.rightWidget ?? Container()
+      ],
+    );
     if (widget.isCenter) {
       curNavigationBar = Center(child: curNavigationBar);
     } else if (widget.isGuide) {

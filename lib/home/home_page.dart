@@ -1,6 +1,7 @@
 import 'package:hlw/home/home_content_page.dart';
 import 'package:hlw/util/desktop_extension.dart';
 import 'package:hlw/util/load_status.dart';
+import 'package:hlw/util/local_png.dart';
 import 'package:hlw/util/pageviewmixin.dart';
 import 'package:flutter/material.dart';
 import 'package:hlw/util/style_theme.dart';
@@ -13,6 +14,7 @@ import '../base/request_api.dart';
 
 class HomePage extends StatefulWidget {
   final bool isShow;
+
   const HomePage({Key? key, this.isShow = false}) : super(key: key);
 
   @override
@@ -68,7 +70,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget _widget() {
     return Stack(children: [
       Positioned(
-        top: 90.w + 5.w, // 5 边距
+        top: 90.w + 5.w,
+        // 5 边距
         bottom: 0,
         left: 0,
         right: 0,
@@ -81,6 +84,49 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget _buildPostWidget() {
     return GenCustomNav(
       isCenter: false,
+      tabPadding: 40.w,
+      rightWidget: Container(
+        margin: EdgeInsets.only(left: 10.w, right: 30.w),
+        height: 40.w,
+        width: 120.w,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(20.w)),
+          color: StyleTheme.white10,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            GestureDetector(
+                onTap: () {
+                  //
+                },
+                child:
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 5.w),
+                        width: 54.w, height: 48.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(24.w)),
+                          color: StyleTheme.yellow255Color,
+                        ),
+                        child: const LocalPNG(name: 'hlw_list_icon_n'))),
+            SizedBox(width: 10.w),
+            GestureDetector(
+                onTap: () {
+                  //
+                },
+                child:
+                    Container(
+                        padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 5.w),
+                        width: 54.w, height: 48.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(24.w)),
+                          color: StyleTheme.yellow255Color,
+                        ),
+                        child: const LocalPNG(name: 'hlw_girl_icon_n'))),
+          ],
+        ),
+      ),
       titles: elements.map((e) => e["name"].toString()).toList(),
       pages: elements.map((e) {
         return PageViewMixin(

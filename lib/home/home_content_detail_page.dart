@@ -248,13 +248,13 @@ class _HomeContentDetailPageState
             onTap: () => Utils.splitPopView(context),
             behavior: HitTestBehavior.opaque,
             child: Container(
-              padding: EdgeInsets.fromLTRB(3.w, 0, 15.w, 8.w),
+              padding: EdgeInsets.all(5.w),
               // color: Colors.orange,
               width: 40.w,
               height: 40.w,
               alignment: Alignment.center,
               child: const LocalPNG(
-                name: 'hlw_nav_back_w',
+                name: '51_nav_back_w',
                 fit: BoxFit.fitWidth,
               ),
             ),

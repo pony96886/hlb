@@ -237,9 +237,7 @@ class Utils {
 
   static void checkline({Function? onSuccess, Function? onFailed}) async {
     Box? box = AppGlobal.appBox;
-    List<String> unChecklines = box?.get('lines_url') == null
-        ? AppGlobal.apiLines
-        : List<String>.from(box?.get('lines_url'));
+    List<String> unChecklines = AppGlobal.apiLines;
     List<Map> errorLines = [];
     Function checkGit;
     Function doCheck;
@@ -1194,15 +1192,17 @@ class Utils {
                 child: Stack(
                   children: [
                     LocalPNG(name: "news_tag_bg", width: 72.w, height: 40.w),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          '30',
-                          style: StyleTheme.font_white_255_24_bold,
-                        )
-                      ],
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            '30',
+                            style: StyleTheme.font_white_255_22_bold,
+                          )
+                        ],
+                      ),
                     )
                   ],
                 ),
@@ -1212,15 +1212,15 @@ class Utils {
         ),
         SizedBox(height: 16.w),
         SizedBox(
-          height: 56.w,
+          height: 60.w,
           child: Text(
             e['is_ad'] == 1 &&
-                    e['ad'] is Map &&
-                    e['ad']['name'] != null &&
-                    e['ad']['name'] != ''
+                e['ad'] is Map &&
+                e['ad']['name'] != null &&
+                e['ad']['name'] != ''
                 ? '${e['ad']['name']}'
                 : '${e["title"]}',
-            style: StyleTheme.font_white_255_22_bold,
+            style: StyleTheme.font_white_255_20,
             maxLines: 2,
           ),
         ),

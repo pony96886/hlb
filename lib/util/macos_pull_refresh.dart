@@ -79,14 +79,15 @@ class _MacosPullRefreshState extends State<MacosPullRefresh> {
           }
           return Center(
             child: Container(
+              margin: EdgeInsets.all(20.w),
               height: 40.w,
               width: 120.w,
               alignment: Alignment.center,
               constraints: BoxConstraints(minWidth: 120.w),
-              decoration: BoxDecoration(
-                color: StyleTheme.gray102Color,
-                borderRadius: BorderRadius.circular(20.w),
-              ),
+              // decoration: BoxDecoration(
+                // color: StyleTheme.gray102Color,
+              //   borderRadius: BorderRadius.circular(20.w),
+              // ),
               child: child,
             ),
           );

@@ -106,7 +106,7 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
       physics: const NeverScrollableScrollPhysics(),
       cacheExtent: ScreenHeight * 3,
       crossAxisCount: 3,
-      mainAxisSpacing: 52.w,
+      mainAxisSpacing: 20.w,
       crossAxisSpacing: 20.w,
       childAspectRatio: 505.w / 368.w,
       padding: EdgeInsets.symmetric(horizontal: 29.5.w),
