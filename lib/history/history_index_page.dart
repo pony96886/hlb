@@ -26,6 +26,12 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
+      LocalPNG(
+        name: "history_bg",
+        height: double.infinity,
+        width: double.infinity,
+        fit: BoxFit.cover,
+      ),
       Positioned(
         top: 90.w,
         bottom: 0,
