@@ -45,7 +45,7 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
               child: GenCustomNav(
             isCenter: false,
             defaultSelectIndex: 2,
-            titles: ["尘封", "往期", "往期"],
+            titles: ["尘封", "榜单", "往期"],
             pages: [],
           )),
           InkWell(
