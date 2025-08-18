@@ -42,48 +42,43 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
       padding: EdgeInsets.symmetric(
         vertical: 32.w,
       ),
-      child: Row(
-        children: [
-          Expanded(
-              child: GenCustomNav(
-            isCenter: false,
-            defaultSelectIndex: tabSelectIndex,
-            indexFunc: (index) {
-              tabSelectIndex = index;
-              setState(() {});
-            },
-            titles: ["尘封", "榜单", "往期"],
-            pages: [
-              HistoryContentPage(
-                index: 0,
-              ),
-              HistoryContentPage(index: 1),
-              HistoryContentPage(index: 2),
-            ],
-            titleExtraWidget: tabSelectIndex == 0
-                ? null
-                : InkWell(
-                    onTap: _pickDate,
-                    child: Row(
-                      children: [
-                        Text(
-                          "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}",
-                          style: StyleTheme.font_gray_194_20_bold,
-                        ),
-                        SizedBox(
-                          width: 12.w,
-                        ),
-                        LocalPNG(
-                          name: "icon_calendar",
-                          width: 30.w,
-                          height: 30.w,
-                          fit: BoxFit.contain,
-                        ),
-                      ],
-                    ),
-                  ),
-          )),
+      child: GenCustomNav(
+        isCenter: false,
+        defaultSelectIndex: tabSelectIndex,
+        indexFunc: (index) {
+          tabSelectIndex = index;
+          setState(() {});
+        },
+        titles: ["尘封", "榜单", "往期"],
+        pages: [
+          HistoryContentPage(
+            index: 0,
+          ),
+          HistoryContentPage(index: 1),
+          HistoryContentPage(index: 2),
         ],
+        titleExtraWidget: tabSelectIndex == 0
+            ? null
+            : InkWell(
+                onTap: _pickDate,
+                child: Row(
+                  children: [
+                    Text(
+                      "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}",
+                      style: StyleTheme.font_gray_194_20_bold,
+                    ),
+                    SizedBox(
+                      width: 12.w,
+                    ),
+                    LocalPNG(
+                      name: "icon_calendar",
+                      width: 30.w,
+                      height: 30.w,
+                      fit: BoxFit.contain,
+                    ),
+                  ],
+                ),
+              ),
       ),
     );
     // return Column(
