@@ -21,6 +21,8 @@ class HistoryIndexPage extends StatefulWidget {
 class _HistoryIndexPageState extends State<HistoryIndexPage> {
   DateTime? selectedDate = DateTime.now();
 
+  int tabSelectIndex = 2;
+
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
@@ -45,7 +47,11 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
           Expanded(
               child: GenCustomNav(
             isCenter: false,
-            defaultSelectIndex: 2,
+            defaultSelectIndex: tabSelectIndex,
+            indexFunc: (index) {
+              tabSelectIndex = index;
+              setState(() {});
+            },
             titles: ["尘封", "榜单", "往期"],
             pages: [
               HistoryContentPage(
@@ -54,26 +60,28 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
               HistoryContentPage(index: 1),
               HistoryContentPage(index: 2),
             ],
-            titleExtraWidget: InkWell(
-              onTap: _pickDate,
-              child: Row(
-                children: [
-                  Text(
-                    "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}",
-                    style: StyleTheme.font_gray_194_20_bold,
+            titleExtraWidget: tabSelectIndex == 0
+                ? null
+                : InkWell(
+                    onTap: _pickDate,
+                    child: Row(
+                      children: [
+                        Text(
+                          "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}",
+                          style: StyleTheme.font_gray_194_20_bold,
+                        ),
+                        SizedBox(
+                          width: 12.w,
+                        ),
+                        LocalPNG(
+                          name: "icon_calendar",
+                          width: 30.w,
+                          height: 30.w,
+                          fit: BoxFit.contain,
+                        ),
+                      ],
+                    ),
                   ),
-                  SizedBox(
-                    width: 12.w,
-                  ),
-                  LocalPNG(
-                    name: "icon_calendar",
-                    width: 30.w,
-                    height: 30.w,
-                    fit: BoxFit.contain,
-                  ),
-                ],
-              ),
-            ),
           )),
         ],
       ),
