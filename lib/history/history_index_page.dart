@@ -48,30 +48,27 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
             defaultSelectIndex: 2,
             titles: ["尘封", "榜单", "往期"],
             pages: [],
-          )),
-          InkWell(
-            onTap: _pickDate,
-            child: Row(
-              children: [
-                Text(
-                  "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}",
-                  style: StyleTheme.font_gray_194_20_bold,
-                ),
-                SizedBox(
-                  width: 12.w,
-                ),
-                LocalPNG(
-                  name: "icon_calendar",
-                  width: 30.w,
-                  height: 30.w,
-                  fit: BoxFit.contain,
-                ),
-              ],
+            titleExtraWidget: InkWell(
+              onTap: _pickDate,
+              child: Row(
+                children: [
+                  Text(
+                    "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}",
+                    style: StyleTheme.font_gray_194_20_bold,
+                  ),
+                  SizedBox(
+                    width: 12.w,
+                  ),
+                  LocalPNG(
+                    name: "icon_calendar",
+                    width: 30.w,
+                    height: 30.w,
+                    fit: BoxFit.contain,
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            width: 29.5.w,
-          )
+          )),
         ],
       ),
     );
