@@ -109,7 +109,6 @@ class _TopBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: StyleTheme.bgColor,
       height: 90.w,
       child: Row(children: [
         SizedBox(width: 30.w),
