@@ -171,7 +171,7 @@ class _WebWidget extends StatelessWidget {
                 Text(
                   Utils.txt('jcxlsd'),
                   style:
-                      StyleTheme.font(size: 20, color: StyleTheme.gray204Color),
+                      StyleTheme.font(size: 22, color: StyleTheme.gray204Color),
                 ),
                 SizedBox(height: 20.w),
                 Visibility(
@@ -182,7 +182,7 @@ class _WebWidget extends StatelessWidget {
                   },
                   child: Text(
                     Utils.txt('gwdzdz') + '：$webUrl',
-                    style: StyleTheme.font_orange_255_18,
+                    style: StyleTheme.font_orange_255_20,
                     maxLines: 3,
                     ),
                   )
