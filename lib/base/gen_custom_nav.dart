@@ -22,7 +22,8 @@ class GenCustomNav extends StatefulWidget {
       this.isGuide = false,
       this.labelPadding = const EdgeInsets.only(right: 40),
       this.titlePadding = const EdgeInsets.all(0),
-      this.defaultSelectIndex = 0})
+      this.defaultSelectIndex = 0,
+      this.titleExtraWidget})
       : super(key: key);
   final EdgeInsets titlePadding;
   final EdgeInsets labelPadding;
@@ -35,6 +36,7 @@ class GenCustomNav extends StatefulWidget {
   final bool isGuide;
   final Function(int)? indexFunc;
   final int defaultSelectIndex;
+  final Widget? titleExtraWidget;
 
   @override
   State createState() => _GenCustomNavState();
@@ -57,62 +59,77 @@ class _GenCustomNavState extends State<GenCustomNav>
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent),
-          child: TabBar(
-            onTap: (index) {
-              _isSelect = true;
-              _isOnTab = true;
-              _onTabPageChange(index, isOnTab: true);
-            },
-            overlayColor: const MaterialStatePropertyAll(Colors.transparent),
-            indicator: BoxDecoration(),
-            labelPadding: widget.labelPadding,
-            padding: EdgeInsets.symmetric(horizontal: 30.w),
-            dividerColor: Colors.transparent,
-            dividerHeight: 0,
-            isScrollable: true,
-            // tabAlignment: widget.isScrollable ? TabAlignment.start : null,
-            tabAlignment: TabAlignment.start,
-            indicatorPadding: EdgeInsets.zero,
-            physics: const BouncingScrollPhysics(),
-            tabs: widget.titles.asMap().keys.map((x) {
-              _isSelect = _selectIndex == x;
-              return Tab(
-                child: widget.isCover
-                    ? Container(
-                        height: StyleTheme.navHegiht,
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.symmetric(horizontal: 20.w),
-                        decoration: BoxDecoration(
-                          color: _selectIndex == x
-                              ? StyleTheme.orange47Color
-                              : StyleTheme.gray255Color1,
-                          borderRadius: BorderRadius.all(Radius.circular(40.w)),
-                        ),
-                        child: Text(
-                          widget.titles[x],
-                          style:
-                              _selectIndex == x ? _selectStyle : _defaultStyle,
-                        ),
-                      )
-                    : Row(children: [
-                        if (_selectIndex == x) ...[
-                          LocalPNG(
-                            name: "icon_tab_select",
-                            width: 16.w,
-                            height: 16.w,
-                            fit: BoxFit.contain,
-                          ),
-                          SizedBox(width: 12.w),
-                        ],
-                        Text(
-                          widget.titles[x],
-                          style:
-                              _selectIndex == x ? _selectStyle : _defaultStyle,
-                        )
-                      ]),
-              );
-            }).toList(),
-            controller: _tabController,
+          child: Row(
+            children: [
+              Expanded(
+                  child: TabBar(
+                onTap: (index) {
+                  _isSelect = true;
+                  _isOnTab = true;
+                  _onTabPageChange(index, isOnTab: true);
+                },
+                overlayColor:
+                    const MaterialStatePropertyAll(Colors.transparent),
+                indicator: BoxDecoration(),
+                labelPadding: widget.labelPadding,
+                padding: EdgeInsets.symmetric(horizontal: 30.w),
+                dividerColor: Colors.transparent,
+                dividerHeight: 0,
+                isScrollable: true,
+                // tabAlignment: widget.isScrollable ? TabAlignment.start : null,
+                tabAlignment: TabAlignment.start,
+                indicatorPadding: EdgeInsets.zero,
+                physics: const BouncingScrollPhysics(),
+                tabs: widget.titles.asMap().keys.map((x) {
+                  _isSelect = _selectIndex == x;
+                  return Tab(
+                    child: widget.isCover
+                        ? Container(
+                            height: StyleTheme.navHegiht,
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.symmetric(horizontal: 20.w),
+                            decoration: BoxDecoration(
+                              color: _selectIndex == x
+                                  ? StyleTheme.orange47Color
+                                  : StyleTheme.gray255Color1,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(40.w)),
+                            ),
+                            child: Text(
+                              widget.titles[x],
+                              style: _selectIndex == x
+                                  ? _selectStyle
+                                  : _defaultStyle,
+                            ),
+                          )
+                        : Row(children: [
+                            if (_selectIndex == x) ...[
+                              LocalPNG(
+                                name: "icon_tab_select",
+                                width: 16.w,
+                                height: 16.w,
+                                fit: BoxFit.contain,
+                              ),
+                              SizedBox(width: 12.w),
+                            ],
+                            Text(
+                              widget.titles[x],
+                              style: _selectIndex == x
+                                  ? _selectStyle
+                                  : _defaultStyle,
+                            )
+                          ]),
+                  );
+                }).toList(),
+                controller: _tabController,
+              )),
+              if (widget.titleExtraWidget != null) ...[
+                widget.titleExtraWidget!,
+                SizedBox(
+                  width: 29.5.w,
+                )
+              ],
+            ],
           )),
     );
   }
