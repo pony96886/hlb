@@ -7,6 +7,7 @@ import 'package:hlw/util/utils.dart';
 import 'package:hlw/widget/search_bar_widget.dart';
 
 import '../util/style_theme.dart';
+import 'history_content_page.dart';
 
 class HistoryIndexPage extends StatefulWidget {
   final dynamic args;
@@ -85,7 +86,7 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
             onLoading: () async {
               return true;
             },
-            sameChild: _buildGridViewWidget(),
+            sameChild: HistoryContentPage(),
           ),
         ),
         SizedBox(height: 20.w),
@@ -106,37 +107,5 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
         selectedDate = picked;
       });
     }
-  }
-
-  dynamic defaultItemData = {
-    "id": 39668,
-    "title": "黑料网最新入口，黑料回家路，黑料合集每日更新，回家路合集页",
-    "plates": {},
-    "created_date": "2025-05-01 00:00:00",
-    "is_ad": 0,
-    "thumb":
-        "https://new.fwvkjw.cn/upload_01/upload/20250813/2025081312034176716.png",
-  };
-
-  Widget _buildGridViewWidget() {
-    return GridView.count(
-      addRepaintBoundaries: false,
-      addAutomaticKeepAlives: false,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      cacheExtent: ScreenHeight * 3,
-      crossAxisCount: 3,
-      mainAxisSpacing: 52.w,
-      crossAxisSpacing: 20.w,
-      childAspectRatio: 505.w / 368.w,
-      padding: EdgeInsets.symmetric(horizontal: 29.5.w),
-      children: [
-        defaultItemData,
-        defaultItemData,
-        defaultItemData,
-        defaultItemData,
-        defaultItemData,
-      ].map((e) => Utils.newsModuleUI(context, e, style: 2)).toList(),
-    );
   }
 }
