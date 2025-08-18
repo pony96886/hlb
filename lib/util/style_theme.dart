@@ -78,6 +78,7 @@ class StyleTheme {
   static Color gray194Color = const Color.fromRGBO(194, 202, 217, 1);
   static Color gray199Color = const Color.fromRGBO(199, 199, 199, 1);
   static Color gray153Color64 = const Color.fromRGBO(153, 153, 153, 0.64);
+  static Color white255Color10 = const Color.fromRGBO(255, 255, 255, 0.1);
   static Color gray161Color64 = const Color.fromRGBO(161, 161, 161, 1);
   static Color gray170Color = const Color.fromRGBO(170, 170, 170, 1);
   static Color gray186Color = const Color.fromRGBO(186, 186, 186, 1);
@@ -95,9 +96,13 @@ class StyleTheme {
   static Color orange255Color = const Color.fromRGBO(255, 144, 0, 1);
   static Color orange244Color = const Color.fromRGBO(244, 154, 52, 1);
   static Color orange249Color2 = const Color.fromRGBO(244, 154, 52, 0.2);
+  static Color orange249Color25 = const Color.fromRGBO(244, 154, 52, 0.25);
   static Color orange249Color = const Color.fromRGBO(244, 154, 52, 1);
   static Color orange47Color = const Color.fromRGBO(47, 29, 24, 1);
-
+  static Color orange194Color64 = const Color.fromRGBO(255, 194, 125, 0.64);
+  static Color orange194Color = const Color.fromRGBO(255, 194, 125, 1);
+  static Color brown103Color = const Color.fromRGBO(103, 55, 0, 1);
+  static Color red74Color = const Color.fromRGBO(74, 74, 74, 1);
   static Color tabColor_n = const Color.fromRGBO(194, 202, 217, 1);
   static TextStyle tab_font =
       font(size: 20, weight: FontWeight.w500, color: tabColor_n);
@@ -223,6 +228,15 @@ class StyleTheme {
   static TextStyle font_gray_187_13 =
       font(size: 13, weight: FontWeight.normal, color: gray187Color);
 
+  static TextStyle font_orange_194_40_bold =
+      font(size: 40, weight: FontWeight.bold, color: orange194Color);
+
+  static TextStyle font_orange_244_22_bold =
+      font(size: 22, weight: FontWeight.bold, color: orange244Color);
+
+  static TextStyle font_brown_103_26_bold =
+      font(size: 26, weight: FontWeight.bold, color: brown103Color);
+
   static TextStyle font_gray_204_13 =
       font(size: 13, weight: FontWeight.normal, color: gray204Color);
 
@@ -339,6 +353,9 @@ class StyleTheme {
 
   static TextStyle font_red_246_14 =
       font(size: 14, weight: FontWeight.normal, color: red246Color);
+  // orange194Color64
+  static TextStyle font_orange_194_64_14_medium =
+      font(size: 14, weight: FontWeight.w500, color: orange194Color64);
 
   static TextStyle font_red_245_15 =
       font(size: 15, weight: FontWeight.normal, color: red245Color);
