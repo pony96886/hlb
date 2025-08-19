@@ -108,29 +108,23 @@ class _WatchContentPageState extends State<WatchContentPage> {
   }
 
   Widget _buildContainerWidget() {
-    return NestedScrollView(
-      headerSliverBuilder: (context, innerBoxIsScrolled) => [
-        SliverToBoxAdapter(child: _buildBannerWidget()),
-        SliverToBoxAdapter(child: SizedBox(height: 32.w)),
-      ],
-      body: _buildFilterWidget(), // 这里就是你的 GenCustomNav
-    );
+    return ListView(children: [
+      _buildBannerWidget(),
+      _buildFilterWidget(),
+      _buildGridViewWidget(),
+    ]);
   }
 
   Widget _buildFilterWidget() {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.w),
+      padding: EdgeInsets.symmetric(vertical: 28.w),
       child: GenCustomNav(
         defaultStyle: StyleTheme.font_gray_161_20_bold,
         selectStyle: StyleTheme.font_orange_244_20_600,
         isCenter: false,
         isCover: true,
         titles: ["热门推荐", "本周最新", "最多观看"],
-        pages: [
-          _buildGridViewWidget(),
-          _buildGridViewWidget(),
-          _buildGridViewWidget(),
-        ],
+        pages: [],
       ),
     );
   }
