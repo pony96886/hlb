@@ -41,7 +41,7 @@ class _HotDiscussionContentPageState extends State<HotDiscussionContentPage> {
             onLoading: () async {
               return true;
             },
-            sameChild: _buildGridViewWidget(),
+            sameChild: _buildContainerWidget(),
           );
   }
 
@@ -54,6 +54,7 @@ class _HotDiscussionContentPageState extends State<HotDiscussionContentPage> {
     "thumb":
         "https://new.fwvkjw.cn/upload_01/upload/20250813/2025081312034176716.png",
   };
+
   Widget _todayWidget() {
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(horizontal: 30.w),
@@ -67,7 +68,7 @@ class _HotDiscussionContentPageState extends State<HotDiscussionContentPage> {
             physics: const NeverScrollableScrollPhysics(),
             cacheExtent: ScreenHeight * 3,
             crossAxisCount: 4,
-            mainAxisSpacing: 20.w,
+            mainAxisSpacing: 52.w,
             crossAxisSpacing: 20.w,
             childAspectRatio: 374.w / 664.w,
             children: [
@@ -111,6 +112,31 @@ class _HotDiscussionContentPageState extends State<HotDiscussionContentPage> {
     );
   }
 
+  Widget _buildContainerWidget() {
+    return NestedScrollView(
+      headerSliverBuilder: (context, innerBoxIsScrolled) => [],
+      body: _buildFilterWidget(), // 这里就是你的 GenCustomNav
+    );
+  }
+
+  Widget _buildFilterWidget() {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 0.w),
+      child: GenCustomNav(
+        defaultStyle: StyleTheme.font_gray_161_20_bold,
+        selectStyle: StyleTheme.font_orange_244_20_600,
+        isCenter: false,
+        isCover: true,
+        titles: ["热门推荐", "本周最新", "最多观看"],
+        pages: [
+          _buildGridViewWidget(),
+          _buildGridViewWidget(),
+          _buildGridViewWidget(),
+        ],
+      ),
+    );
+  }
+
   Widget _buildGridViewWidget() {
     return GridView.count(
       addRepaintBoundaries: false,
@@ -118,10 +144,10 @@ class _HotDiscussionContentPageState extends State<HotDiscussionContentPage> {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       cacheExtent: ScreenHeight * 3,
-      crossAxisCount: 3,
+      crossAxisCount: 4,
       mainAxisSpacing: 52.w,
       crossAxisSpacing: 20.w,
-      childAspectRatio: 505.w / 368.w,
+      childAspectRatio: 374.w / 664.w,
       padding: EdgeInsets.symmetric(horizontal: 29.5.w),
       children: [
         defaultItemData,
@@ -129,7 +155,7 @@ class _HotDiscussionContentPageState extends State<HotDiscussionContentPage> {
         defaultItemData,
         defaultItemData,
         defaultItemData,
-      ].map((e) => Utils.newsModuleUI(context, e, style: 2)).toList(),
+      ].map((e) => Utils.newsModuleUI(context, e, style: 3)).toList(),
     );
   }
 }
