@@ -252,6 +252,9 @@ class StyleTheme {
   static TextStyle font_white_20 =
       font(size: 20, weight: FontWeight.bold, color: Colors.white);
 
+  static TextStyle font_white_20_600 =
+      font(size: 20, weight: FontWeight.w600, color: Colors.white);
+
   static TextStyle font_gray_194_20 =
       font(size: 20, weight: FontWeight.bold, color: gray194Color);
 
