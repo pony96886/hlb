@@ -127,11 +127,7 @@ class _WatchContentPageState extends State<WatchContentPage> {
         isCenter: false,
         isCover: true,
         titles: ["热门推荐", "本周最新", "最多观看"],
-        pages: [
-          _buildGridViewWidget(),
-          _buildGridViewWidget(),
-          _buildGridViewWidget(),
-        ],
+        pages: [],
       ),
     );
   }
