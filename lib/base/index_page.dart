@@ -381,8 +381,6 @@ class _MainPageState extends State<MainPage> {
             SizedBox(height: 40.w),
             GestureDetector(
               onTap: () {
-                _selectIndex = -1;
-                setState(() {});
                 Utils.splitToView(context, const MineNorquestionPage());
               },
               child: Row(children: [
@@ -395,8 +393,6 @@ class _MainPageState extends State<MainPage> {
             SizedBox(height: 40.w),
             GestureDetector(
               onTap: () {
-                _selectIndex = -1;
-                setState(() {});
                 Utils.splitToView(context, MineSharePage());
               },
               child: Row(children: [
@@ -409,8 +405,6 @@ class _MainPageState extends State<MainPage> {
             SizedBox(height: 40.w),
             GestureDetector(
               onTap: () {
-                _selectIndex = -1;
-                setState(() {});
                 Utils.splitToView(context, const MineGroupsPage());
               },
               child: Row(children: [
