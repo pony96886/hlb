@@ -58,7 +58,7 @@ class GoSplitRouters {
         Utils.splitToView(context, const HomePage());
         break;
       case 'homeinvitefriends': //邀請好友
-        Utils.splitToView(context, HomeInviteFriends());
+        Utils.splitToView(context, const HomeInviteFriends());
         break;
       case 'web': //web页面
         Utils.splitToView(context, NormalWeb(url: params?['arg0'] ?? ''));
@@ -79,7 +79,7 @@ class GoSplitRouters {
         Utils.splitToView(context, MineUpdatePage(type: params?['arg0'] ?? '', title: params?['arg1'] ?? ''));
         break;
       case 'minenorquestionpage': //常见问题
-        Utils.splitToView(context, MineNorquestionPage());
+        Utils.splitToView(context, const MineNorquestionPage());
         break;
       case 'homesearchpage': //搜索页面
         Utils.splitToView(context, HomeSearchPage(tag: params?['arg0'] ?? ''));
@@ -94,7 +94,7 @@ class GoSplitRouters {
         Utils.splitToView(context, MineSharePage());
         break;
       case 'minegroupspage': //车友群
-        Utils.splitToView(context, MineGroupsPage());
+        Utils.splitToView(context, const MineGroupsPage());
         break;
       case 'minerepliedcomments_page': //评论回复
         Utils.splitToView(context, MineRepliedCommentsPage());
@@ -118,7 +118,7 @@ class GoSplitRouters {
         Utils.splitToView(context, MineWithdrawalNow());
         break;
       case 'homeeditorpage': //发布文章
-        Utils.splitToView(context, HomeEditorPage());
+        Utils.splitToView(context, const HomeEditorPage());
         break;
       case 'minewithdrawalnowaccount': //選擇帳號
         Utils.splitToView(context, MineWithdrawalNowAccount());

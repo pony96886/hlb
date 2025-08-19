@@ -5,6 +5,10 @@ import 'package:hlw/base/update_sysalert.dart';
 import 'package:hlw/history/history_index_page.dart';
 import 'package:hlw/home/home_page.dart';
 import 'package:hlw/hotDiscussion/hot_discussion_index_page.dart';
+import 'package:hlw/jinxuan/welfare_page.dart';
+import 'package:hlw/mine/mine_groups_page.dart';
+import 'package:hlw/mine/mine_norquestion_page.dart';
+import 'package:hlw/mine/mine_share_page.dart';
 import 'package:hlw/model/config_model.dart';
 import 'package:hlw/util/app_global.dart';
 import 'package:hlw/util/image_request_async.dart';
@@ -376,7 +380,9 @@ class _MainPageState extends State<MainPage> {
           Column(mainAxisSize: MainAxisSize.min, children: [
             SizedBox(height: 40.w),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Utils.splitToView(context, const MineNorquestionPage());
+              },
               child: Row(children: [
                 SizedBox(width: 15.w + 17.w),
                 LocalPNG(name: "icon-help", width: 28.w, height: 28.w),
@@ -386,7 +392,9 @@ class _MainPageState extends State<MainPage> {
             ),
             SizedBox(height: 40.w),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Utils.splitToView(context, MineSharePage());
+              },
               child: Row(children: [
                 SizedBox(width: 15.w + 17.w),
                 LocalPNG(name: "icon-share", width: 28.w, height: 28.w),
@@ -396,7 +404,9 @@ class _MainPageState extends State<MainPage> {
             ),
             SizedBox(height: 40.w),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Utils.splitToView(context, const MineGroupsPage());
+              },
               child: Row(children: [
                 SizedBox(width: 15.w + 17.w),
                 LocalPNG(name: "icon-telegram", width: 28.w, height: 28.w),
