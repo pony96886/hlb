@@ -1203,7 +1203,9 @@ class Utils {
                           Text(
                             '30',
                             style: StyleTheme.font_white_255_22_bold,
-                          )
+                          ),
+                          SizedBox(width: 3.w),
+                          LocalPNG(name: "hlw_coin_icon", width: 28.w, height: 28.w),
                         ],
                       ),
                     )

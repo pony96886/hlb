@@ -243,7 +243,7 @@ class _ActionBarWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        // Utils.navTo(context, "/homesearchpage/");
+        Utils.navTo(context, "/homesearchpage/");
       },
       behavior: HitTestBehavior.translucent,
       child: Container(
@@ -320,6 +320,8 @@ class _UserHeaderWidget extends StatelessWidget {
         child: current,
       );
     }
-    return Row(children: [Ink(child: current)]);
+    return Row(children: [InkWell(
+        onTap:onVisibleMenuAction,
+        child: current)]);
   }
 }

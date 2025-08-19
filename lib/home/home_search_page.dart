@@ -258,7 +258,7 @@ class _HomeSearchPageState extends BaseWidgetState<HomeSearchPage>
               clickSearchBar: widget.tag.isEmpty ? _clickSearchBar : Navigator.of(context).pop,
             ),
             Divider(
-              color: StyleTheme.gray238Color,
+              color: StyleTheme.white10,
               height: 1.w,
             ),
             SizedBox(height: isSearch ? 30.w : 50.w),
@@ -343,28 +343,28 @@ class _SearchBar extends StatelessWidget {
             behavior: HitTestBehavior.translucent,
             onTap: () => Utils.splitPopView(context),
             child: LocalPNG(
-              name: "hlw_arrow_left",
-              width: 20.w,
-              height: 20.w,
+              name: "51_nav_back_w",
+              width: 25.w,
+              height: 25.w,
               fit: BoxFit.contain,
             ),
           ),
-          SizedBox(width: 146.w),
+          SizedBox(width: 30.w),
           Container(
             width: 500.w,
-            height: 36.w,
+            height: 40.w,
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             decoration: BoxDecoration(
-                color: StyleTheme.gray247Color,
+                color: StyleTheme.white10,
                 border: Border.all(color: StyleTheme.gray238Color, width: 1.w),
-                borderRadius: BorderRadius.all(Radius.circular(17.w))),
+                borderRadius: BorderRadius.all(Radius.circular(20.w))),
             alignment: Alignment.centerLeft,
             child: Row(
               children: [
                 LocalPNG(
                   name: "hlw_top_search",
-                  width: 20.w,
-                  height: 20.w,
+                  width: 25.w,
+                  height: 25.w,
                 ),
                 SizedBox(width: 20.w),
                 Expanded(
@@ -373,9 +373,9 @@ class _SearchBar extends StatelessWidget {
                     keyboardType: TextInputType.text,
                     autofocus: false,
                     controller: textController,
-                    style: StyleTheme.font_black_31_14,
+                    style: StyleTheme.font_white_255_20,
                     textInputAction: TextInputAction.search,
-                    cursorColor: StyleTheme.black31Color,
+                    cursorColor: Colors.white,
                     enabled: !isHud, //加载完才让输入
                     onSubmitted: (value) {
                       searchInfo();
@@ -385,7 +385,7 @@ class _SearchBar extends StatelessWidget {
                     },
                     decoration: InputDecoration(
                       hintText: Utils.txt('srsgjz'),
-                      hintStyle: StyleTheme.font_gray_170_16_medium,
+                      hintStyle: StyleTheme.font_gray_153_20,
                       contentPadding: EdgeInsets.zero,
                       isDense: true,
                       disabledBorder: OutlineInputBorder(
@@ -444,8 +444,8 @@ class _SearchBar extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(17.w))),
               child: Text(Utils.txt('sosuo'),
                   style: isSearch
-                      ? StyleTheme.font_white_255_16
-                      : StyleTheme.font_black_34_16_medium),
+                      ? StyleTheme.font_white_255_20
+                      : StyleTheme.font_black_34_20),
             ),
           ),
           Expanded(child: Container()),
@@ -513,7 +513,7 @@ class _UnSearchWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(Utils.txt('ssls'), style: StyleTheme.font_black_0_30),
+                  Text(Utils.txt('ssls'), style: StyleTheme.font_white_255_22_bold),
                   GestureDetector(
                     onTap: () => clearRecords(),
                     child: Row(
@@ -526,7 +526,7 @@ class _UnSearchWidget extends StatelessWidget {
                         ),
                         SizedBox(width: 5.w),
                         Text(Utils.txt('qcjl'),
-                            style: StyleTheme.font_black_0_15),
+                            style: StyleTheme.font_white_161_20_bold),
                       ],
                     ),
                   ),
@@ -542,7 +542,7 @@ class _UnSearchWidget extends StatelessWidget {
                     ? Center(
                   child: Text(
                     '没有匹配到"${Utils.txt('zwssjl')}"的内容',
-                    style: StyleTheme.font_black_34_17,
+                    style: StyleTheme.font_gray_153_18,
                   ),
                 )
                     : Wrap(
@@ -553,13 +553,13 @@ class _UnSearchWidget extends StatelessWidget {
                       onTap: () => tapTags(e),
                       child: Container(
                         decoration: BoxDecoration(
-                            color: StyleTheme.gray246Color,
+                            color: StyleTheme.yellow255Color.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(10.w)),
                         padding: EdgeInsets.symmetric(
                             vertical: 10.w, horizontal: 20.w),
                         child: Text(
                           e,
-                          style: StyleTheme.font_black_34_16,
+                          style: StyleTheme.font_gray_194_20,
                         ),
                       ),
                     );
@@ -568,8 +568,8 @@ class _UnSearchWidget extends StatelessWidget {
               ),
               SizedBox(height: 50.w),
               Divider(
-                color: StyleTheme.gray238Color,
-                height: 10.w,
+                color: StyleTheme.white10,
+                height: 1.w,
               ),
               SizedBox(height: 30.w),
               Visibility(
@@ -589,7 +589,7 @@ class _UnSearchWidget extends StatelessWidget {
                     ),
                   ),
               ),
-              Text(Utils.txt('rmtj'), style: StyleTheme.font_black_0_30),
+              Text(Utils.txt('rmtj'), style: StyleTheme.font_white_255_22_bold),
               SizedBox(height: 10.w),
               hots.isEmpty
                   ? LoadStatus.noData()
@@ -606,14 +606,14 @@ class _UnSearchWidget extends StatelessWidget {
                       onTap: () => tapTags(e["word"].toString()),
                       child: Container(
                         decoration: BoxDecoration(
-                            color: StyleTheme.gray246Color,
+                            color: StyleTheme.yellow255Color.withOpacity(0.2),
                             borderRadius:
                             BorderRadius.circular(10.w)),
                         padding: EdgeInsets.symmetric(
                             vertical: 10.w, horizontal: 20.w),
                         child: Text(
                           e["word"] ?? "",
-                          style: StyleTheme.font_black_34_16,
+                          style: StyleTheme.font_gray_194_20,
                         ),
                       ),
                     );

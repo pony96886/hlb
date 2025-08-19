@@ -138,9 +138,9 @@ class _NotLoginWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(width: 20.w),
-          _buildWidget(context, "/mineloginpage/true", StyleTheme.black34Color, 'dneglu', StyleTheme.font_white_255_14),
+          _buildWidget(context, "/mineloginpage/true", StyleTheme.black34Color, 'dneglu', StyleTheme.font_white_255_20),
           SizedBox(width: 10.w),
-          _buildWidget(context, "/mineloginpage", StyleTheme.gray225Color45, 'zuche', StyleTheme.font_black_51_14),
+          _buildWidget(context, "/mineloginpage", StyleTheme.gray225Color45, 'zuche', StyleTheme.font_black_34_20),
         ]);
   }
 }
@@ -193,7 +193,7 @@ class _UserInfoWidget extends StatelessWidget {
                     SizedBox(width: 5.w),
                     Text(
                       '设置',
-                      style: StyleTheme.font_gray_187_15,
+                      style: StyleTheme.font_gray_194_20,
                     ),
                   ],
                 ),
@@ -206,7 +206,7 @@ class _UserInfoWidget extends StatelessWidget {
               Expanded(
                 child: Text(
                   user?.nickname ?? "",
-                  style: StyleTheme.font_black_34_17_bold,
+                  style: StyleTheme.font_black_34_20,
                   maxLines: 1,
                 ),
               ),
@@ -229,8 +229,8 @@ class _ScrollWidget extends StatelessWidget {
       _GroupWidget(
         text: '求瓜投稿',
         style: isData
-            ? StyleTheme.font_gray_102_12
-            : StyleTheme.font_gray_153_12,
+            ? StyleTheme.font_black_34_20
+            : StyleTheme.font_gray_153_20,
         items: AppGlobal.userMenu['regular_menu'],
       ),
       AppGlobal.userMenu['regular_menu'] is List &&
@@ -243,8 +243,8 @@ class _ScrollWidget extends StatelessWidget {
       _GroupWidget(
         text: '更多选项',
         style: isData
-            ? StyleTheme.font_black_34_12
-            : StyleTheme.font_gray_153_12,
+            ? StyleTheme.font_black_34_20
+            : StyleTheme.font_gray_153_20,
         items: AppGlobal.userMenu['more_menu'],
       ),
     ]);
@@ -415,7 +415,7 @@ class _OperationItemWidget extends StatelessWidget {
           ? SizedBox(width: 22.w, height: 22.w)
           : LocalPNG(name: icon, width: 22.w, height: 22.w),
       SizedBox(width: 10.w),
-      Text(item['title'], style: StyleTheme.font_black_34_16),
+      Text(item['title'], style: StyleTheme.font_black_34_20),
     ]);
     current = Container(
       padding: EdgeInsets.symmetric(vertical: 10.w),
