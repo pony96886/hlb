@@ -237,7 +237,10 @@ class Utils {
 
   static void checkline({Function? onSuccess, Function? onFailed}) async {
     Box? box = AppGlobal.appBox;
-    List<String> unChecklines = AppGlobal.apiLines;
+    List<String> unChecklines = AppGlobal.apiLines;//todo：需要恢复以下代码
+    // List<String> unChecklines = box?.get('lines_url') == null
+    //     ? AppGlobal.apiLines
+    //     : List<String>.from(box?.get('lines_url'));
     List<Map> errorLines = [];
     Function checkGit;
     Function doCheck;

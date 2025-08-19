@@ -180,24 +180,24 @@ class PostItemWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 8.w),
-            Text(
-              args['is_ad'] == 1 &&
-                      args['ad'] is Map &&
-                      args['ad']['name'] != null &&
-                      args['ad']['name'] != ''
-                  ? '${args['ad']['name']}'
-                  : '${args["title"]}',
-              style: StyleTheme.font_white_255_22_medium,
-              maxLines: 2,
-            ),
-            SizedBox(height: 10.w),
             Expanded(
               child: Text(
-                plates,
-                style: StyleTheme.font_gray_153_18,
-                maxLines: 1,
+                args['is_ad'] == 1 &&
+                        args['ad'] is Map &&
+                        args['ad']['name'] != null &&
+                        args['ad']['name'] != ''
+                    ? '${args['ad']['name']}'
+                    : '${args["title"]}',
+                style: StyleTheme.font_white_255_22_medium,
+                maxLines: 2,
               ),
             ),
+            SizedBox(height: 10.w),
+            Text(
+              plates,
+              style: StyleTheme.font_gray_153_18,
+              maxLines: 1,
+            )
           ],
         ),
       ),

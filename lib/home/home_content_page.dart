@@ -142,9 +142,9 @@ class _HomeContentPageState extends State<HomeContentPage> {
       physics: const NeverScrollableScrollPhysics(),
       cacheExtent: ScreenHeight * 3,
       crossAxisCount: 3,
-      mainAxisSpacing: 30.w,
+      mainAxisSpacing: 20.w,
       crossAxisSpacing: 20.w,
-      childAspectRatio: 505 / (265 + 112),
+      childAspectRatio: 505 / (265 + 135),
       children: tps.map((e) {
         return PostItemWidget(e, style: 2);
       }).toList(),
