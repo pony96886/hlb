@@ -1242,6 +1242,128 @@ class Utils {
         ),
       ]);
     }
+
+    if (style == 3) {
+      current = current =
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Expanded(
+          child: Stack(children: [
+            NetImageTool(
+              radius: BorderRadius.circular(12.w),
+              url: e['thumb'] ?? '',
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: -1,
+              child: Container(
+                padding: EdgeInsets.only(
+                    left: 20.w, right: 20.w, top: 40.w, bottom: 16.w),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    colors: [
+                      Colors.black,
+                      Colors.black.withOpacity(0),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(12.w),
+                    bottomRight: Radius.circular(12.w),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        LocalPNG(name: "icon_hot", width: 24.w, height: 24.w),
+                        SizedBox(
+                          width: 8.w,
+                        ),
+                        Text(
+                          '1.6w',
+                          style: StyleTheme.font_white_255_20,
+                          maxLines: 1,
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        LocalPNG(
+                            name: "icon_comment", width: 24.w, height: 24.w),
+                        SizedBox(
+                          width: 8.w,
+                        ),
+                        Text(
+                          '1.6w',
+                          style: StyleTheme.font_white_255_20,
+                          maxLines: 1,
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        LocalPNG(
+                            name: "icon_collect", width: 24.w, height: 24.w),
+                        SizedBox(
+                          width: 8.w,
+                        ),
+                        Text(
+                          '1.6w',
+                          style: StyleTheme.font_white_255_20,
+                          maxLines: 1,
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ]),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.w),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(.1),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(12.w),
+              bottomRight: Radius.circular(12.w),
+            ),
+          ),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 60.w,
+                child: Text(
+                  e['is_ad'] == 1 &&
+                          e['ad'] is Map &&
+                          e['ad']['name'] != null &&
+                          e['ad']['name'] != ''
+                      ? '${e['ad']['name']}'
+                      : '${e["title"]}',
+                  style: StyleTheme.font_white_255_22_bold,
+                  maxLines: 2,
+                ),
+              ),
+              SizedBox(height: 16.w),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "2024年9月9日 23:00:00",
+                    style: StyleTheme.font_gray_153_18,
+                    maxLines: 1,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        )
+      ]);
+    }
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {

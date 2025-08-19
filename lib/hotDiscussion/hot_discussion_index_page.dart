@@ -7,7 +7,7 @@ import 'package:hlw/util/utils.dart';
 import 'package:hlw/widget/search_bar_widget.dart';
 
 import '../util/style_theme.dart';
-import 'history_content_page.dart';
+import 'hot_discussion_content_page.dart';
 
 class HotDiscussionIndexPage extends StatefulWidget {
   final dynamic args;
@@ -42,8 +42,12 @@ class _HotDiscussionIndexPageState extends State<HotDiscussionIndexPage> {
       isCenter: false,
       titles: ["今日话题", "历史话题"],
       pages: [
-        Container(),
-        Container(),
+        HotDiscussionContentPage(
+          index: 0,
+        ),
+        HotDiscussionContentPage(
+          index: 1,
+        ),
       ],
     );
   }
