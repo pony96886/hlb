@@ -108,25 +108,29 @@ class _WatchContentPageState extends State<WatchContentPage> {
   }
 
   Widget _buildContainerWidget() {
-    return ListView(
-        padding: EdgeInsets.symmetric(horizontal: 29.5.w),
-        children: [
-          _buildBannerWidget(),
-          _buildFilterWidget(),
-          _buildGridViewWidget(),
-        ]);
+    return NestedScrollView(
+      headerSliverBuilder: (context, innerBoxIsScrolled) => [
+        SliverToBoxAdapter(child: _buildBannerWidget()),
+        SliverToBoxAdapter(child: SizedBox(height: 32.w)),
+      ],
+      body: _buildFilterWidget(), // 这里就是你的 GenCustomNav
+    );
   }
 
   Widget _buildFilterWidget() {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 32.w),
+      padding: EdgeInsets.symmetric(vertical: 0.w),
       child: GenCustomNav(
         defaultStyle: StyleTheme.font_gray_161_20_bold,
         selectStyle: StyleTheme.font_orange_244_20_600,
         isCenter: false,
         isCover: true,
         titles: ["热门推荐", "本周最新", "最多观看"],
-        pages: [],
+        pages: [
+          _buildGridViewWidget(),
+          _buildGridViewWidget(),
+          _buildGridViewWidget(),
+        ],
       ),
     );
   }
@@ -136,6 +140,7 @@ class _WatchContentPageState extends State<WatchContentPage> {
         visible: banners.isNotEmpty,
         child: Utils.bannerScaleExtSwiper(
           data: banners,
+          padding: EdgeInsets.symmetric(horizontal: 29.5.w),
           itemWidth: 710.w,
           // 图片宽
           itemHeight: 240.w,
@@ -150,6 +155,7 @@ class _WatchContentPageState extends State<WatchContentPage> {
 
   Widget _buildGridViewWidget() {
     return GridView.count(
+      padding: EdgeInsets.symmetric(horizontal: 29.5.w),
       addRepaintBoundaries: false,
       addAutomaticKeepAlives: false,
       shrinkWrap: true,
