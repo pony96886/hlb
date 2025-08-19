@@ -137,6 +137,7 @@ class _WatchContentPageState extends State<WatchContentPage> {
         visible: banners.isNotEmpty,
         child: Utils.bannerScaleExtSwiper(
           data: banners,
+          padding: EdgeInsets.symmetric(horizontal: 29.5.w),
           itemWidth: 710.w,
           // 图片宽
           itemHeight: 400.w,
@@ -151,6 +152,7 @@ class _WatchContentPageState extends State<WatchContentPage> {
 
   Widget _buildGridViewWidget() {
     return GridView.count(
+      padding: EdgeInsets.symmetric(horizontal: 29.5.w),
       addRepaintBoundaries: false,
       addAutomaticKeepAlives: false,
       shrinkWrap: true,

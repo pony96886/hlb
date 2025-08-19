@@ -4,8 +4,7 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:hlw/base/update_sysalert.dart';
 import 'package:hlw/history/history_index_page.dart';
 import 'package:hlw/home/home_page.dart';
-import 'package:hlw/hot_discussion/hot_discussion_page.dart';
-import 'package:hlw/jinxuan/welfare_page.dart';
+import 'package:hlw/hotDiscussion/hot_discussion_index_page.dart';
 import 'package:hlw/model/config_model.dart';
 import 'package:hlw/util/app_global.dart';
 import 'package:hlw/util/image_request_async.dart';
@@ -280,7 +279,7 @@ class _MainPageState extends State<MainPage> {
       case 4: // 历史
         return const HistoryIndexPage();
       case 5: // 热议
-        return const HotDiscussionPage();
+        return const HotDiscussionIndexPage();
       default:
         return const SizedBox();
     }

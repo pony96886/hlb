@@ -88,25 +88,8 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
                   ),
                 ),
               ),
-      ),
+            ),
     );
-    // return Column(
-    //   children: [
-    //     current,
-    //     Expanded(
-    //       child: EasyPullRefresh(
-    //         onRefresh: () async {
-    //           return true;
-    //         },
-    //         onLoading: () async {
-    //           return true;
-    //         },
-    //         sameChild: HistoryContentPage(),
-    //       ),
-    //     ),
-    //     SizedBox(height: 20.w),
-    //   ],
-    // );
   }
 
   void _pickDate() async {
