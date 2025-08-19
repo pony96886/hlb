@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:hive/hive.dart';
 import 'package:hlw/util/local_png.dart';
 import 'package:hlw/util/style_theme.dart';
 import 'package:hlw/util/utils.dart';
@@ -66,10 +67,10 @@ class LoadStatus {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          LocalPNG(name: "hlw_nodata", width: w.w, height: w / 285 * 169),
+          LocalPNG(name: "hlw_nodata", width: w.w, height: w / 285 * 169, fit: BoxFit.fitWidth),
           SizedBox(height: 10.w),
           Text(tip,
-              style: StyleTheme.font(size: 14, color: StyleTheme.gray204Color))
+              style: StyleTheme.font(size: 20, color: StyleTheme.gray204Color))
         ],
       ),
     );
