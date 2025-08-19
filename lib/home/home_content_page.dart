@@ -9,16 +9,15 @@ import 'package:hlw/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hlw/util/desktop_extension.dart';
 
-import 'post_item_widget.dart';
+import 'melon_item_widget.dart';
 
 class HomeContentPage extends StatefulWidget {
+  final int? layoutType; //1 list ， 2 gird
   final int id;
   final dynamic banners;
-  const HomeContentPage({
-    super.key,
-    this.id = 0,
-    this.banners,
-  });
+
+  const HomeContentPage(
+      {super.key, this.id = 0, this.banners, this.layoutType = 2});
 
   @override
   State createState() => _HomeContentPageState();
@@ -122,9 +121,12 @@ class _HomeContentPageState extends State<HomeContentPage> {
       visible: banners.isNotEmpty,
       child: Utils.bannerScaleExtSwiper(
         data: banners,
-        itemWidth: 700.w, // 图片宽
-        itemHeight: 300.w, // 图片高(240) + 23 + 10
-        viewportFraction: 700 / 1508, // 1548 - 20 * 2
+        itemWidth: 700.w,
+        // 图片宽
+        itemHeight: 300.w,
+        // 图片高(240) + 23 + 10
+        viewportFraction: 700 / 1508,
+        // 1548 - 20 * 2
         scale: 1,
         spacing: 20.w,
         lineWidth: 20.w,
@@ -135,19 +137,19 @@ class _HomeContentPageState extends State<HomeContentPage> {
 
   Widget _buildGridViewWidget() {
     return GridView.count(
-      padding: EdgeInsets.fromLTRB(0, 15.w, 0, 10.w),
-      addRepaintBoundaries: false,
-      addAutomaticKeepAlives: false,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      cacheExtent: ScreenHeight * 3,
-      crossAxisCount: 3,
-      mainAxisSpacing: 20.w,
-      crossAxisSpacing: 20.w,
-      childAspectRatio: 505 / (265 + 135),
-      children: tps.map((e) {
-        return PostItemWidget(e, style: 2);
-      }).toList(),
-    );
+            padding: EdgeInsets.fromLTRB(0, 15.w, 0, 10.w),
+            addRepaintBoundaries: false,
+            addAutomaticKeepAlives: false,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            cacheExtent: ScreenHeight * 3,
+            crossAxisCount: widget.layoutType == 1 ? 1 : 3,
+            mainAxisSpacing: 20.w,
+            crossAxisSpacing: 20.w,
+            childAspectRatio: widget.layoutType == 1 ? (1585 / 180) : ( 505 / 377),
+            children: tps.map((e) {
+              return MelonItemWidget(e, style: widget.layoutType ?? 2);
+            }).toList(),
+          );
   }
 }

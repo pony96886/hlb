@@ -26,6 +26,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool _loading = true;
   List elements = [], banners = [];
 
+  int layoutType = 2; //1 list ， 2 gird
+
   @override
   void initState() {
     super.initState();
@@ -99,38 +101,44 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
           children: [
             GestureDetector(
                 onTap: () {
-                  //
+                  setState(() {
+                    layoutType = 1;
+                  });
                 },
-                child:
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 5.w),
-                        width: 54.w, height: 48.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(24.w)),
-                          color: StyleTheme.yellow255Color,
-                        ),
-                        child: const LocalPNG(name: 'hlw_list_icon_n'))),
+                child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 13.w, vertical: 5.w),
+                    width: 54.w,
+                    height: 48.w,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(24.w)),
+                      color: layoutType == 1 ? StyleTheme.yellow255Color : Colors.transparent,
+                    ),
+                    child: LocalPNG(name: layoutType == 1 ? 'hlw_list_icon_h': 'hlw_list_icon_n'))),
             SizedBox(width: 10.w),
             GestureDetector(
                 onTap: () {
-                  //
+                  setState(() {
+                    layoutType = 2;
+                  });
                 },
-                child:
-                    Container(
-                        padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 5.w),
-                        width: 54.w, height: 48.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(24.w)),
-                          color: StyleTheme.yellow255Color,
-                        ),
-                        child: const LocalPNG(name: 'hlw_girl_icon_n'))),
+                child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 13.w, vertical: 5.w),
+                    width: 54.w,
+                    height: 48.w,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(24.w)),
+                      color: layoutType == 2 ? StyleTheme.yellow255Color : Colors.transparent,
+                    ),
+                    child: LocalPNG(name: layoutType == 2 ? 'hlw_girl_icon_h': 'hlw_girl_icon_n'))),
           ],
         ),
       ),
       titles: elements.map((e) => e["name"].toString()).toList(),
       pages: elements.map((e) {
         return PageViewMixin(
-          child: HomeContentPage(id: e["id"], banners: banners),
+          child: HomeContentPage(id: e["id"], banners: banners, layoutType: layoutType),
         );
       }).toList(),
     );

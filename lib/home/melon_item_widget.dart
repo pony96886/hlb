@@ -7,14 +7,13 @@ import '../util/netimage_tool.dart';
 import '../util/style_theme.dart';
 import '../util/utils.dart';
 
-class PostItemWidget extends StatelessWidget {
+class MelonItemWidget extends StatelessWidget {
   final int style;
   final int state;
   final dynamic args;
 
-  /// style: 1 横向样式 2 纵向样式
-  /// state: 1 已分布 2 通过/待回调 3 待审核 4 被拒绝
-  const PostItemWidget(
+  /// style: 1 list 横向样式 , 2 gird 纵向样式
+  const MelonItemWidget(
     this.args, {
     super.key,
     this.style = 1,
@@ -59,100 +58,67 @@ class PostItemWidget extends StatelessWidget {
   }
 
   String get plates {
-    String plates =
-        DateUtil.formatDateStr(args["created_date"], format: "yyyy年MM日dd");
+    String plates = '';
     if (args["plates"] is Map && (args["plates"] as Map).isNotEmpty) {
-      plates += ' · ${(args["plates"] as Map).values.toList().join(' ')}';
+      plates += (args["plates"] as Map).values.toList().join(' ');
     }
     if (args["plates"] is List && (args["plates"] as List).isNotEmpty) {
-      plates += ' · ${(args["plates"] as List).map((i) {
+      plates += (args["plates"] as List).map((i) {
         if (i is String) return i;
         if (i is Map) return '${i['name']}';
         return ''; // 未知类型
-      }).join(' ')}';
+      }).join(' ');
     }
 
     return plates;
   }
 
   Widget _buildStyleOneWidget(BuildContext context) {
-    return Column(children: [
-      SizedBox(
-        width: 920.w,
-        height: 150.w,
-        child: Row(children: [
-          Stack(children: [
-            SizedBox(
-              width: 440.w,
-              height: 150.w,
-              // width: StyleTheme.contentWidth / 2,
-              // height: StyleTheme.contentWidth / 2 / 375 * 130,
-              child: NetImageTool(
-                radius: BorderRadius.all(Radius.circular(3.w)),
-                url: args['thumb'] ?? '',
-              ),
-            ),
-            Positioned(
-              right: 0,
-              top: 0,
-              child: (args['is_hot'] != 1 || args['is_ad'] == 1)
-                  ? Container()
-                  : LocalPNG(name: "hlw_new_hot", width: 54.w, height: 43.w),
-            ),
-          ]),
-          SizedBox(width: 40.w),
-          SizedBox(
-            height: 150.w,
-            // height: StyleTheme.contentWidth / 2 / 375 * 130,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  args["title"],
-                  style: StyleTheme.font_white_20,
-                  maxLines: 3,
-                ),
-                SizedBox(height: 10.w),
-                Text(
-                  plates,
-                  style: StyleTheme.font_gray_153_14,
-                  maxLines: 1,
-                ),
-                Expanded(child: Container()),
-                Visibility(
-                  visible: args['id'] > 0,
-                  child: Utils.btnRed(
-                    '编辑',
-                    () => Utils.navTo(context, '/homeeditorpage/${args['id']}'),
-                  ),
-                ),
-              ],
-            ),
+    return Row(children: [
+      Stack(children: [
+        SizedBox(
+          width: 356.w,
+          height: 180.w,
+          child: NetImageTool(
+            radius: BorderRadius.all(Radius.circular(5.w)),
+            url: args['thumb'] ?? '',
           ),
-        ]),
-      ),
-      SizedBox(height: 20.w),
-      Container(
-        height: 70.w,
-        width: double.infinity,
-        color: StyleTheme.gray246Color,
-        padding: EdgeInsets.all(10.w),
+        ),
+        Positioned(
+          right: 0,
+          top: 0,
+          child: (args['is_hot'] != 1 || args['is_ad'] == 1)
+              ? Container()
+              : LocalPNG(name: "hlw_new_hot", width: 54.w, height: 43.w),
+        ),
+      ]),
+      SizedBox(width: 20.w),
+      Expanded(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              Utils.txt('ggly') + ":",
-              style: StyleTheme.font_red_245_15_bold,
+              args["title"],
+              style: StyleTheme.font_white_255_22_bold,
+              maxLines: 10,
+            ),
+            SizedBox(height: 10.w),
+            Expanded(
+              child: Text(
+                plates,
+                style: StyleTheme.font_gray_153_18,
+                maxLines: 3,
+              ),
             ),
             Text(
-              "${args['remark']}",
-              style: StyleTheme.font_gray_102_14,
+              DateUtil.formatDateStr(args["created_date"],
+                  format: "yyyy年MM日dd"),
+              style: StyleTheme.font_gray_153_18,
+              maxLines: 1,
             ),
           ],
         ),
-      ),
-      SizedBox(height: 20.w), // 間距
+      )
     ]);
   }
 
