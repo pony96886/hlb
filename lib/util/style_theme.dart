@@ -414,6 +414,9 @@ class StyleTheme {
   static TextStyle font_white_255_28_medium =
       font(size: 28, weight: FontWeight.w500);
 
+  static TextStyle font_white_255_28_600 =
+      font(size: 28, weight: FontWeight.w600, color: Colors.white);
+
   static TextStyle font_gray_204_13_bold =
       font(size: 13, weight: FontWeight.bold, color: gray204Color);
 

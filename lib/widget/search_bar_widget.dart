@@ -108,61 +108,90 @@ class _TopBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 90.w,
-      child: Row(children: [
-        SizedBox(width: 30.w),
-        _ActionBarWidget(
-          detailWidget: detailWidget,
-          isBackBtn: isBackBtn,
+    return Column(
+      children: [
+        Container(
+          height: 90.w,
+          child: Row(children: [
+            SizedBox(width: 30.w),
+            _ActionBarWidget(
+              detailWidget: detailWidget,
+              isBackBtn: false,
+            ),
+            const Expanded(child: SizedBox()),
+            GestureDetector(
+              onTap: () {},
+              behavior: HitTestBehavior.opaque,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                height: 50.w,
+                width: 56.w,
+                child: const LocalPNG(
+                  name: 'hlw_top_refresh',
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {},
+              behavior: HitTestBehavior.opaque,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                height: 50.w,
+                width: 56.w,
+                child: const LocalPNG(
+                  name: 'hlw_top_problem',
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {},
+              behavior: HitTestBehavior.opaque,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                height: 50.w,
+                width: 56.w,
+                child: const LocalPNG(
+                  name: 'hlw_top_setting',
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            SizedBox(width: 12.w),
+            _UserHeaderWidget(
+              showHead: showHead,
+              onVisibleMenuAction: onVisibleMenuAction,
+            ),
+            SizedBox(width: 30.w),
+          ]),
         ),
-        const Expanded(child: SizedBox()),
-        GestureDetector(
-          onTap: () {},
-          behavior: HitTestBehavior.opaque,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w),
-            height: 50.w,
-            width: 56.w,
-            child: const LocalPNG(
-              name: 'hlw_top_refresh',
-              fit: BoxFit.contain,
+        if (isBackBtn)
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 30.w),
+            height: 56.w,
+            alignment: Alignment.centerLeft,
+            child: Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    Utils.splitPopView(context);
+                  },
+                  child: LocalPNG(
+                    name: "icon_back",
+                    width: 24.w,
+                    height: 24.w,
+                  ),
+                ),
+                SizedBox(width: 12.8.w),
+                Text(
+                  backTitle,
+                  style: StyleTheme.font_white_255_28_600,
+                )
+              ],
             ),
           ),
-        ),
-        GestureDetector(
-          onTap: () {},
-          behavior: HitTestBehavior.opaque,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w),
-            height: 50.w,
-            width: 56.w,
-            child: const LocalPNG(
-              name: 'hlw_top_problem',
-              fit: BoxFit.contain,
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {},
-          behavior: HitTestBehavior.opaque,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w),
-            height: 50.w,
-            width: 56.w,
-            child: const LocalPNG(
-              name: 'hlw_top_setting',
-              fit: BoxFit.contain,
-            ),
-          ),
-        ),
-        SizedBox(width: 12.w),
-        _UserHeaderWidget(
-          showHead: showHead,
-          onVisibleMenuAction: onVisibleMenuAction,
-        ),
-        SizedBox(width: 30.w),
-      ]),
+      ],
     );
   }
 }
@@ -320,8 +349,6 @@ class _UserHeaderWidget extends StatelessWidget {
         child: current,
       );
     }
-    return Row(children: [InkWell(
-        onTap:onVisibleMenuAction,
-        child: current)]);
+    return Row(children: [InkWell(onTap: onVisibleMenuAction, child: current)]);
   }
 }
