@@ -113,27 +113,27 @@ class _HotDiscussionContentPageState extends State<HotDiscussionContentPage> {
   }
 
   Widget _buildContainerWidget() {
-    return NestedScrollView(
-      headerSliverBuilder: (context, innerBoxIsScrolled) => [],
-      body: _buildFilterWidget(), // 这里就是你的 GenCustomNav
-    );
+    return ListView(children: [
+      _buildFilterWidget(),
+      SizedBox(
+        height: 28.w,
+      ),
+      _buildGridViewWidget(),
+    ]);
   }
 
   Widget _buildFilterWidget() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.w),
-      child: GenCustomNav(
-        defaultStyle: StyleTheme.font_gray_161_20_bold,
-        selectStyle: StyleTheme.font_orange_244_20_600,
-        isCenter: false,
-        isCover: true,
-        titles: ["热门推荐", "本周最新", "最多观看"],
-        pages: [
-          _buildGridViewWidget(),
-          _buildGridViewWidget(),
-          _buildGridViewWidget(),
-        ],
-      ),
+    return Column(
+      children: [
+        GenCustomNav(
+          defaultStyle: StyleTheme.font_gray_161_20_bold,
+          selectStyle: StyleTheme.font_orange_244_20_600,
+          isCenter: false,
+          isCover: true,
+          titles: ["热门推荐", "本周最新", "最多观看"],
+          pages: [],
+        ),
+      ],
     );
   }
 
@@ -141,6 +141,7 @@ class _HotDiscussionContentPageState extends State<HotDiscussionContentPage> {
     return GridView.count(
       addRepaintBoundaries: false,
       addAutomaticKeepAlives: false,
+      padding: EdgeInsets.symmetric(horizontal: 29.5.w),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       cacheExtent: ScreenHeight * 3,
@@ -148,7 +149,6 @@ class _HotDiscussionContentPageState extends State<HotDiscussionContentPage> {
       mainAxisSpacing: 52.w,
       crossAxisSpacing: 20.w,
       childAspectRatio: 374.w / 664.w,
-      padding: EdgeInsets.symmetric(horizontal: 29.5.w),
       children: [
         defaultItemData,
         defaultItemData,
