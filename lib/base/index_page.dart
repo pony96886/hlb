@@ -13,7 +13,6 @@ import 'package:hlw/util/local_png.dart';
 import 'package:hlw/util/style_theme.dart';
 import 'package:hlw/util/utils.dart';
 import 'package:hlw/watch/watch_page.dart';
-import 'package:hlw/welfare/welfare_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,7 +23,6 @@ import 'package:provider/provider.dart';
 import "package:universal_html/html.dart" as html;
 
 import '../circle/circle_index_page.dart';
-import '../feature/feature_index_page.dart';
 import '../model/general_ads_model.dart';
 import '../model/user_model.dart';
 
@@ -277,7 +275,7 @@ class _MainPageState extends State<MainPage> {
         // return RankPage(isShow: true);
         return const CircleIndexPage();
       case 3: // 精选
-        return const FeatureIndexPage();
+        return const WelfarePage(isShow: true);
       case 4: // 历史
         return const HistoryIndexPage();
       case 5: // 热议

@@ -30,20 +30,24 @@ class _WelfarePageState extends State<WelfarePage> {
         Provider.of<BaseStore>(context, listen: false).config;
     return Stack(children: [
       Positioned(
-        top: 64.w,
-        left: 60.w,
-        right: 60.w,
+        top: 100.w,
+        left: 30.w,
+        right: 30.w,
         bottom: 0,
         child: configModel?.welfare_tab == null
             ? Container()
             : GenCustomNav(
+                tabPadding: 0,
                 isCenter: false,
                 titles: configModel!.welfare_tab!
                     .map((e) => e["name"].toString())
                     .toList(),
                 pages: configModel.welfare_tab!.map((e) {
                   return PageViewMixin(
-                    child: WelfareRecApps(isShow: widget.isShow, id: e["id"], isRec: e["name"] == Utils.txt('tj')),
+                    child: WelfareRecApps(
+                        isShow: widget.isShow,
+                        id: e["id"],
+                        isRec: e["name"] == Utils.txt('tj')),
                   );
                 }).toList(),
               ),
@@ -82,7 +86,13 @@ class WelfareRecApps extends StatefulWidget {
   final bool isRec;
   final bool isShow;
   final dynamic data;
-  const WelfareRecApps({Key? key, this.id = 0, this.isRec = false, this.isShow = false, this.data})
+
+  const WelfareRecApps(
+      {Key? key,
+      this.id = 0,
+      this.isRec = false,
+      this.isShow = false,
+      this.data})
       : super(key: key);
 
   @override
@@ -163,9 +173,7 @@ class _WelfareRecAppsState extends State<WelfareRecApps> {
   @override
   void didUpdateWidget(covariant WelfareRecApps oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (apps.isEmpty &&
-        oldWidget.isShow == false &&
-        widget.isShow == true) {
+    if (apps.isEmpty && oldWidget.isShow == false && widget.isShow == true) {
       getDataAll();
     }
   }
@@ -193,17 +201,19 @@ class _WelfareRecAppsState extends State<WelfareRecApps> {
                 children: [
                   Utils.bannerScaleExtSwiper(
                     data: banners2,
-                    itemWidth: 710.w, // 图片宽
-                    itemHeight: 240.w, // 图片高(240) + 23 + 10
-                    viewportFraction: 0.777, // （710 + 5）/ 920（1040 - 120）
+                    itemWidth: 710.w,
+                    // 图片宽
+                    itemHeight: 240.w,
+                    // 图片高(240) + 23 + 10
+                    viewportFraction: 0.777,
+                    // （710 + 5）/ 920（1040 - 120）
                     scale: 1,
                     spacing: 5.w,
                     lineWidth: 20.w,
                   ),
                   SizedBox(height: 30.w),
                 ],
-              )
-          ),
+              )),
           netError1
               ? LoadStatus.netErrorWork(onTap: () {
                   netError1 = false;
@@ -244,19 +254,19 @@ class _WelfareRecAppsState extends State<WelfareRecApps> {
           // SizedBox(height: 30.w),
           Visibility(
             visible: apps2.isNotEmpty,
-              child: SizedBox(
-                key: ValueKey(apps2),
-                width: double.infinity,
-                child: Wrap(
-                  spacing: 25.w,
-                  runSpacing: 25.w,
-                  children: apps2
-                      .asMap()
-                      .keys
-                      .map((index) => _AppGridWidget(e: apps2[index]))
-                      .toList(),
-                ),
+            child: SizedBox(
+              key: ValueKey(apps2),
+              width: double.infinity,
+              child: Wrap(
+                spacing: 25.w,
+                runSpacing: 25.w,
+                children: apps2
+                    .asMap()
+                    .keys
+                    .map((index) => _AppGridWidget(e: apps2[index]))
+                    .toList(),
               ),
+            ),
           ),
         ],
       ),
@@ -266,6 +276,7 @@ class _WelfareRecAppsState extends State<WelfareRecApps> {
 
 class _AppGridWidget extends StatelessWidget {
   final dynamic e;
+
   const _AppGridWidget({Key? key, required this.e}) : super(key: key);
 
   @override
@@ -273,7 +284,7 @@ class _AppGridWidget extends StatelessWidget {
     return Container(
       color: Colors.transparent,
       width: 290.w,
-      height: 122.w,
+      height: 140.w,
       child: GestureDetector(
         onTap: () {
           //上报点击量
@@ -296,17 +307,14 @@ class _AppGridWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 24.w,
-                    child: Text(
-                      e["name"] ?? '',
-                      style: StyleTheme.font_black_0_17,
-                    ),
+                  Text(
+                    e["name"] ?? '',
+                    style: StyleTheme.font_white_255_20,
                   ),
-                  SizedBox(height: 1.w),
+                  SizedBox(height: 2.w),
                   Text(
                     e["intro"] ?? '',
-                    style: StyleTheme.font_gray_153_13,
+                    style: StyleTheme.font_gray_153_17,
                     maxLines: 3,
                     softWrap: false,
                   ),
@@ -315,13 +323,13 @@ class _AppGridWidget extends StatelessWidget {
                   LocalPNG(
                     key: ValueKey(e),
                     name: 'hlw_btn_download',
-                    height: 25.w,
-                    width: 55.w,
+                    height: 30.w,
+                    width: 65.w,
                   ),
                   SizedBox(height: 20.w),
                   Divider(
                     height: 1.w,
-                    color: StyleTheme.gray233Color,
+                    color: StyleTheme.gray77Color,
                   ),
                 ],
               ),

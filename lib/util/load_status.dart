@@ -45,7 +45,7 @@ class LoadStatus {
             SizedBox(height: 15.w),
             Text(tip,
                 style:
-                    StyleTheme.font(size: 12, color: StyleTheme.gray204Color))
+                    StyleTheme.font(size: 20, color: StyleTheme.gray204Color))
           ],
         ),
       );

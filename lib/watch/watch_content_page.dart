@@ -108,19 +108,20 @@ class _WatchContentPageState extends State<WatchContentPage> {
   }
 
   Widget _buildContainerWidget() {
-    return NestedScrollView(
-      headerSliverBuilder: (context, innerBoxIsScrolled) => [
-        SliverToBoxAdapter(child: _buildBannerWidget()),
-        SliverToBoxAdapter(child: SizedBox(height: 32.w)),
-      ],
-      body: _buildFilterWidget(), // 这里就是你的 GenCustomNav
-    );
+    return ListView(
+        padding: EdgeInsets.symmetric(horizontal: 30.w),
+        children: [
+          _buildBannerWidget(),
+          _buildFilterWidget(),
+          _buildGridViewWidget(),
+        ]);
   }
 
   Widget _buildFilterWidget() {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.w),
+      padding: EdgeInsets.only(top: 5.w, bottom: 30.w),
       child: GenCustomNav(
+        tabPadding: 0,
         defaultStyle: StyleTheme.font_gray_161_20_bold,
         selectStyle: StyleTheme.font_orange_244_20_600,
         isCenter: false,
@@ -143,7 +144,7 @@ class _WatchContentPageState extends State<WatchContentPage> {
           padding: EdgeInsets.symmetric(horizontal: 29.5.w),
           itemWidth: 710.w,
           // 图片宽
-          itemHeight: 240.w,
+          itemHeight: 400.w,
           // 图片高(240) + 23 + 10
           viewportFraction: 0.777,
           // （710 + 5）/ 920 // 1040 - 120
@@ -162,7 +163,7 @@ class _WatchContentPageState extends State<WatchContentPage> {
       physics: const NeverScrollableScrollPhysics(),
       cacheExtent: ScreenHeight * 3,
       crossAxisCount: 4,
-      mainAxisSpacing: 52.w,
+      mainAxisSpacing: 20.w,
       crossAxisSpacing: 20.w,
       childAspectRatio: 374.w / 353.w,
       children:

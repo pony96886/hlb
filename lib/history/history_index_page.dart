@@ -26,7 +26,7 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      LocalPNG(
+      const LocalPNG(
         name: "history_bg",
         height: double.infinity,
         width: double.infinity,
@@ -44,41 +44,49 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
   }
 
   Widget _buildHistoryWidget() {
-    return GenCustomNav(
-      isCenter: false,
-      defaultSelectIndex: tabSelectIndex,
-      indexFunc: (index) {
-        tabSelectIndex = index;
-        setState(() {});
-      },
-      titles: ["尘封", "榜单", "往期"],
-      pages: [
-        HistoryContentPage(
-          index: 0,
-        ),
-        HistoryContentPage(index: 1),
-        HistoryContentPage(index: 2),
-      ],
-      titleExtraWidget: tabSelectIndex == 0
-          ? null
-          : InkWell(
-              onTap: _pickDate,
-              child: Row(
-                children: [
-                  Text(
-                    "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}",
-                    style: StyleTheme.font_gray_194_20_bold,
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: 32.w,
+      ),
+      child: GenCustomNav(
+        isCenter: false,
+        defaultSelectIndex: tabSelectIndex,
+        indexFunc: (index) {
+          tabSelectIndex = index;
+          setState(() {});
+        },
+        titles: const ["尘封", "榜单", "往期"],
+        pages: const [
+          HistoryContentPage(
+            index: 0,
+          ),
+          HistoryContentPage(index: 1),
+          HistoryContentPage(index: 2),
+        ],
+        rightWidget: tabSelectIndex == 0
+            ? null
+            : InkWell(
+                onTap: _pickDate,
+                child: Padding(
+                  padding: EdgeInsets.only(right: 30.w),
+                  child: Row(
+                    children: [
+                      Text(
+                        "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}",
+                        style: StyleTheme.font_gray_194_20_bold,
+                      ),
+                      SizedBox(
+                        width: 12.w,
+                      ),
+                      LocalPNG(
+                        name: "icon_calendar",
+                        width: 30.w,
+                        height: 30.w,
+                        fit: BoxFit.contain,
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    width: 12.w,
-                  ),
-                  LocalPNG(
-                    name: "icon_calendar",
-                    width: 30.w,
-                    height: 30.w,
-                    fit: BoxFit.contain,
-                  ),
-                ],
+                ),
               ),
             ),
     );

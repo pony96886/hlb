@@ -39,6 +39,7 @@ class StyleTheme {
   //颜色
   static Color bgColor = const Color.fromRGBO(24, 24, 24, 1);
   static Color navColor = const Color.fromRGBO(255, 255, 255, 1);
+  static Color white10 = const Color.fromRGBO(255, 255, 255, 0.1);
   static Color black0Color = Colors.black;
   static Color black0Color120 = const Color.fromRGBO(0, 0, 0, 0.120);
   static Color black0Color720 = const Color.fromRGBO(0, 0, 0, 0.720);
@@ -486,10 +487,10 @@ class StyleTheme {
       font(size: 22, weight: FontWeight.bold, color: Colors.white);
 
   static TextStyle font_white_255_24_bold =
-      font(size: 22, weight: FontWeight.bold, color: Colors.white);
+      font(size: 24, weight: FontWeight.bold, color: Colors.white);
 
   static TextStyle font_white_255_20 =
-      font(size: 22, weight: FontWeight.normal, color: Colors.white);
+      font(size: 20, weight: FontWeight.normal, color: Colors.white);
 
   static TextStyle font_black_51_17 =
       font(size: 17, weight: FontWeight.normal, color: gray51Color);
