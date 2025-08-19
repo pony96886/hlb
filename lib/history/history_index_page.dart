@@ -44,66 +44,44 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
   }
 
   Widget _buildHistoryWidget() {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: 32.w,
-      ),
-      child: GenCustomNav(
-        isCenter: false,
-        defaultSelectIndex: tabSelectIndex,
-        indexFunc: (index) {
-          tabSelectIndex = index;
-          setState(() {});
-        },
-        titles: ["尘封", "榜单", "往期"],
-        pages: [
-          HistoryContentPage(
-            index: 0,
-          ),
-          HistoryContentPage(index: 1),
-          HistoryContentPage(index: 2),
-        ],
-        titleExtraWidget: tabSelectIndex == 0
-            ? null
-            : InkWell(
-                onTap: _pickDate,
-                child: Row(
-                  children: [
-                    Text(
-                      "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}",
-                      style: StyleTheme.font_gray_194_20_bold,
-                    ),
-                    SizedBox(
-                      width: 12.w,
-                    ),
-                    LocalPNG(
-                      name: "icon_calendar",
-                      width: 30.w,
-                      height: 30.w,
-                      fit: BoxFit.contain,
-                    ),
-                  ],
-                ),
+    return GenCustomNav(
+      isCenter: false,
+      defaultSelectIndex: tabSelectIndex,
+      indexFunc: (index) {
+        tabSelectIndex = index;
+        setState(() {});
+      },
+      titles: ["尘封", "榜单", "往期"],
+      pages: [
+        HistoryContentPage(
+          index: 0,
+        ),
+        HistoryContentPage(index: 1),
+        HistoryContentPage(index: 2),
+      ],
+      titleExtraWidget: tabSelectIndex == 0
+          ? null
+          : InkWell(
+              onTap: _pickDate,
+              child: Row(
+                children: [
+                  Text(
+                    "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}",
+                    style: StyleTheme.font_gray_194_20_bold,
+                  ),
+                  SizedBox(
+                    width: 12.w,
+                  ),
+                  LocalPNG(
+                    name: "icon_calendar",
+                    width: 30.w,
+                    height: 30.w,
+                    fit: BoxFit.contain,
+                  ),
+                ],
               ),
-      ),
+            ),
     );
-    // return Column(
-    //   children: [
-    //     current,
-    //     Expanded(
-    //       child: EasyPullRefresh(
-    //         onRefresh: () async {
-    //           return true;
-    //         },
-    //         onLoading: () async {
-    //           return true;
-    //         },
-    //         sameChild: HistoryContentPage(),
-    //       ),
-    //     ),
-    //     SizedBox(height: 20.w),
-    //   ],
-    // );
   }
 
   void _pickDate() async {
