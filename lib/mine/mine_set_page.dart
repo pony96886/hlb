@@ -260,14 +260,14 @@ class _Item extends StatelessWidget {
               children: [
                 Text(
                   title ?? "",
-                  style: StyleTheme.font_gray_102_14_40,
+                  style: StyleTheme.font_gray_153_20,
                 ),
                 Expanded(child: Container()),
                 rightText != null
                     ? Text(
                         rightText!,
                         key: ValueKey(rightText),
-                        style: StyleTheme.font_black_34_17,
+                        style: StyleTheme.font_white_255_20,
                         textAlign: TextAlign.right,
                       )
                     : Container(),
@@ -275,7 +275,7 @@ class _Item extends StatelessWidget {
                   width: 10.w,
                 ),
                 LocalPNG(
-                  name: '51_mine_parrow',
+                  name: '51_mine_arrow',
                   width: 20.w,
                   height: 20.w,
                   color: StyleTheme.black34Color,
@@ -284,7 +284,7 @@ class _Item extends StatelessWidget {
             ),
             SizedBox(height: 15.w),
             Divider(
-              color: StyleTheme.gray238Color,
+              color: StyleTheme.white10 ,
               height: 1.w,
             ),
           ],

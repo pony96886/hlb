@@ -42,7 +42,7 @@ class InputContainer extends StatelessWidget {
     UserModel? user = Provider.of<BaseStore>(context, listen: false).user;
     return Container(
       width: width,
-      color: Colors.transparent,
+      color: StyleTheme.bgColor,
       child: Column(
         children: [
           Expanded(
@@ -60,19 +60,20 @@ class InputContainer extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: padding.w),
             child: Divider(
               height: 1.w,
-              color: StyleTheme.gray238Color,
+              color: StyleTheme.white10,
             ),
           ),
-          SizedBox(
-            height: 54.w,
+          Container(
+            padding: EdgeInsets.all(13.w),
+            height: 66.w,
             width: width,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 onSelectPicComplete == null
                     ? SizedBox(
-                  height: 30.w,
-                  width: 30.w,
+                  height: 40.w,
+                  width: 40.w,
                   child: NetImageTool(
                     url: user?.thumb ?? "",
                     radius: BorderRadius.all(Radius.circular(15.w)),
@@ -86,21 +87,22 @@ class InputContainer extends StatelessWidget {
                   },
                   child: LocalPNG(
                       name: "hlw_mine_head",
-                      width: 28.5.w,
-                      height: 24.w),
+                      width: 40.w,
+                      height: 40.w),
                 ),
                 Container(
-                  width: 500.w,
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  width: ScreenWidth - StyleTheme.rightWidth - 430.w,
                   alignment: Alignment.centerLeft,
                   child: TextField(
                     focusNode: focusNode,
                     controller: controller,
-                    style: StyleTheme.font_black_31_14,
-                    cursorColor: StyleTheme.black31Color,
+                    style: StyleTheme.font_white_255_20,
+                    cursorColor: Colors.white,
                     decoration: InputDecoration(
                       prefix: childPrefix,
                       hintText: hintText,
-                      hintStyle: StyleTheme.font_gray_119_14,
+                      hintStyle: StyleTheme.font_gray_153_20,
                       isDense: true,
                       contentPadding: EdgeInsets.zero,
                       border: const OutlineInputBorder(
@@ -117,6 +119,7 @@ class InputContainer extends StatelessWidget {
                     onSubmitted: (_) {},
                   ),
                 ),
+                const Spacer(),
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onTap: () {
@@ -125,18 +128,16 @@ class InputContainer extends StatelessWidget {
                     controller.text = "";
                   },
                   child: Container(
-                    width: 54.w,
-                    height: 30.w,
+                    width: 70.w,
+                    height: 40.w,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(
-                          color: StyleTheme.gray151Color, width: 1.w),
-                      borderRadius: BorderRadius.circular((13.w)),
+                      color: StyleTheme.white10,
+                      borderRadius: BorderRadius.circular((20.w)),
                     ),
                     child: Text(
                       '发送',
-                      style: StyleTheme.font_gray_151_13,
+                      style: StyleTheme.font_gray_153_20,
                     ),
                   ),
                 ),

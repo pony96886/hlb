@@ -349,7 +349,7 @@ class _MainPageState extends State<MainPage> {
                       MaximizeWindowButton(),
                     ]),
                   ),
-                  SizedBox(height: 26.w),
+                  SizedBox(height: 20.w),
                 ],
                 GestureDetector(
                   // 官網

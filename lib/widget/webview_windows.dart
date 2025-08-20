@@ -93,7 +93,7 @@
 //                 onTap: () {
 //                   _controller.goBack();
 //                 },
-//                 child: LocalPNG(name: "hlw_arrow_left", width: 20.w, height: 20.w),
+//                 child: LocalPNG(name: "51_nav_back_w", width: 20.w, height: 20.w),
 //               ),
 //               SizedBox(width: 20.w),
 //               GestureDetector(
@@ -102,7 +102,7 @@
 //                 },
 //                 child: Transform.rotate(
 //                   angle: math.pi,
-//                   child: LocalPNG(name: "hlw_arrow_left", width: 20.w, height: 20.w),
+//                   child: LocalPNG(name: "51_nav_back_w", width: 20.w, height: 20.w),
 //                 ),
 //               ),
 //               SizedBox(width: 20.w),

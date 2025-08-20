@@ -132,11 +132,11 @@ abstract class BaseWidgetState<T extends BaseWidget> extends State<T>
    */
   void setAppTitle({
     String title = "",
-    String backIcon = "51_nav_back",
+    String backIcon = "51_nav_back_w",
     Color navColor = Colors.transparent,
-    Color bgColor = const Color.fromRGBO(255, 255, 255, 1),
+    Color bgColor = const Color.fromRGBO(24, 24, 24, 1),
     Widget? rightW,
-    Color lineColor = const Color.fromRGBO(245, 245, 245, 1),
+    Color lineColor = Colors.transparent,
   }) {
     _appTitle = title;
     _backIcon = backIcon;
@@ -179,12 +179,12 @@ abstract class BaseWidgetState<T extends BaseWidget> extends State<T>
                             child: GestureDetector(
                               child: Container(
                                 alignment: Alignment.centerLeft,
-                                width: 27.w,
+                                width: 35.w,
                                 height: 40.w,
                                 child: LocalPNG(
                                   name: _backIcon,
-                                  width: 17.w,
-                                  height: 17.w,
+                                  width: 25.w,
+                                  height: 25.w,
                                   fit: BoxFit.contain,
                                 ),
                               ),
@@ -196,7 +196,7 @@ abstract class BaseWidgetState<T extends BaseWidget> extends State<T>
                           ),
                           Expanded(
                               child: Text(_appTitle,
-                                  style: StyleTheme.nav_title_font,
+                                  style: StyleTheme.font_white_255_20,
                                   textAlign: TextAlign.left)),
                           SizedBox(width: 10.w),
                           _rightW ?? SizedBox(width: 20.w, height: 20.w)

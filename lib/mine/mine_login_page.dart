@@ -362,7 +362,7 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
   Widget _buildPopButtonWidget() {
     return GestureDetector(
       child: LocalPNG(
-        name: "hlw_arrow_left",
+        name: "51_nav_back_w",
         width: 17.w,
         height: 17.w,
         fit: BoxFit.contain,

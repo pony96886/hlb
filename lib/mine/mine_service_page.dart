@@ -74,7 +74,7 @@ class _MineServicePageState extends BaseWidgetState<MineServicePage> {
           },
           child: Text(
             Utils.txt('chjwt'),
-            style: StyleTheme.font_black_31_14,
+            style: StyleTheme.font_white_255_20
           ),
         ));
     getData();
@@ -365,7 +365,7 @@ class _MineServicePageState extends BaseWidgetState<MineServicePage> {
                 children: [
                   Expanded(
                     child: InputContainer(
-                      bg: Colors.white,
+                      bg: Colors.black,
                       onEditingCompleteText: ((value) {
                         sendContent(value.toString().trim());
                       }),
@@ -414,7 +414,7 @@ class _MineServicePageState extends BaseWidgetState<MineServicePage> {
                             ),
                     ),
                   ),
-                  RightModuleUI()
+                  const RightModuleUI()
                 ],
               );
   }

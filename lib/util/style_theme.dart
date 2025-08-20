@@ -115,7 +115,7 @@ class StyleTheme {
 
   //字体
   static TextStyle nav_title_font =
-      font(size: 18, weight: FontWeight.normal, color: black31Color);
+      font(size: 18, weight: FontWeight.normal, color: Colors.white);
 
   static TextStyle font_orange_255_15 =
       font(size: 15, weight: FontWeight.normal, color: orange255Color);

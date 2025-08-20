@@ -10,7 +10,7 @@ import 'package:hlw/util/desktop_extension.dart';
 import 'package:provider/provider.dart';
 
 class RightModuleUI extends StatefulWidget {
-  const RightModuleUI({Key? key, this.bgColor = Colors.white}) : super(key: key);
+  const RightModuleUI({Key? key, this.bgColor = const Color.fromRGBO(24, 24, 24, 1)}) : super(key: key);
   final Color bgColor;
   // const Color.fromRGBO(247, 248, 249, 1)
 
@@ -57,13 +57,17 @@ class _RightModuleUIState extends State<RightModuleUI> {
       return Container(
           width: StyleTheme.rightWidth,
           height: ScreenHeight,
-          color: widget.bgColor,
+          decoration: BoxDecoration(
+            color: widget.bgColor,
+            border: Border.all(
+                color: StyleTheme.white10, width: 1.w),
+          ),
           padding: EdgeInsets.symmetric(horizontal: StyleTheme.margin),
           child: SingleChildScrollView(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                SizedBox(height: ScreenHeight * 0.046875),
+                SizedBox(height: ScreenHeight * 0.05),
                 //投稿
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
@@ -96,7 +100,7 @@ class _RightModuleUIState extends State<RightModuleUI> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(Utils.txt('tgzq'),
-                            style: StyleTheme.font_black_31_12_medium),
+                            style: StyleTheme.font_white_255_20),
                         SizedBox(height: 5.w),
                         Container(
                           height: 115.w,
@@ -118,7 +122,7 @@ class _RightModuleUIState extends State<RightModuleUI> {
                                     height: 16.w),
                                 SizedBox(width: 3.w),
                                 Text(Utils.txt('tp'),
-                                    style: StyleTheme.font_black_31_10)
+                                    style: StyleTheme.font_white_255_17)
                               ],
                             ),
                             SizedBox(width: 13.w),
@@ -130,13 +134,13 @@ class _RightModuleUIState extends State<RightModuleUI> {
                                     height: 16.w),
                                 SizedBox(width: 3.w),
                                 Text(Utils.txt('sping'),
-                                    style: StyleTheme.font_black_31_10)
+                                    style: StyleTheme.font_white_255_17)
                               ],
                             ),
                             const Spacer(),
                             Container(
-                              width: 55.w,
-                              height: 21.w,
+                              width: 60.w,
+                              height: 30.w,
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                   color: StyleTheme.red246Color,
@@ -144,8 +148,7 @@ class _RightModuleUIState extends State<RightModuleUI> {
                                       BorderRadius.all(Radius.circular(3.w))),
                               child: Text(
                                 Utils.txt('fb'),
-                                style: StyleTheme.font(
-                                    size: 10, weight: FontWeight.w600),
+                                style: StyleTheme.font_white_255_17,
                               ),
                             )
                           ],

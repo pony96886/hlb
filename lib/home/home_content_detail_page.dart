@@ -239,9 +239,13 @@ class _HomeContentDetailPageState
 
   @override
   Widget pageBody(BuildContext context) {
-    return Column(children: [
-      const SearchBarWidget(),
-      Expanded(
+    return Stack(children: [
+      Positioned(
+        top: 90.w + 5.w,
+        // 5 边距
+        bottom: 0,
+        left: 0,
+        right: 0,
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           SizedBox(width: 30.w),
           GestureDetector(
@@ -271,171 +275,8 @@ class _HomeContentDetailPageState
           SizedBox(width: 30.w),
         ]),
       ),
+      const SearchBarWidget(),
     ]);
-
-    return BaseMainView(
-      paddingTop: 94.w,
-      dataDetail: data,
-      dataArticle: dataArticle,
-      banners: banners,
-      cid: widget.cid,
-      isBackBtn: true,
-      leftWidget: SizedBox(
-        height: ScreenHeight - 94.w,
-        width: 640.w,
-        child: netError
-            ? LoadStatus.netErrorWork(onTap: () {
-                netError = false;
-                getData();
-              })
-            : isHud
-                ? LoadStatus.showLoading(mounted)
-                : data == null
-                    ? LoadStatus.noData()
-                    : Stack(children: [
-                        Positioned(
-                            top: 0,
-                            bottom: 60.w,
-                            left: 0,
-                            right: 0,
-                            child: EasyPullRefresh(
-                              child: _CheckCommentsBar(data: data),
-                              onRefresh: () {
-                                page = 1;
-                                return getData();
-                              },
-                              onLoading: () {
-                                page++;
-                                return getReviewData();
-                              },
-                              sameChild: ListView(
-                                addRepaintBoundaries: false,
-                                addAutomaticKeepAlives: false,
-                                cacheExtent: ScreenHeight * 5,
-                                scrollDirection: Axis.vertical,
-                                controller: controller,
-                                children: [
-                                  Text(
-                                    Utils.convertEmojiAndHtml(
-                                        "${data["title"] ?? ""}"),
-                                    style: StyleTheme.font_black_31_30_semi,
-                                    maxLines: 3,
-                                  ),
-                                  netErrorTag || dataTag.isEmpty
-                                      ? Container()
-                                      : _TagsCategoriesWidget(
-                                          key: ValueKey(dataTag),
-                                          data: data,
-                                          tags: dataTag,
-                                          // categories: data['plates'],
-                                        ),
-                                  SizedBox(height: 30.w),
-                                  Text(
-                                    "${Utils.txt('fbsj')}•${DateUtil.formatDateStr(data["created_at"] ?? " 2023-06-05 20:11:55", format: "yyyy年MM月dd日")}",
-                                    style: StyleTheme.font_gray_153_15,
-                                  ),
-                                  SizedBox(height: 20.w),
-                                  Divider(
-                                    height: 1.w,
-                                    color: StyleTheme.gray238Color,
-                                  ),
-                                  //网页内容
-                                  _HtmlWidget(data: data, picMap: picMap),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 20.w),
-                                    color: StyleTheme.gray238Color,
-                                    height: 1.w,
-                                  ),
-                                  SizedBox(height: 15.w),
-                                  Text(
-                                    Utils.txt('plly') +
-                                        " ${data["comment_ct"]}",
-                                    style: StyleTheme.font_black_34_30,
-                                  ),
-                                  SizedBox(height: 15.w),
-                                  isHud
-                                      ? Column(children: [
-                                          LoadStatus.showLoading(mounted),
-                                          SizedBox(height: 30.w),
-                                        ])
-                                      : comments.isEmpty
-                                          ? Column(children: [
-                                              LoadStatus.noData(),
-                                              SizedBox(height: 30.w),
-                                            ])
-                                          : ListView.builder(
-                                              addRepaintBoundaries: true,
-                                              addAutomaticKeepAlives: true,
-                                              padding: EdgeInsets.zero,
-                                              shrinkWrap: true,
-                                              physics:
-                                                  const NeverScrollableScrollPhysics(),
-                                              itemCount: comments.length,
-                                              itemBuilder: (context, index) {
-                                                return HomeCommentsPage(
-                                                  data: comments[index],
-                                                  replyCall: (dp, cmid) {
-                                                    if (dp.isNotEmpty) {
-                                                      isReplay = true;
-                                                      tip = dp;
-                                                      commid = cmid;
-                                                      focusNode.requestFocus();
-                                                      if (mounted)
-                                                        setState(() {});
-                                                    } else {
-                                                      resetXcfocusNode();
-                                                    }
-                                                  },
-                                                  resetCall: () {
-                                                    resetXcfocusNode();
-                                                  },
-                                                );
-                                              }),
-                                ],
-                              ),
-                            )),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: SizedBox(
-                            height: 55.w,
-                            width: double.infinity,
-                            child: InputContainer(
-                              width: double.infinity,
-                              focusNode: focusNode,
-                              hintText: '快留下您的评论',
-                              childPrefix: RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(
-                                    text: tip[0],
-                                    style: StyleTheme.font_black_0_15),
-                                TextSpan(
-                                    text: tip[1],
-                                    style: StyleTheme.font_gray_153_15),
-                              ])),
-                              onEditingCompleteText: (value) {
-                                if (isReplay) {
-                                  inputTxt(2, commid, value);
-                                  isReplay = false;
-                                  tip = [Utils.txt("wyddxf") + '：', ""];
-                                  getData();
-                                } else {
-                                  inputTxt(1, widget.cid, value);
-                                }
-                              },
-                              onOutEventComplete: () {
-                                resetXcfocusNode();
-                              },
-                              isCollect: data["is_favorite"] == 1,
-                              // onCollectEventComplete: () {
-                              //   postCollectData();
-                              // },
-                              child: Container(),
-                            ),
-                          ),
-                        )
-                      ]),
-      ),
-    );
   }
 
   Widget _buildLeftWidget() {
@@ -454,6 +295,7 @@ class _HomeContentDetailPageState
           child: Text(
             "${data["title"] ?? ""}",
             style: StyleTheme.font_white_255_28_medium,
+            maxLines: 10,
           ),
         ),
         SizedBox(height: 20.w),
@@ -494,7 +336,9 @@ class _HomeContentDetailPageState
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 15.w),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  // Utils.navTo(context, "/homecontentdetailpage/${args["id"]}");
+                },
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.w),
@@ -505,13 +349,14 @@ class _HomeContentDetailPageState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'data',
+                        '推特顶级约炮大神 一杆钢枪 专注开发清纯女大学生穿着女仆装带到酒店',
                         style: StyleTheme.font_white_255_22_bold,
+                        maxLines: 2,
                       ),
                       SizedBox(height: 5.w),
                       Text(
-                        'data',
-                        style: StyleTheme.font_gray_209_18,
+                        '黑料不打烊 • 2024年9月9日',
+                        style: StyleTheme.font_gray_153_18,
                       ),
                     ],
                   ),

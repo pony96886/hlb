@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hlw/mine/mine_service_page.dart';
+import 'package:hlw/mine/mine_set_page.dart';
 import 'package:provider/provider.dart';
 
 import '../base/base_store.dart';
@@ -118,7 +120,10 @@ class _TopBarWidget extends StatelessWidget {
         ),
         const Expanded(child: SizedBox()),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            //刷新当前界面
+            debugPrint('通知刷新当前界面');
+          },
           behavior: HitTestBehavior.opaque,
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 12.w),
@@ -131,7 +136,9 @@ class _TopBarWidget extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Utils.splitToView(context, MineServicePage());
+          },
           behavior: HitTestBehavior.opaque,
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 12.w),
@@ -144,7 +151,9 @@ class _TopBarWidget extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Utils.splitToView(context, MineSetPage());
+          },
           behavior: HitTestBehavior.opaque,
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 12.w),
@@ -214,9 +223,9 @@ class _PopBarItemWidget extends StatelessWidget {
         Utils.splitPopView(context);
       },
       child: Row(children: [
-        LocalPNG(name: "hlw_arrow_left", width: 20.w, height: 20.w),
+        LocalPNG(name: "51_nav_back_w", width: 25.w, height: 25.w),
         SizedBox(width: 20.w),
-        Text(backTitle, style: StyleTheme.font_black_34_15),
+        Text(backTitle, style: StyleTheme.font_white_255_22_bold),
       ]),
     );
     return current;
@@ -239,7 +248,7 @@ class _ActionBarWidget extends StatelessWidget {
     if (detailWidget != null) return detailWidget!;
 
     /// 子页面
-    if (isBackBtn) return const SizedBox();
+    if (isBackBtn) return _PopBarItemWidget(isBackBtn: isBackBtn, backTitle: '标题');
 
     return GestureDetector(
       onTap: () {

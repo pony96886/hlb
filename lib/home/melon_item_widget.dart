@@ -9,7 +9,6 @@ import '../util/utils.dart';
 
 class MelonItemWidget extends StatelessWidget {
   final int style;
-  final int state;
   final dynamic args;
 
   /// style: 1 list 横向样式 , 2 gird 纵向样式
@@ -17,7 +16,6 @@ class MelonItemWidget extends StatelessWidget {
     this.args, {
     super.key,
     this.style = 1,
-    this.state = 1,
   });
 
   @override
@@ -41,17 +39,7 @@ class MelonItemWidget extends StatelessWidget {
           Utils.openURL(args["advertiser_url"]);
           return;
         }
-        switch (state) {
-          case 1:
-          case 2:
-            Utils.navTo(context, "/homecontentdetailpage/${args["id"]}");
-            break;
-          // case 3: // 待审核
-          case 4: //
-            Utils.navTo(context, "/homeeditorpage/${args["id"]}");
-            break;
-          default:
-        }
+        Utils.navTo(context, "/homecontentdetailpage/${args["id"]}");
       },
       child: current,
     );
