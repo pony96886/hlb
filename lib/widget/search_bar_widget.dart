@@ -117,6 +117,7 @@ class _TopBarWidget extends StatelessWidget {
         _ActionBarWidget(
           detailWidget: detailWidget,
           isBackBtn: isBackBtn,
+          backTitle: backTitle,
         ),
         const Expanded(child: SizedBox()),
         GestureDetector(
@@ -236,11 +237,10 @@ class _PopBarItemWidget extends StatelessWidget {
 class _ActionBarWidget extends StatelessWidget {
   final Widget? detailWidget;
   final bool isBackBtn;
+  final String? backTitle;
 
-  const _ActionBarWidget({
-    required this.detailWidget,
-    required this.isBackBtn,
-  });
+  const _ActionBarWidget(
+      {required this.detailWidget, required this.isBackBtn, this.backTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -248,7 +248,9 @@ class _ActionBarWidget extends StatelessWidget {
     if (detailWidget != null) return detailWidget!;
 
     /// 子页面
-    if (isBackBtn) return _PopBarItemWidget(isBackBtn: isBackBtn, backTitle: '标题');
+    if (isBackBtn)
+      return _PopBarItemWidget(
+          isBackBtn: isBackBtn, backTitle: backTitle == null ? '' : backTitle!);
 
     return GestureDetector(
       onTap: () {
@@ -272,24 +274,24 @@ class _ActionBarWidget extends StatelessWidget {
           ),
           SizedBox(width: 10.w),
           Expanded(
-            child: Text(
-              Utils.txt('ssngxqd'),
-              style: StyleTheme.font_gray_153_20,
-            )
-            // TextField(
-            //   textAlignVertical: TextAlignVertical.center,
-            //   style: StyleTheme.font_white_20,
-            //   decoration: InputDecoration(
-            //     border: InputBorder.none,
-            //     isDense: true,
-            //     contentPadding: const EdgeInsets.symmetric(vertical: 0),
-            //     enabledBorder: InputBorder.none,
-            //     focusedBorder: InputBorder.none,
-            //     hintText: Utils.txt('ssngxqd'),
-            //     hintStyle: StyleTheme.font_gray_153_20,
-            //   ),
-            // ),
-          ),
+              child: Text(
+            Utils.txt('ssngxqd'),
+            style: StyleTheme.font_gray_153_20,
+          )
+              // TextField(
+              //   textAlignVertical: TextAlignVertical.center,
+              //   style: StyleTheme.font_white_20,
+              //   decoration: InputDecoration(
+              //     border: InputBorder.none,
+              //     isDense: true,
+              //     contentPadding: const EdgeInsets.symmetric(vertical: 0),
+              //     enabledBorder: InputBorder.none,
+              //     focusedBorder: InputBorder.none,
+              //     hintText: Utils.txt('ssngxqd'),
+              //     hintStyle: StyleTheme.font_gray_153_20,
+              //   ),
+              // ),
+              ),
           SizedBox(width: 10.w),
           Text(
             "搜索",
@@ -333,8 +335,6 @@ class _UserHeaderWidget extends StatelessWidget {
         child: current,
       );
     }
-    return Row(children: [InkWell(
-        onTap:onVisibleMenuAction,
-        child: current)]);
+    return Row(children: [InkWell(onTap: onVisibleMenuAction, child: current)]);
   }
 }
