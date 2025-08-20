@@ -31,8 +31,7 @@ class _MineNorquestionPageState extends BaseWidgetState<MineNorquestionPage> {
     return Stack(
       children: [
         Positioned(
-          top: 155.w,
-          // 5 边距
+          top: 90.w,
           bottom: 0,
           left: 0,
           right: 0,
