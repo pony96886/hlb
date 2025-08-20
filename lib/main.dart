@@ -75,7 +75,7 @@ Future<void> _initData(List<String> args) async {
         Utils.toMD5(
             '${Utils.randomId(16)}_${DateTime.now().millisecondsSinceEpoch.toString()}'),
     "bundleId": "com.pwa.hlw",
-    "version": "1.2.0",
+    "version": "1.0.0",
     "oauth_type": "web",
     "language": 'zh',
     "via": 'pwa',

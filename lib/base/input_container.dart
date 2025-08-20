@@ -90,33 +90,34 @@ class InputContainer extends StatelessWidget {
                       width: 40.w,
                       height: 40.w),
                 ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  width: ScreenWidth - StyleTheme.rightWidth - 430.w,
-                  alignment: Alignment.centerLeft,
-                  child: TextField(
-                    focusNode: focusNode,
-                    controller: controller,
-                    style: StyleTheme.font_white_255_20,
-                    cursorColor: Colors.white,
-                    decoration: InputDecoration(
-                      prefix: childPrefix,
-                      hintText: hintText,
-                      hintStyle: StyleTheme.font_gray_153_20,
-                      isDense: true,
-                      contentPadding: EdgeInsets.zero,
-                      border: const OutlineInputBorder(
-                        gapPadding: 0,
-                        borderSide: BorderSide(
-                          width: 0,
-                          style: BorderStyle.none,
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    alignment: Alignment.centerLeft,
+                    child: TextField(
+                      focusNode: focusNode,
+                      controller: controller,
+                      style: StyleTheme.font_white_255_20,
+                      cursorColor: Colors.white,
+                      decoration: InputDecoration(
+                        prefix: childPrefix,
+                        hintText: hintText,
+                        hintStyle: StyleTheme.font_gray_153_20,
+                        isDense: true,
+                        contentPadding: EdgeInsets.zero,
+                        border: const OutlineInputBorder(
+                          gapPadding: 0,
+                          borderSide: BorderSide(
+                            width: 0,
+                            style: BorderStyle.none,
+                          ),
                         ),
                       ),
+                      minLines: 1,
+                      maxLines: 2,
+                      onTap: () {},
+                      onSubmitted: (_) {},
                     ),
-                    minLines: 1,
-                    maxLines: 2,
-                    onTap: () {},
-                    onSubmitted: (_) {},
                   ),
                 ),
                 const Spacer(),
