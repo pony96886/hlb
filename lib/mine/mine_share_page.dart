@@ -148,7 +148,7 @@ class _MineSharePageState extends BaseWidgetState<MineSharePage> {
           width: double.infinity,
         ),
         Positioned(
-          top: 155.w,
+          top: 90.w,
           bottom: 0,
           left: 0,
           right: 0,
