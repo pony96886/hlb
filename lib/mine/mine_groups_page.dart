@@ -220,7 +220,7 @@ class _MineGroupsPageState extends BaseWidgetState<MineGroupsPage> {
                                 )),
                         ))
                     : LoadStatus.noData()),
-        SearchBarWidget(isBackBtn: true, backTitle: Utils.txt('chjwt')),
+        SearchBarWidget(isBackBtn: true, backTitle: Utils.txt('gfjlq')),
       ],
     );
   }
