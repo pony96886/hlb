@@ -148,8 +148,9 @@ class _MineSetPageState extends BaseWidgetState<MineSetPage> {
     final bool isLogin = AppGlobal.apiToken.isNotEmpty;
     return BaseMainView(
       paddingTop: 94.w,
-      paddingLeft: 160.w,
+      paddingLeft: 100.w,
       paddingBottom: 50.w,
+      rightPadding: 0,
       isBackBtn: true,
       backTitle: '设置',
       leftWidget: SingleChildScrollView(
