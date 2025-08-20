@@ -292,19 +292,23 @@ class _ActionBarWidget extends StatelessWidget {
           ),
           SizedBox(width: 10.w),
           Expanded(
-            child: TextField(
-              textAlignVertical: TextAlignVertical.center,
-              style: StyleTheme.font_white_20,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                isDense: true,
-                contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                enabledBorder: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                hintText: Utils.txt('ssngxqd'),
-                hintStyle: StyleTheme.font_gray_153_20,
-              ),
-            ),
+            child: Text(
+              Utils.txt('ssngxqd'),
+              style: StyleTheme.font_gray_153_20,
+            )
+            // TextField(
+            //   textAlignVertical: TextAlignVertical.center,
+            //   style: StyleTheme.font_white_20,
+            //   decoration: InputDecoration(
+            //     border: InputBorder.none,
+            //     isDense: true,
+            //     contentPadding: const EdgeInsets.symmetric(vertical: 0),
+            //     enabledBorder: InputBorder.none,
+            //     focusedBorder: InputBorder.none,
+            //     hintText: Utils.txt('ssngxqd'),
+            //     hintStyle: StyleTheme.font_gray_153_20,
+            //   ),
+            // ),
           ),
           SizedBox(width: 10.w),
           Text(
