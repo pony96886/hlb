@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:hlw/base/base_store.dart';
 import 'package:hlw/base/base_widget.dart';
 import 'package:hlw/model/config_model.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:hlw/util/desktop_extension.dart';
+import 'package:hlw/widget/search_bar_widget.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -132,6 +134,57 @@ class _MineSharePageState extends BaseWidgetState<MineSharePage> {
   @override
   Widget pageBody(BuildContext context) {
     ConfigModel? config = Provider.of<BaseStore>(context, listen: false).config;
+    final Widget shareTitle = LocalPNG(
+      name: "share_title",
+      width: 460.w,
+      height: 60.w,
+      fit: BoxFit.fill,
+    );
+    return Stack(
+      children: [
+        LocalPNG(
+          fit: BoxFit.cover,
+          name: "share_bg",
+          width: double.infinity,
+        ),
+        Positioned(
+          top: 155.w,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(vertical: 30.w),
+            child: Column(
+              children: [
+                shareTitle,
+                SizedBox(
+                  height: 36.w,
+                ),
+                Text(
+                  "一起学会分享，一起来看漫画，一起来看小说",
+                  style: StyleTheme.font_white_255_22_600,
+                ),
+                SizedBox(
+                  height: 52.w,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _build_left(),
+                    SizedBox(
+                      width: 100.w,
+                    ),
+                    _build_right()
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+        SearchBarWidget(isBackBtn: true, backTitle: Utils.txt('fx')),
+      ],
+    );
 
     return Stack(
       children: [
@@ -492,6 +545,306 @@ class _MineSharePageState extends BaseWidgetState<MineSharePage> {
       ],
     );
   }
+
+  Widget _build_right() {
+    return Column(
+      children: [
+        Text(
+          Utils.txt("yqbz"),
+          style: StyleTheme.font_white_255_30_600,
+        ),
+        SizedBox(
+          height: 12.w,
+        ),
+        LocalPNG(
+          name: "share_setp_arrow_down",
+          width: 54.w,
+          height: 33.w,
+        ),
+        SizedBox(
+          height: 18.w,
+        ),
+        Container(
+          width: 430.w,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 40.w,
+                    width: 40.w,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      // color: StyleTheme.white20,
+                      borderRadius: BorderRadius.circular(40.w),
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          StyleTheme.yellow255Color,
+                          StyleTheme.orange255Color,
+                        ],
+                      ),
+                    ),
+                    child: Text(
+                      "1",
+                      style: StyleTheme.font_orange_103_28_600,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 22.w,
+                  ),
+                  Text(
+                    Utils.txt("dyb"),
+                    style: StyleTheme.font_white_255_24_bold,
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 12.w,
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 18.w),
+                child: Row(
+                  children: [
+                    Container(
+                        width: 4.w,
+                        height: 88.w,
+                        decoration: BoxDecoration(
+                          color: StyleTheme.orange244Color30,
+                          borderRadius: BorderRadius.circular(2.w),
+                        )),
+                    SizedBox(
+                      width: 40.w,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.w),
+                      child: Text(
+                        Utils.txt("dyb_tip"),
+                        style: StyleTheme.font_gray_153_22,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 12.w,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 40.w,
+                    width: 40.w,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      // color: StyleTheme.white20,
+                      borderRadius: BorderRadius.circular(40.w),
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          StyleTheme.yellow255Color,
+                          StyleTheme.orange255Color,
+                        ],
+                      ),
+                    ),
+                    child: Text(
+                      "2",
+                      style: StyleTheme.font_orange_103_28_600,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 22.w,
+                  ),
+                  Text(
+                    Utils.txt("dyb"),
+                    style: StyleTheme.font_white_255_24_bold,
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 12.w,
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 18.w),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 44.w,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            Utils.txt("derb_tip"),
+                            style: StyleTheme.font_gray_153_22,
+                          ),
+                          SizedBox(
+                            height: 38.w,
+                          ),
+                          SizedBox(
+                            width: 340.w,
+                            child: Wrap(
+                              spacing: 10.w, // 水平间距
+                              runSpacing: 24.w, // 垂直间距
+                              children: List.generate(10, (index) {
+                                return Container(
+                                  width: 48.w,
+                                  height: 48.w,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: Colors.orange,
+                                    borderRadius: BorderRadius.circular(48.w),
+                                  ),
+                                );
+                              }),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 24.w,
+                          ),
+                          Text(
+                            Utils.txt("derb_tip2"),
+                            style: StyleTheme.font_gray_153_22,
+                          ),
+                          SizedBox(
+                            height: 38.w,
+                          ),
+                          SizedBox(
+                            width: 340.w,
+                            child: Wrap(
+                              spacing: 10.w, // 水平间距
+                              runSpacing: 24.w, // 垂直间距
+                              children: List.generate(6, (index) {
+                                return Container(
+                                  width: 48.w,
+                                  height: 48.w,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: Colors.orange,
+                                    borderRadius: BorderRadius.circular(48.w),
+                                  ),
+                                );
+                              }),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 28.w,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _build_left() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          width: 500.w,
+          decoration: BoxDecoration(
+            color: StyleTheme.white20,
+            borderRadius: BorderRadius.circular(18.w),
+          ),
+          child: Column(
+            children: [
+              Padding(
+                  padding: EdgeInsets.symmetric(vertical: 40.w),
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                            text: "我的推广码 ",
+                            style: StyleTheme.font_white_255_28),
+                        TextSpan(
+                            text: "GSSD",
+                            style: StyleTheme.font_orange_244_28_600)
+                      ],
+                    ),
+                  )),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                        color: StyleTheme.black0Color,
+                        width: 1.w,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 40.w),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    LocalPNG(
+                      name: "share_qrcode_border",
+                      width: 360.w,
+                      height: 360.w,
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      child: QrImage(
+                        data: '${member?.share?.share_url}',
+                        backgroundColor: Colors.white,
+                        version: 3,
+                        size: 312.w,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 40.w,
+        ),
+        Row(
+          children: [
+            ActionShareButton(
+              text: Utils.txt('bctp'),
+              onTap: isSaving
+                  ? null
+                  : () {
+                      isSaving = true;
+                      setState(() {});
+                      SchedulerBinding.instance.addPostFrameCallback((_) {
+                        _saveImgShare();
+                      });
+                    },
+              isLoadding: isSaving,
+            ),
+            SizedBox(
+              width: 40.w,
+            ),
+            ActionShareButton(
+              text: Utils.txt('fzlj'),
+              onTap: _copyLinkShare,
+              isLoadding: false,
+            ),
+          ],
+        )
+      ],
+    );
+  }
 }
 
 class ActionShareButton extends StatelessWidget {
@@ -499,6 +852,7 @@ class ActionShareButton extends StatelessWidget {
   final GestureTapCallback? onTap;
   final bool isLoadding;
   final AssetImage? image;
+
   const ActionShareButton(
       {Key? key,
       this.text = '',
@@ -512,12 +866,18 @@ class ActionShareButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 165.w,
-        height: 38.w,
+        height: 72.w,
+        width: 230.w,
+        alignment: Alignment.center,
         decoration: image == null
             ? BoxDecoration(
-                borderRadius: BorderRadius.circular(19.w),
-                color: StyleTheme.red245Color)
+                color: StyleTheme.orange47Color,
+                borderRadius: BorderRadius.circular(40.w),
+                border: Border.all(
+                  color: StyleTheme.orange244Color,
+                  width: 1.w,
+                ),
+              )
             : BoxDecoration(image: DecorationImage(image: image!)),
         child: Center(
           child: isLoadding
@@ -530,7 +890,7 @@ class ActionShareButton extends StatelessWidget {
                   ))
               : Text(
                   text!,
-                  style: StyleTheme.font_white_255_16,
+                  style: StyleTheme.font_orange_244_26_medium,
                 ),
         ),
       ),
