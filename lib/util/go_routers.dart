@@ -22,6 +22,7 @@ import 'package:hlw/mine/mine_update_page.dart';
 import 'package:hlw/util/approute_observer.dart';
 import 'package:hlw/util/utils.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hlw/watch/watch_content_detail_page.dart';
 
 import '../mine/mine_withdrawal_now_account.dart';
 
@@ -76,6 +77,19 @@ class GoRouters {
                 (context, animation, secondaryAnimation, child) =>
                     ScaleTransition(scale: animation, child: child)),
       ),
+
+      // 视频详情
+      GoRoute(
+        path: 'homevideocontentdetailpage/:cid',
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+            key: state.pageKey,
+            barrierDismissible: true,
+            child: WatchContentDetailPage(cid: state.params['cid'] ?? "0"),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
+      ),
+
       //更新文本信息
       GoRoute(
         path: 'mineupdatepage/:type/:title',
@@ -170,6 +184,18 @@ class GoRouters {
             key: state.pageKey,
             barrierDismissible: true,
             child: HomeContentDetailPage(cid: state.params['cid'] ?? "0"),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(scale: animation, child: child)),
+        routes: childTwoRouters,
+      ),
+      // 视频详情
+      GoRoute(
+        path: 'homevideocontentdetailpage/:cid',
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+            key: state.pageKey,
+            barrierDismissible: true,
+            child: WatchContentDetailPage(cid: state.params['cid'] ?? "0"),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) =>
                     ScaleTransition(scale: animation, child: child)),

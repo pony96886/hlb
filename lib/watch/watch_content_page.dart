@@ -108,13 +108,11 @@ class _WatchContentPageState extends State<WatchContentPage> {
   }
 
   Widget _buildContainerWidget() {
-    return ListView(
-        padding: EdgeInsets.symmetric(horizontal: 30.w),
-        children: [
-          _buildBannerWidget(),
-          _buildFilterWidget(),
-          _buildGridViewWidget(),
-        ]);
+    return ListView(padding: EdgeInsets.symmetric(horizontal: 30.w), children: [
+      _buildBannerWidget(),
+      _buildFilterWidget(),
+      _buildGridViewWidget(),
+    ]);
   }
 
   Widget _buildFilterWidget() {
@@ -139,11 +137,8 @@ class _WatchContentPageState extends State<WatchContentPage> {
           data: banners,
           padding: EdgeInsets.symmetric(horizontal: 29.5.w),
           itemWidth: 710.w,
-          // 图片宽
           itemHeight: 400.w,
-          // 图片高(240) + 23 + 10
           viewportFraction: 0.777,
-          // （710 + 5）/ 920 // 1040 - 120
           scale: 1,
           spacing: 5.w,
           lineWidth: 20.w,
@@ -162,8 +157,11 @@ class _WatchContentPageState extends State<WatchContentPage> {
       mainAxisSpacing: 20.w,
       crossAxisSpacing: 20.w,
       childAspectRatio: 374.w / 353.w,
-      children:
-          tps.map((e) => Utils.newsModuleUI(context, e, style: 2)).toList(),
+      children: tps
+          .map((e) => Utils.newsModuleUI(context, e, style: 2, onTap: () {
+                Utils.navTo(context, "/homevideocontentdetailpage/${e["id"]}");
+              }))
+          .toList(),
     );
   }
 }
