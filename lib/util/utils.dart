@@ -211,7 +211,7 @@ class Utils {
               padding: EdgeInsets.all(20.w),
               child: Text(
                 text.isEmpty ? Utils.txt('wzxx') : text,
-                style: StyleTheme.font(size: 13),
+                style: StyleTheme.font(size: 20),
                 maxLines: 100,
               ),
             )
@@ -684,7 +684,7 @@ class Utils {
     required double itemWidth,
     required double itemHeight,
     List<dynamic>? data,
-    double radius = 0,
+    double radius = 10,
     bool autoplay = true,
     double viewportFraction = 1, // 占满整个窗口
     double scale = 1, // 缩放比例[0- 1] 1-不缩放

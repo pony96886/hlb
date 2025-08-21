@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:hlw/base/base_widget.dart';
 import 'package:hlw/base/request_api.dart';
+import 'package:hlw/mine/mine_service_page.dart';
+import 'package:hlw/mine/mine_set_page.dart';
 import 'package:hlw/util/app_global.dart';
 import 'package:hlw/util/easy_pull_refresh.dart';
 import 'package:hlw/util/load_status.dart';
@@ -19,6 +21,7 @@ import '../util/netimage_tool.dart';
 
 class HomeSearchPage extends BaseWidget {
   final String tag;
+
   const HomeSearchPage({Key? key, this.tag = ''}) : super(key: key);
 
   @override
@@ -81,6 +84,11 @@ class _HomeSearchPageState extends BaseWidgetState<HomeSearchPage>
   }
 
   void onVisibleMenuAction() {
+    var user = Provider.of<BaseStore>(context, listen: false).user;
+    if (user?.username?.isEmpty == true) {
+      debugPrint('登录');
+      return;
+    }
     _isOpen = !_isOpen;
     _controller.reset();
     _isOpen ? _controller.forward() : _controller.reverse();
@@ -127,7 +135,7 @@ class _HomeSearchPageState extends BaseWidgetState<HomeSearchPage>
   }
 
   //热搜词+广告
-  Future<bool> unSearchData() async{
+  Future<bool> unSearchData() async {
     reqPopularSearch(limit: 20).then((value) {
       if (value?.data == null) {
         netError = true;
@@ -195,7 +203,8 @@ class _HomeSearchPageState extends BaseWidgetState<HomeSearchPage>
   //搜索页面
   Widget isSearchWidget() {
     return _SearchWidget(
-        tps: tps, scrollController: _scrollController,
+        tps: tps,
+        scrollController: _scrollController,
         onRefresh: () {
           page = 1;
           return searchData();
@@ -203,25 +212,26 @@ class _HomeSearchPageState extends BaseWidgetState<HomeSearchPage>
         onLoading: () {
           page++;
           return searchData();
-        }
-    );
+        });
   }
 
   //没有搜索页面
   Widget isNoSearchWidget() {
     return _UnSearchWidget(
-      banners: banners, hots: hots, records: records, scrollController: _scrollController,
-      clearRecords: () {
-        records.clear();
-        AppGlobal.appBox?.put(recordKey, records);
-        setState(() {});
-      },
-      tapTags: (dynamic e) {
-        textController.text = e;
-        searchInfo();
-      },
-      onRefresh: unSearchData,
-    );
+        banners: banners,
+        hots: hots,
+        records: records,
+        scrollController: _scrollController,
+        clearRecords: () {
+          records.clear();
+          AppGlobal.appBox?.put(recordKey, records);
+          setState(() {});
+        },
+        tapTags: (dynamic e) {
+          textController.text = e;
+          searchInfo();
+        },
+        onRefresh: unSearchData);
   }
 
   @override
@@ -255,33 +265,34 @@ class _HomeSearchPageState extends BaseWidgetState<HomeSearchPage>
               textController: textController,
               searchInfo: searchInfo,
               onVisibleMenuAction: onVisibleMenuAction,
-              clickSearchBar: widget.tag.isEmpty ? _clickSearchBar : Navigator.of(context).pop,
+              clickSearchBar: widget.tag.isEmpty
+                  ? _clickSearchBar
+                  : Navigator.of(context).pop,
             ),
-            Divider(
-              color: StyleTheme.white10,
-              height: 1.w,
-            ),
-            SizedBox(height: isSearch ? 30.w : 50.w),
+            // Divider(
+            //   color: StyleTheme.white10,
+            //   height: 1.w,
+            // ),
+            SizedBox(height: 30.w),
             //内容页面
             Expanded(
               child: GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  Utils.unFocusNode(context);
-                },
-                child: netError
-                    ? LoadStatus.netErrorWork(onTap: () {
-                      netError = false;
-                      searchInfo();
-                    })
-                    : isHud
-                    ? LoadStatus.showLoading(mounted)
-                    : isSearch || widget.tag.isNotEmpty
-                    ? tps.isEmpty
-                    ? LoadStatus.noData()
-                    : isSearchWidget()
-                    : isNoSearchWidget()
-              ),
+                  behavior: HitTestBehavior.translucent,
+                  onTap: () {
+                    Utils.unFocusNode(context);
+                  },
+                  child: netError
+                      ? LoadStatus.netErrorWork(onTap: () {
+                          netError = false;
+                          searchInfo();
+                        })
+                      : isHud
+                          ? LoadStatus.showLoading(mounted)
+                          : isSearch || widget.tag.isNotEmpty
+                              ? tps.isEmpty
+                                  ? LoadStatus.noData()
+                                  : isSearchWidget()
+                              : isNoSearchWidget()),
             )
           ],
         ),
@@ -296,6 +307,7 @@ class _SearchBar extends StatelessWidget {
   final TextEditingController textController;
   final Function() searchInfo, onVisibleMenuAction;
   final Function clickSearchBar;
+
   const _SearchBar(
       {Key? key,
       required this.isHud,
@@ -309,26 +321,83 @@ class _SearchBar extends StatelessWidget {
   /// 用户头像
   Widget _buildUsrHeaderWidget(BuildContext context) {
     var user = Provider.of<BaseStore>(context, listen: false).user;
-    Widget current;
-    if (user?.username?.isEmpty == true) {
-      current = LocalPNG(
-        name: 'hlw_mine_head',
-        width: 36.w,
-        height: 36.w,
-      );
-    } else {
-      current = NetImageTool(
-        radius: BorderRadius.circular(18.w),
-        url: user?.thumb ?? "",
-      );
-      current = SizedBox(
-        width: 36.w,
-        height: 36.w,
-        child: current,
-      );
-    }
-    current = InkWell(onTap: onVisibleMenuAction, child: current);
-    return Ink(child: current);
+    return Row(
+      children: [
+        GestureDetector(
+          onTap: () {
+            //刷新当前界面
+            debugPrint('通知刷新当前界面');
+          },
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            height: 50.w,
+            width: 56.w,
+            child: const LocalPNG(
+              name: 'hlw_top_refresh',
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Utils.splitToView(context, MineServicePage());
+          },
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            height: 50.w,
+            width: 56.w,
+            child: const LocalPNG(
+              name: 'hlw_top_problem',
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Utils.splitToView(context, MineSetPage());
+          },
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            height: 50.w,
+            width: 56.w,
+            child: const LocalPNG(
+              name: 'hlw_top_setting',
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
+        SizedBox(width: 12.w),
+        GestureDetector(
+          onTap: onVisibleMenuAction,
+          behavior: HitTestBehavior.opaque,
+          child: user?.username?.isEmpty == true
+              ? Container(
+                  alignment: Alignment.center,
+                  height: 40.w,
+                  width: 70.w,
+                  decoration: BoxDecoration(
+                    color: StyleTheme.yellow255Color,
+                    borderRadius: BorderRadius.circular(5.w),
+                  ),
+                  child: Text(
+                    "登录",
+                    style: StyleTheme.font_black_34_20,
+                  ),
+                )
+              : SizedBox(
+                  width: 36.w,
+                  height: 36.w,
+                  child: NetImageTool(
+                    radius: BorderRadius.circular(18.w),
+                    url: user?.thumb ?? "",
+                  ),
+                ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -376,7 +445,8 @@ class _SearchBar extends StatelessWidget {
                     style: StyleTheme.font_white_255_20,
                     textInputAction: TextInputAction.search,
                     cursorColor: Colors.white,
-                    enabled: !isHud, //加载完才让输入
+                    enabled: !isHud,
+                    //加载完才让输入
                     onSubmitted: (value) {
                       searchInfo();
                     },
@@ -442,10 +512,8 @@ class _SearchBar extends StatelessWidget {
               decoration: BoxDecoration(
                   color: StyleTheme.orange255Color,
                   borderRadius: BorderRadius.all(Radius.circular(17.w))),
-              child: Text(Utils.txt('sosuo'),
-                  style: isSearch
-                      ? StyleTheme.font_white_255_20
-                      : StyleTheme.font_black_34_20),
+              child:
+                  Text(Utils.txt('sosuo'), style: StyleTheme.font_black_34_20),
             ),
           ),
           Expanded(child: Container()),
@@ -460,7 +528,13 @@ class _SearchWidget extends StatelessWidget {
   final List tps;
   final ScrollController scrollController;
   final Future<bool> Function() onRefresh, onLoading;
-  const _SearchWidget({Key? key, required this.tps, required this.scrollController, required this.onRefresh, required this.onLoading})
+
+  const _SearchWidget(
+      {Key? key,
+      required this.tps,
+      required this.scrollController,
+      required this.onRefresh,
+      required this.onLoading})
       : super(key: key);
 
   @override
@@ -491,20 +565,32 @@ class _SearchWidget extends StatelessWidget {
   }
 }
 
-class _UnSearchWidget extends StatelessWidget {
+class _UnSearchWidget extends StatefulWidget {
+  const _UnSearchWidget(
+      {required this.banners,
+      required this.hots,
+      required this.records,
+      required this.scrollController,
+      required this.clearRecords,
+      required this.tapTags,
+      required this.onRefresh});
+
   final List banners, hots, records;
   final ScrollController scrollController;
   final Function clearRecords, tapTags;
   final Future<bool> Function() onRefresh;
-  const _UnSearchWidget({Key? key, required this.banners, required this.hots, required this.records, required this.scrollController, required this.clearRecords,
-    required this.tapTags, required this.onRefresh}) : super(key: key);
 
+  @override
+  State createState() => _UnSearchWidgetState();
+}
+
+class _UnSearchWidgetState extends State<_UnSearchWidget> {
   @override
   Widget build(BuildContext context) {
     return EasyPullRefresh(
-      onRefresh: onRefresh,
+      onRefresh: widget.onRefresh,
       sameChild: SingleChildScrollView(
-        controller: scrollController,
+        controller: widget.scrollController,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 60.w),
           child: Column(
@@ -513,18 +599,23 @@ class _UnSearchWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(Utils.txt('ssls'), style: StyleTheme.font_white_255_22_bold),
+                  Row(
+                    children: [
+                      LocalPNG(
+                        name: 'hlw_search_record_icon',
+                        width: 32.w,
+                        height: 32.w,
+                      ),
+                      SizedBox(width: 5.w),
+                      Text(Utils.txt('ssls'),
+                          style: StyleTheme.font_white_255_22_bold),
+                    ],
+                  ),
                   GestureDetector(
-                    onTap: () => clearRecords(),
+                    onTap: () => widget.clearRecords(),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        LocalPNG(
-                          name: 'hlw_close_black',
-                          width: 16.w,
-                          height: 16.w,
-                        ),
-                        SizedBox(width: 5.w),
                         Text(Utils.txt('qcjl'),
                             style: StyleTheme.font_white_161_20_bold),
                       ],
@@ -538,88 +629,114 @@ class _UnSearchWidget extends StatelessWidget {
                   top: StyleTheme.margin,
                   bottom: 10.w,
                 ),
-                child: records.isEmpty
+                child: widget.records.isEmpty
                     ? Center(
-                  child: Text(
-                    '没有匹配到"${Utils.txt('zwssjl')}"的内容',
-                    style: StyleTheme.font_gray_153_18,
-                  ),
-                )
-                    : Wrap(
-                  spacing: 10.w,
-                  runSpacing: 15.w,
-                  children: records.map((e) {
-                    return GestureDetector(
-                      onTap: () => tapTags(e),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: StyleTheme.yellow255Color.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(10.w)),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 10.w, horizontal: 20.w),
                         child: Text(
-                          e,
-                          style: StyleTheme.font_gray_194_20,
+                          '没有匹配到"${Utils.txt('zwssjl')}"的内容',
+                          style: StyleTheme.font_gray_153_18,
                         ),
+                      )
+                    : Wrap(
+                        spacing: 10.w,
+                        runSpacing: 15.w,
+                        children: widget.records.map((e) {
+                          return GestureDetector(
+                            onTap: () => widget.tapTags(e),
+                            child: Container(
+                              height: 60.w,
+                              decoration: BoxDecoration(
+                                  color: StyleTheme.white10,
+                                  borderRadius: BorderRadius.circular(30.w)),
+                              padding: EdgeInsets.symmetric(horizontal: 20.w),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    e,
+                                    style: StyleTheme.font_gray_187_20,
+                                  ),
+                                  Container(
+                                    color: StyleTheme.gray77Color,
+                                    height: 30.w,
+                                    width: 1.w,
+                                    margin: EdgeInsets.only(
+                                        left: 10.w, right: 10.w),
+                                  ),
+                                  GestureDetector(
+                                    behavior: HitTestBehavior.translucent,
+                                    onTap: () async {
+                                      if (Utils.unFocusNode(context)) {
+                                        widget.records.remove(e);
+                                        AppGlobal.appBox?.put(
+                                            'search_record', widget.records);
+                                        if (mounted) setState(() {});
+                                      }
+                                    },
+                                    child: Icon(Icons.close_outlined,
+                                        size: 30.w, color: Colors.white),
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        }).toList(),
                       ),
-                    );
-                  }).toList(),
-                ),
               ),
-              SizedBox(height: 50.w),
-              Divider(
-                color: StyleTheme.white10,
-                height: 1.w,
-              ),
+              // SizedBox(height: 50.w),
+              // Divider(
+              //   color: StyleTheme.white10,
+              //   height: 1.w,
+              // ),
               SizedBox(height: 30.w),
               Visibility(
-                visible: banners.isNotEmpty,
-                  child: Container(
-                    key: ValueKey(banners),
-                    height: 240.w,
-                    padding: EdgeInsets.zero,
-                    child: Utils.bannerScaleExtSwiper(
-                      data: banners,
-                      itemWidth: 710.w,
-                      itemHeight: 240.w, // 240 + 23 + 10
-                      viewportFraction: 0.67, // 710 / 1040
-                      scale: 1,
-                      spacing: 5.w,
-                      lineWidth: 20.w,
-                    ),
+                visible: widget.banners.isNotEmpty,
+                child: Container(
+                  key: ValueKey(widget.banners),
+                  height: 310.w,
+                  padding: EdgeInsets.zero,
+                  child: Utils.bannerScaleExtSwiper(
+                    data: widget.banners,
+                    itemWidth: 710.w,
+                    itemHeight: 310.w,
+                    // 240 + 23 + 10
+                    viewportFraction: 0.67,
+                    // 710 / 1040
+                    scale: 1,
+                    spacing: 20.w,
+                    lineWidth: 20.w,
                   ),
+                ),
               ),
               Text(Utils.txt('rmtj'), style: StyleTheme.font_white_255_22_bold),
               SizedBox(height: 10.w),
-              hots.isEmpty
+              widget.hots.isEmpty
                   ? LoadStatus.noData()
                   : Container(
-                padding: EdgeInsets.only(
-                  top: StyleTheme.margin,
-                  bottom: 10.w,
-                ),
-                child: Wrap(
-                  spacing: 10.w,
-                  runSpacing: 15.w,
-                  children: hots.map((e) {
-                    return GestureDetector(
-                      onTap: () => tapTags(e["word"].toString()),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: StyleTheme.yellow255Color.withOpacity(0.2),
-                            borderRadius:
-                            BorderRadius.circular(10.w)),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 10.w, horizontal: 20.w),
-                        child: Text(
-                          e["word"] ?? "",
-                          style: StyleTheme.font_gray_194_20,
-                        ),
+                      padding: EdgeInsets.only(
+                        top: StyleTheme.margin,
+                        bottom: 10.w,
                       ),
-                    );
-                  }).toList(),
-                ),
-              ),
+                      child: Wrap(
+                        spacing: 10.w,
+                        runSpacing: 15.w,
+                        children: widget.hots.map((e) {
+                          return GestureDetector(
+                            onTap: () => widget.tapTags(e["word"].toString()),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: StyleTheme.orange47Color,
+                                  borderRadius: BorderRadius.circular(10.w)),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10.w, horizontal: 20.w),
+                              child: Text(
+                                e["word"] ?? "",
+                                style: StyleTheme.font_orange_244_20_600,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
               SizedBox(height: 50.w),
             ],
           ),

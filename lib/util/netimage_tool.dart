@@ -129,7 +129,7 @@ class __NetImageWorkState extends State<_NetImageWork>
                     ),
                   )
                 : Shimmer.fromColors(
-                    baseColor: const Color.fromRGBO(204, 204, 204, 1),
+                    baseColor: const Color.fromRGBO(204, 204, 204, 0.3),
                     highlightColor: const Color.fromRGBO(204, 204, 204, .5),
                     enabled: _loading,
                     child: Container(color: Colors.white),
