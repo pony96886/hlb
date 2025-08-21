@@ -68,6 +68,12 @@ class _SearchBarWidgetState extends State<SearchBarWidget>
   }
 
   void onVisibleMenuAction() {
+    var user = Provider.of<BaseStore>(context, listen: false).user;
+    if (user?.username?.isEmpty == true) {
+      debugPrint('登录');
+      Utils.navTo(context, "/mineloginpage/true");
+      return;
+    }
     _isOpen = !_isOpen;
     _controller.reset();
     _isOpen ? _controller.forward() : _controller.reverse();
@@ -319,10 +325,17 @@ class _UserHeaderWidget extends StatelessWidget {
     var user = Provider.of<BaseStore>(context, listen: false).user;
     Widget current;
     if (user?.username?.isEmpty == true) {
-      current = LocalPNG(
-        name: 'hlw_mine_head',
-        width: 40.w,
-        height: 40.w,
+      current = Container(
+        alignment: Alignment.center,
+        height: 40.w, width: 70.w,
+        decoration: BoxDecoration(
+          color: StyleTheme.yellow255Color,
+          borderRadius: BorderRadius.circular(5.w),
+        ),
+        child: Text(
+          "登录",
+          style: StyleTheme.font_black_34_20,
+        ),
       );
     } else {
       current = NetImageTool(

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:hive/hive.dart';
 import 'package:hlw/base/base_widget.dart';
 import 'package:hlw/base/request_api.dart';
 import 'package:hlw/util/app_global.dart';
@@ -385,9 +386,9 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
           alignment: Alignment.topRight,
           child: _buildCloseContextWidget(), // 24.w
         ),
-        LocalPNG(name: "hlw_mine_logo", width: 136.w, height: 81.w),
+        LocalPNG(name: "hlw_logo", width: 200.w, height: 80.w, fit: BoxFit.fitWidth),
         _buildSwitchContentWidget(),
-        SizedBox(height: 80.w), // 底部边距
+        SizedBox(height: 50.w), // 底部边距
       ],
     );
     return Container(
@@ -397,7 +398,7 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
         boxShadow: [
           BoxShadow(color: Colors.black12, blurRadius: 24.w),
         ],
-        color: Colors.white,
+        color: Colors.black,
       ),
       width: 540.w,
       child: current,
@@ -412,6 +413,7 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
         width: 24.w,
         height: 24.w,
         fit: BoxFit.contain,
+        color: Colors.white,
       ),
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -454,9 +456,9 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
         );
     return InputDecoration(
       hintText: hintText,
-      hintStyle: StyleTheme.font_gray_153_14,
+      hintStyle: StyleTheme.font_gray_153_20,
       suffix: suffix,
-      suffixStyle: StyleTheme.font_black_34_13,
+      suffixStyle: StyleTheme.font_black_34_20,
       contentPadding: EdgeInsets.zero,
       isDense: true,
       disabledBorder: border(),
@@ -488,7 +490,7 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
       obscureText: obscureText,
       keyboardType: TextInputType.text,
       controller: controller,
-      style: StyleTheme.font(size: 16, color: StyleTheme.black31Color),
+      style: StyleTheme.font(size: 20, color: StyleTheme.black31Color),
       textInputAction: TextInputAction.done,
       cursorColor: StyleTheme.black31Color,
       decoration: _buildInputDecoration(hintText: hintText),
@@ -529,7 +531,7 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
         height: 50.w,
         child: Text(
           title,
-          style: StyleTheme.font_white_255_16,
+          style: StyleTheme.font_white_255_20,
         ),
       ),
     );
@@ -550,7 +552,7 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
         width: 320.w,
         child: Text(
           '用户名将用于登陆时使用，请务必牢记',
-          style: StyleTheme.font_black_34_13,
+          style: StyleTheme.font_gray_153_15,
           textAlign: TextAlign.start,
         ),
       ),
@@ -578,11 +580,11 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Text(
             '已有账号？',
-            style: StyleTheme.font_gray_153_14,
+            style: StyleTheme.font_gray_153_20,
           ),
           Text(
             Utils.txt('dneglu'),
-            style: StyleTheme.font_black_31_14_line,
+            style: StyleTheme.font_gray_153_20,
           ),
         ]),
       ),
@@ -606,11 +608,11 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
         obscureText: true,
       ),
       SizedBox(height: 8.w),
-      Text(
-        '黑料客户端与黑料网APP账号互通，用户名登录即可',
-        style: StyleTheme.font_black_34_13,
-        maxLines: 2,
-      ),
+      // Text(
+      //   '黑料客户端与黑料网APP账号互通，用户名登录即可',
+      //   style: StyleTheme.font_gray_153_15,
+      //   maxLines: 2,
+      // ),
       SizedBox(height: 50.w),
       _buildSubmitActionWidget(
         title: Utils.txt('dneglu'),
@@ -623,11 +625,11 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Text(
             '还没有注册？',
-            style: StyleTheme.font_gray_153_14,
+            style: StyleTheme.font_gray_153_20,
           ),
           Text(
             Utils.txt('zuche'),
-            style: StyleTheme.font_black_31_14_line,
+            style: StyleTheme.font_gray_153_20,
           ),
         ]),
       ),
@@ -637,7 +639,7 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
         onTap: () => changeForget(),
         child: Text(
           '忘记账号或密码',
-          style: StyleTheme.font_black_31_14_line,
+          style: StyleTheme.font_gray_153_20,
         ),
       ),
     ]);
@@ -651,11 +653,11 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
       SizedBox(height: 48.w),
       Text(
         '忘记密码了吗?',
-        style: StyleTheme.font_black_34_20,
+        style: StyleTheme.font_gray_153_20,
       ),
       Text(
         '请填写您绑定的邮箱!',
-        style: StyleTheme.font_black_34_13,
+        style: StyleTheme.font_gray_153_20,
       ),
       SizedBox(height: 18.w),
       _buildTextFieldWidget(
@@ -788,8 +790,8 @@ class _VerificationCodeWidgetState extends State<VerificationCodeWidget> {
     Widget current = Text(
       _count == 0 ? '获取验证码' : "重新发送(${_count}s)",
       style: _count == 0
-          ? StyleTheme.font_black_34_13
-          : StyleTheme.font_orange_255_13,
+          ? StyleTheme.font_black_34_20
+          : StyleTheme.font_orange_255_20,
     );
     current = Container(
       height: 40.w,

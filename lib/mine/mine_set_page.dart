@@ -279,7 +279,7 @@ class _Item extends StatelessWidget {
                   name: '51_mine_arrow',
                   width: 20.w,
                   height: 20.w,
-                  color: StyleTheme.black34Color,
+                  color: Colors.grey,
                 ),
               ],
             ),

@@ -132,6 +132,8 @@ class StyleTheme {
   static TextStyle font_gray_187_15 =
       font(size: 15, weight: FontWeight.normal, color: gray187Color);
 
+  static TextStyle font_gray_187_20 =
+  font(size: 20, weight: FontWeight.normal, color: gray187Color);
   static TextStyle font_gray_247_15 =
       font(size: 15, weight: FontWeight.normal, color: gray247Color);
 
