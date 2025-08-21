@@ -1,4 +1,6 @@
 import 'package:hlw/base/base_widget.dart';
+import 'package:hlw/util/easy_pull_refresh.dart';
+import 'package:hlw/util/load_status.dart';
 import 'package:hlw/util/local_png.dart';
 import 'package:hlw/util/style_theme.dart';
 import 'package:hlw/util/utils.dart';
@@ -16,8 +18,28 @@ class MineGroupsPage extends BaseWidget {
 }
 
 class _MineGroupsPageState extends BaseWidgetState<MineGroupsPage> {
+
+  List dataList = [];
+  bool isHud = true;
+
+  Future<bool> getData() {
+    // return reqContactList().then((value) {
+    //   if (value?.status == 1) {
+    //     dataList = value?.data?["office_contact"]["data"];
+    //   } else {
+    //     Utils.showText(value?.msg ?? "");
+    //   }
+    //   isHud = false;
+    //   setState(() {});
+    //   return true;
+    // });
+    return Future.value(true);
+  }
+
   @override
-  void onCreate() {}
+  void onCreate() {
+    getData();
+  }
 
   @override
   Widget appbar() {
