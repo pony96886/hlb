@@ -842,7 +842,6 @@ class Utils {
     VoidCallback? confirm,
     VoidCallback? backgroundReturn,
     Function? setContent,
-    tapClose,
     Widget Function(void Function() cancel)? customWidget,
   }) {
     return BotToast.showAnimationWidget(
@@ -925,7 +924,6 @@ class Utils {
                         ),
                         behavior: HitTestBehavior.translucent,
                         onTap: () {
-                          tapClose();
                           cancelFunc();
                         },
                       ),

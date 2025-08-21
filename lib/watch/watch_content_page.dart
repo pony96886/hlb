@@ -152,7 +152,7 @@ class _WatchContentPageState extends State<WatchContentPage> {
 
   Widget _buildGridViewWidget() {
     return GridView.count(
-      padding: EdgeInsets.symmetric(horizontal: 29.5.w),
+      padding: EdgeInsets.symmetric(horizontal: 30.w),
       addRepaintBoundaries: false,
       addAutomaticKeepAlives: false,
       shrinkWrap: true,

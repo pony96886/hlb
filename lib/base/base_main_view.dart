@@ -179,14 +179,14 @@ class BaseMainViewState extends State<BaseMainView> {
           bottom: 0,
           child: Container(
             padding: EdgeInsets.fromLTRB(widget.paddingLeft.w,
-                widget.paddingTop.w - 64.w, 60.w, widget.paddingBottom.w),
+                widget.paddingTop.w, widget.rightPadding.w, widget.paddingBottom.w),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(child: widget.leftWidget),
                 SizedBox(width: 60.w),
                 Container(
-                  width: 220.w,
+                  width: 0.w,
                   padding: EdgeInsets.only(top: widget.rightPadding),
                   child: ListView(
                     children: [],
