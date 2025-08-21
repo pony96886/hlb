@@ -1,13 +1,10 @@
 import 'package:hlw/base/base_widget.dart';
-import 'package:hlw/util/easy_pull_refresh.dart';
-import 'package:hlw/util/load_status.dart';
 import 'package:hlw/util/local_png.dart';
 import 'package:hlw/util/style_theme.dart';
 import 'package:hlw/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hlw/util/desktop_extension.dart';
-
-import '../widget/search_bar_widget.dart';
+import 'package:hlw/widget/search_bar_widget.dart';
 
 class MineGroupsPage extends BaseWidget {
   const MineGroupsPage({Key? key}) : super(key: key);
@@ -19,27 +16,8 @@ class MineGroupsPage extends BaseWidget {
 }
 
 class _MineGroupsPageState extends BaseWidgetState<MineGroupsPage> {
-  List dataList = [];
-  bool isHud = true;
-
-  Future<bool> getData() {
-    // return reqContactList().then((value) {
-    //   if (value?.status == 1) {
-    //     dataList = value?.data?["office_contact"]["data"];
-    //   } else {
-    //     Utils.showText(value?.msg ?? "");
-    //   }
-    //   isHud = false;
-    //   setState(() {});
-    //   return true;
-    // });
-    return Future.value(true);
-  }
-
   @override
-  void onCreate() {
-    getData();
-  }
+  void onCreate() {}
 
   @override
   Widget appbar() {
@@ -223,5 +201,100 @@ class _MineGroupsPageState extends BaseWidgetState<MineGroupsPage> {
         SearchBarWidget(isBackBtn: true, backTitle: Utils.txt('gfjlq')),
       ],
     );
+  }
+
+  Widget _buildItem(
+      {String title = "",
+      String subTitle = "",
+      String contentTitle = "微信",
+      String conntent = "立即加群，还有小视频福利等你哟!",
+      Future Function()? onTap}) {
+    return Expanded(
+        child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: StyleTheme.font_white_255_30_600,
+        ),
+        SizedBox(
+          height: 20.w,
+        ),
+        Text(
+          subTitle,
+          style: StyleTheme.font_gray_153_22,
+        ),
+        SizedBox(
+          height: 40.w,
+        ),
+        Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(30.w),
+          decoration: BoxDecoration(
+            color: StyleTheme.white10,
+            borderRadius: BorderRadius.circular(12.w),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 80.w,
+                height: 80.w,
+                decoration: BoxDecoration(
+                  color: StyleTheme.gray255Color1,
+                  borderRadius: BorderRadius.circular(12.w),
+                ),
+              ),
+              SizedBox(
+                width: 24.w,
+              ),
+              Expanded(
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    contentTitle,
+                    style: StyleTheme.font_white_255_24_bold,
+                  ),
+                  SizedBox(
+                    height: 20.w,
+                  ),
+                  Text(
+                    conntent,
+                    style: StyleTheme.font_gray_153_20,
+                  ),
+                ],
+              )),
+              SizedBox(
+                width: 24.w,
+              ),
+              InkWell(
+                onTap: onTap,
+                borderRadius: BorderRadius.circular(40.w),
+                child: Container(
+                  alignment: Alignment.center,
+                  width: 120.w,
+                  height: 40.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40.w),
+                    gradient: LinearGradient(
+                      begin: Alignment.centerRight,
+                      end: Alignment.centerLeft,
+                      colors: [
+                        Color(0xFFF49A34),
+                        Color(0xFFF4C455),
+                      ],
+                    ),
+                  ),
+                  child: Text(
+                    "加入",
+                    style: StyleTheme.font_brown_103_20_bold,
+                  ),
+                ),
+              )
+            ],
+          ),
+        )
+      ],
+    ));
   }
 }
