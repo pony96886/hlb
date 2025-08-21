@@ -46,13 +46,9 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       if (value?.status == 1) {
         elements = List.from(value?.data['list'] ?? []);
       }
+      _loading = false;
       if (mounted) setState(() {});
     });
-
-    elements =
-        Provider.of<BaseStore>(context, listen: false).config?.plate_tab ?? [];
-    _loading = false;
-    if (mounted) setState(() {});
   }
 
   @override
