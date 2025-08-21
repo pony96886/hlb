@@ -1,4 +1,7 @@
 import 'package:hlw/base/base_widget.dart';
+import 'package:hlw/base/request_api.dart';
+import 'package:hlw/util/easy_pull_refresh.dart';
+import 'package:hlw/util/load_status.dart';
 import 'package:hlw/util/local_png.dart';
 import 'package:hlw/util/style_theme.dart';
 import 'package:hlw/util/utils.dart';
@@ -16,8 +19,28 @@ class MineGroupsPage extends BaseWidget {
 }
 
 class _MineGroupsPageState extends BaseWidgetState<MineGroupsPage> {
+  List dataList = [];
+  bool isHud = true;
+
+  Future<bool> getData() {
+    // return reqContactList().then((value) {
+    //   if (value?.status == 1) {
+    //     dataList = value?.data?["office_contact"]["data"];
+    //   } else {
+    //     Utils.showText(value?.msg ?? "");
+    //   }
+    //   isHud = false;
+    //   setState(() {});
+    //   return true;
+    // });
+    isHud = false;
+    return Future.value(true);
+  }
+
   @override
-  void onCreate() {}
+  void onCreate() {
+    getData();
+  }
 
   @override
   Widget appbar() {
@@ -31,173 +54,64 @@ class _MineGroupsPageState extends BaseWidgetState<MineGroupsPage> {
   Widget pageBody(BuildContext context) {
     return Stack(
       children: [
-        Container(
-            padding: EdgeInsets.symmetric(
-                horizontal: StyleTheme.margin, vertical: 10.w),
+        Positioned(
+          top: 90.w,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: SingleChildScrollView(
+            padding: EdgeInsets.only(left: 48.w, right: 48.w, top: 52.w),
             child: isHud
                 ? LoadStatus.showLoading(mounted)
-                : dataList.isNotEmpty
-                    ? EasyPullRefresh(
-                        onRefresh: () => getData(),
-                        sameChild: ListView(
-                          padding: EdgeInsets.all(StyleTheme.margin),
-                          // itemCount: dataList.length,
-                          children: dataList.asMap().keys.map((index) {
-                            dynamic e = dataList[index];
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${e['name']}',
-                                  style: StyleTheme.font_black_31_16_semi,
-                                ),
-                                // SizedBox(height: 10.w),
-                                Text(
-                                  '${e['decs']}',
-                                  style: StyleTheme.font_white_255_12,
-                                ),
-                                // SizedBox(height: 10.w),
-                                Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 15.w, vertical: 24.w),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.w),
-                                      color: Colors.white,
-                                      shape: BoxShape.rectangle,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: StyleTheme.gray230Color,
-                                            offset: const Offset(0, 0),
-                                            blurStyle: BlurStyle.normal,
-                                            spreadRadius: 1.w,
-                                            blurRadius: 1.w),
-                                      ]),
-                                  child: Column(
-                                    children: List.from(e['list'])
-                                        .map((x) => GestureDetector(
-                                              behavior:
-                                                  HitTestBehavior.translucent,
-                                              onTap: () {
-                                                Utils.openURL(x['url']);
-                                              },
-                                              child: Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 5.w),
-                                                child: Column(
-                                                  children: [
-                                                    SizedBox(
-                                                      // height: 49.w,
-                                                      child: Row(
-                                                        children: [
-                                                          LocalPNG(
-                                                            name: x['type'] ==
-                                                                    'Telegram'
-                                                                ? 'hlw_mine_tg'
-                                                                : '51_mine_potato',
-                                                            width: 49.w,
-                                                            height: 49.w,
-                                                          ),
-                                                          SizedBox(width: 10.w),
-                                                          Expanded(
-                                                              child: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Text(
-                                                                '${x['name']}',
-                                                                style: StyleTheme
-                                                                    .font_black_31_13_semi,
-                                                              ),
-                                                              SizedBox(
-                                                                  height: 4.w),
-                                                              Text(
-                                                                '${x['decs']}',
-                                                                style: StyleTheme
-                                                                    .font_gray_153_12,
-                                                                maxLines: 2,
-                                                              ),
-                                                            ],
-                                                          )),
-                                                          SizedBox(width: 10.w),
-                                                          Container(
-                                                            width: 70.w,
-                                                            height: 25.w,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: StyleTheme
-                                                                  .red246Color,
-                                                              borderRadius: BorderRadius
-                                                                  .all(Radius
-                                                                      .circular(
-                                                                          12.5.w)),
-                                                            ),
-                                                            child: Center(
-                                                              child: Text(
-                                                                Utils.txt(
-                                                                    'ljjr'),
-                                                                style: StyleTheme
-                                                                    .font_white_255_12,
-                                                              ),
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    // SizedBox(
-                                                    //   height: 10.w,
-                                                    // )
-                                                  ],
-                                                ),
-                                              ),
-                                            ))
-                                        .toList(),
-                                  ),
-                                ),
-                                SizedBox(height: 40.w),
-                              ],
-                            );
-                          }).toList()
-                            ..insert(
-                                0,
-                                Column(
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 20.w),
-                                      child: RichText(
-                                          textAlign: TextAlign.center,
-                                          text: TextSpan(
-                                              text: Utils.txt('jqfqv')
-                                                  .split(Utils.txt('jqfqv1'))
-                                                  .first,
-                                              // textAlign: TextAlign.center,
-                                              style:
-                                                  StyleTheme.font_black_34_16,
-                                              children: [
-                                                TextSpan(
-                                                    text: Utils.txt('jqfqv1'),
-                                                    // textAlign: TextAlign.center,
-                                                    style: StyleTheme.font(
-                                                        color: StyleTheme
-                                                            .red246Color)),
-                                                TextSpan(
-                                                  text: Utils.txt('jqfqv')
-                                                      .split(
-                                                          Utils.txt('jqfqv1'))
-                                                      .last,
-                                                  style: StyleTheme
-                                                      .font_black_34_16,
-                                                )
-                                              ])),
-                                    )
-                                  ],
-                                )),
-                        ))
-                    : LoadStatus.noData()),
+                : dataList.isEmpty
+                    ? LoadStatus.noData()
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text.rich(
+                            textAlign: TextAlign.left,
+                            TextSpan(children: [
+                              TextSpan(
+                                text: '请使用翻墙VPN进入官方交流群点击 ',
+                                style: StyleTheme.font_white_255_32_600,
+                              ),
+                              TextSpan(
+                                text: "福利/翻墙VPN",
+                                style: StyleTheme.font_orange_244_32_600,
+                              ),
+                              TextSpan(
+                                text: "下载即可一键翻墙",
+                                style: StyleTheme.font_white_255_32_600,
+                              ),
+                            ]),
+                          ),
+                          SizedBox(
+                            height: 88.w,
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              _buildItem(
+                                title: "官方用户交流社群",
+                                subTitle: "一起看片就一起分享心得",
+                                contentTitle: "微信",
+                                conntent: "立即加群，还有小视频福利等你哟!",
+                              ),
+                              SizedBox(
+                                width: 80.w,
+                              ),
+                              _buildItem(
+                                title: "广告洽谈",
+                                subTitle: "代理合作/商务合作",
+                                contentTitle: "微信",
+                                conntent: "立即加群，还有小视频福利等你哟!",
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+          ),
+        ),
         SearchBarWidget(isBackBtn: true, backTitle: Utils.txt('gfjlq')),
       ],
     );
