@@ -29,7 +29,7 @@ Future<ResponseModel<ConfigModel>?> reqConfig(BuildContext context) async {
   try {
     // Response<dynamic> res = await NetworkHttp.post('/api/index/config');
     Response<dynamic> res =
-        await NetworkHttp.post('/api/index/getClientConfig');
+        await NetworkHttp.post('/api/home/config');
     Utils.log(res.data);
     ResponseModel<ConfigModel> tp = ResponseModel<ConfigModel>.fromJson(
         res.data, (json) => ConfigModel.fromJson(json));
@@ -68,24 +68,24 @@ Future<ResponseModel<UserModel>?> reqUserInfo(BuildContext context) async {
   }
 }
 
-Future<ResponseModel<dynamic>?> reqUserMeun(BuildContext context) async {
-  try {
-    Response<dynamic> res = await NetworkHttp.post('/api/index/getClientMenu');
-    Utils.log(res.data);
-    // ResponseModel<UserModel> tp = ResponseModel<UserModel>.fromJson(
-    //     res.data, (json) => UserModel.fromJson(json));
-    // if (tp.data != null) {
-    //   //存储用户数据
-    //   Provider.of<BaseStore>(context, listen: false).setUser(tp.data!);
-    //   AppGlobal.vipLevel = tp.data?.vip_level ?? 0;
-    // }
-    // return tp;
-    return ResponseModel<dynamic>.fromJson(res.data, (json) => json);
-  } catch (e) {
-    Utils.log(e);
-    return null;
-  }
-}
+// Future<ResponseModel<dynamic>?> reqUserMeun(BuildContext context) async {
+//   try {
+//     Response<dynamic> res = await NetworkHttp.post('/api/index/getClientMenu');
+//     Utils.log(res.data);
+//     // ResponseModel<UserModel> tp = ResponseModel<UserModel>.fromJson(
+//     //     res.data, (json) => UserModel.fromJson(json));
+//     // if (tp.data != null) {
+//     //   //存储用户数据
+//     //   Provider.of<BaseStore>(context, listen: false).setUser(tp.data!);
+//     //   AppGlobal.vipLevel = tp.data?.vip_level ?? 0;
+//     // }
+//     // return tp;
+//     return ResponseModel<dynamic>.fromJson(res.data, (json) => json);
+//   } catch (e) {
+//     Utils.log(e);
+//     return null;
+//   }
+// }
 
 /// 联系官方
 Future<ResponseModel<dynamic>?> reqContactList() async {
@@ -150,8 +150,8 @@ Future<ResponseModel<dynamic>?> reqAdClickCount({int? id, int? type}) async {
 Future<ResponseModel<dynamic>?> reqHomeCategoryList(
     {int id = 0, int page = 1}) async {
   try {
-    Response<dynamic> res = await NetworkHttp.post('/api/index/index',
-        data: {"id": id, "page": page});
+    Response<dynamic> res = await NetworkHttp.post('/api/contents/list_contents',
+        data: {"mid": id, "page": page});
     Utils.log(res.data);
     return ResponseModel<dynamic>.fromJson(res.data, (json) => json);
   } catch (e) {
@@ -763,16 +763,10 @@ Future<ResponseModel<dynamic>?> reqOrderList({
 }
 
 /// 黑料网首页
-Future<ResponseModel<dynamic>?> reqHome({
-  int id = 1,
-  int page = 1,
-}) async {
+Future<ResponseModel<dynamic>?> reqHome() async {
   try {
     Response<dynamic> res =
-        await NetworkHttp.post('/api/element/getConstructById', data: {
-      'id': id,
-      'page': page,
-    });
+        await NetworkHttp.post('/api/contents/list_category');
     Utils.log(res.data);
     return ResponseModel<dynamic>.fromJson(res.data, (json) => json);
   } catch (e) {

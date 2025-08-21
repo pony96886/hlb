@@ -96,9 +96,9 @@ class ConfigModel {
           ? []
           : List<GeneralAdsModel>.from(
               json['adAlert'].map((x) => GeneralAdsModel.fromJson(x))),
-      version: json['version'] == null
+      version: json['versionMsg'] == null
           ? null
-          : VersionModel.fromJson(json['version']),
+          : VersionModel.fromJson(json['versionMsg']),
       adStart: json['adStart'] is List
           ? List<GeneralAdsModel>.from(
               json['adStart'].map((x) => GeneralAdsModel.fromJson(x)))

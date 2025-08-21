@@ -1,4 +1,4 @@
-package com.hlw.ct.hlw;
+package com.hlw.ct.hlwpc;
 
 import io.flutter.embedding.android.FlutterActivity;
 

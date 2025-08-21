@@ -40,15 +40,15 @@ class _MineMenuState extends State<MineMenu> {
   }
 
   void _getData() {
-    reqUserMeun(context).then((value) {
-      if (value?.status == 1) {
-        isHud = false;
-        netError = false;
-      } else {
-        netError = true;
-      }
-      if (mounted) setState(() {});
-    });
+    // reqUserMeun(context).then((value) {
+    //   if (value?.status == 1) {
+    //     isHud = false;
+    //     netError = false;
+    //   } else {
+    //     netError = true;
+    //   }
+    //   if (mounted) setState(() {});
+    // });
   }
 
   @override

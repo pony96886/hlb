@@ -391,17 +391,29 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
         SizedBox(height: 50.w), // 底部边距
       ],
     );
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10.w)),
-        border: Border.all(color: Colors.transparent),
-        boxShadow: [
-          BoxShadow(color: Colors.black12, blurRadius: 24.w),
-        ],
-        color: Colors.black,
-      ),
-      width: 540.w,
-      child: current,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10.w)),
+            border: Border.all(color: Colors.transparent),
+            boxShadow: [
+              BoxShadow(color: Colors.black12, blurRadius: 24.w),
+            ],
+            color: Colors.black,
+          ),
+          width: 540.w,
+          child: current,
+        ),
+        SizedBox(height: 30.w),
+        Text('-温馨提示-', style: StyleTheme.font_orange_244_20_600),
+        SizedBox(height: 10.w),
+        Text('1.请务必记住自己的账号密码', style: StyleTheme.font_gray_153_18),
+        Text('2.不提供密码修改', style: StyleTheme.font_gray_153_18),
+        Text('3.不提供密码找回功能', style: StyleTheme.font_gray_153_18),
+      ],
     );
   }
 
@@ -542,7 +554,7 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
   ///
   Widget _buildRegisterWidget() {
     return Column(children: [
-      SizedBox(height: 50.w),
+      SizedBox(height: 30.w),
       _buildTextFieldWidget(
         controller: accountTxt,
         hintText: '请设置用户名',
@@ -568,7 +580,7 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
         hintText: '请输入确认密码',
         obscureText: true,
       ),
-      SizedBox(height: 50.w),
+      SizedBox(height: 30.w),
       _buildSubmitActionWidget(
         title: Utils.txt('zuche'),
         onTap: userRegister,
@@ -596,7 +608,7 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
   ///
   Widget _buildCurLoginWidget() {
     return Column(children: [
-      SizedBox(height: 50.w),
+      SizedBox(height: 30.w),
       _buildTextFieldWidget(
         controller: accountTxt,
         hintText: '请输入用户名',
@@ -613,7 +625,7 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
       //   style: StyleTheme.font_gray_153_15,
       //   maxLines: 2,
       // ),
-      SizedBox(height: 50.w),
+      SizedBox(height: 30.w),
       _buildSubmitActionWidget(
         title: Utils.txt('dneglu'),
         onTap: userLogin,
@@ -650,7 +662,7 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
   ///
   Widget _buildForgotWidget() {
     return Column(children: [
-      SizedBox(height: 48.w),
+      SizedBox(height: 30.w),
       Text(
         '忘记密码了吗?',
         style: StyleTheme.font_gray_153_20,
@@ -687,7 +699,7 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
         hintText: '请输入确认密码',
         obscureText: true,
       ),
-      SizedBox(height: 50.w),
+      SizedBox(height: 30.w),
       _buildSubmitActionWidget(
         title: '确定',
         onTap: userForget,
@@ -700,7 +712,7 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
   ///
   Widget _buildRegEmailWidget() {
     return Column(children: [
-      SizedBox(height: 50.w),
+      SizedBox(height: 30.w),
       _buildTextFieldWidget(
         controller: mailTxt,
         hintText: '请输入您的邮箱',
@@ -716,7 +728,7 @@ class _MineLoginPageState extends BaseWidgetState<MineLoginPage>
           mailVc: mailTxt,
         ),
       ),
-      SizedBox(height: 50.w),
+      SizedBox(height: 30.w),
       _buildSubmitActionWidget(
         title: '确定',
         onTap: bindEmail,

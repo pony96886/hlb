@@ -27,7 +27,7 @@ class NetImageTool extends StatelessWidget {
     return ClipRRect(
       borderRadius: radius,
       child: url.isEmpty
-          ? Container(color: StyleTheme.gray204Color)
+          ? Container(color: StyleTheme.white10)
           : _NetImageWork(
               provider: NetworkImageCRP(
                 url,

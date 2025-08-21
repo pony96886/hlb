@@ -86,7 +86,7 @@ class _HomeSearchPageState extends BaseWidgetState<HomeSearchPage>
   void onVisibleMenuAction() {
     var user = Provider.of<BaseStore>(context, listen: false).user;
     if (user?.username?.isEmpty == true) {
-      debugPrint('登录');
+      debugPrint('去登录界面');
       return;
     }
     _isOpen = !_isOpen;

@@ -177,7 +177,7 @@ flutter:
 # msix_config:
 #     display_name: 黑料网
 #     publisher_display_name: 51CG Company
-#     identity_name: com.hlw.ct.hlw
+#     identity_name: com.hlw.ct.hlwpc
 #     msix_version: 1.0.0.0
 #     logo_path: C:\Users\mac\Desktop\hlw\installers\windows\app_icon.ico
 #     capabilities: internetClient, location, microphone, webcam

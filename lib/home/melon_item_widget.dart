@@ -45,22 +45,6 @@ class MelonItemWidget extends StatelessWidget {
     );
   }
 
-  String get plates {
-    String plates = '';
-    if (args["plates"] is Map && (args["plates"] as Map).isNotEmpty) {
-      plates += (args["plates"] as Map).values.toList().join(' ');
-    }
-    if (args["plates"] is List && (args["plates"] as List).isNotEmpty) {
-      plates += (args["plates"] as List).map((i) {
-        if (i is String) return i;
-        if (i is Map) return '${i['name']}';
-        return ''; // 未知类型
-      }).join(' ');
-    }
-
-    return plates;
-  }
-
   Widget _buildStyleOneWidget(BuildContext context) {
     return Row(children: [
       Stack(children: [
@@ -93,13 +77,13 @@ class MelonItemWidget extends StatelessWidget {
             SizedBox(height: 10.w),
             Expanded(
               child: Text(
-                plates,
+                args?["author"]?['screenName'] ?? '',
                 style: StyleTheme.font_gray_153_18,
                 maxLines: 3,
               ),
             ),
             Text(
-              DateUtil.formatDateStr(args["created_date"],
+              DateUtil.formatDateStr(args["created"],
                   format: "yyyy年MM日dd"),
               style: StyleTheme.font_gray_153_18,
               maxLines: 1,
@@ -118,12 +102,12 @@ class MelonItemWidget extends StatelessWidget {
         child: Stack(children: [
           NetImageTool(
             radius: BorderRadius.circular(12.w),
-            url: args['thumb'],
+            url: args?['thumb'] ?? '',
           ),
           Positioned(
             right: 0,
             top: 0,
-            child: (args['is_hot'] != 1 || args['is_ad'] == 1)
+            child: (args?['is_hot'] != 1 || args?['is_ad'] == 1)
                 ? Container()
                 : LocalPNG(name: "hlw_new_hot", width: 54.w, height: 43.w),
           ),
@@ -148,7 +132,8 @@ class MelonItemWidget extends StatelessWidget {
             ),
             SizedBox(height: 10.w),
             Text(
-              plates,
+              '${args?["author"]?['screenName'] ?? ''} • ${DateUtil.formatDateStr(args["created"],
+                  format: "yyyy年MM日dd")}',
               style: StyleTheme.font_gray_153_18,
               maxLines: 1,
             )

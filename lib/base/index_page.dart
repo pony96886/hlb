@@ -66,11 +66,11 @@ class _IndexPageState extends State<IndexPage> {
             Utils.showText(Utils.txt('hqsbcs'));
           }
           setState(() {});
-          reqUserMeun(context).then((value) {
-            if (value?.status == 1) {
-              AppGlobal.userMenu = value?.data;
-            }
-          });
+          // reqUserMeun(context).then((value) {
+          //   if (value?.status == 1) {
+          //     AppGlobal.userMenu = value?.data;
+          //   }
+          // });
         });
         //缓存广告AD
         String? _adurl = value?.data?.adStart?.first?.thumb;

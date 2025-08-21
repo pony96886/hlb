@@ -31,29 +31,28 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    getDataBanners();
+    // getDataBanners();
     getData();
   }
 
   void getData() {
-    elements =
-        Provider.of<BaseStore>(context, listen: false).config?.plate_tab ?? [];
-    _loading = false;
-    if (mounted) setState(() {});
-  }
 
-  getDataBanners() {
-    reqAds(position_id: 2).then((value) {
+    reqHome().then((value) {
       if (value?.data == null) {
         netError = true;
         if (mounted) setState(() {});
         return;
       }
       if (value?.status == 1) {
-        banners = List.from(value?.data["ad_list"]);
+        elements = List.from(value?.data['list'] ?? []);
       }
       if (mounted) setState(() {});
     });
+
+    elements =
+        Provider.of<BaseStore>(context, listen: false).config?.plate_tab ?? [];
+    _loading = false;
+    if (mounted) setState(() {});
   }
 
   @override
@@ -138,7 +137,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       titles: elements.map((e) => e["name"].toString()).toList(),
       pages: elements.map((e) {
         return PageViewMixin(
-          child: HomeContentPage(id: e["id"], banners: banners, layoutType: layoutType),
+          child: HomeContentPage(id: e["mid"], layoutType: layoutType),
         );
       }).toList(),
     );

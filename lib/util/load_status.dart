@@ -67,7 +67,7 @@ class LoadStatus {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          LocalPNG(name: "hlw_nodata", width: w.w, height: w / 285 * 169, fit: BoxFit.fitWidth),
+          LocalPNG(name: "hlw_nodata",  width: 291.w, height: 291.w, fit: BoxFit.fitWidth),
           SizedBox(height: 10.w),
           Text(tip,
               style: StyleTheme.font(size: 20, color: StyleTheme.gray204Color))
@@ -80,10 +80,10 @@ class LoadStatus {
   static Widget netErrorWork({String? text, Function? onTap}) {
     String tip = text ?? Utils.txt('zzsb');
     return InkWell(
-      hoverColor: Colors.white,
-      focusColor: Colors.white,
-      splashColor: Colors.white,
-      highlightColor: Colors.white,
+      // hoverColor: Colors.white,
+      // focusColor: Colors.white,
+      // splashColor: Colors.white,
+      // highlightColor: Colors.white,
       onTap: () {
         onTap?.call();
       },
@@ -94,11 +94,11 @@ class LoadStatus {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              LocalPNG(name: 'hlw_no_network', width: 291.w, height: 156.w),
+              LocalPNG(name: 'hlw_no_network', width: 291.w, height: 291.w),
               SizedBox(height: 5.w),
               Text(tip,
                   style: StyleTheme.font(
-                      size: 14, color: StyleTheme.gray204Color)),
+                      size: 20, color: StyleTheme.gray204Color)),
             ],
           ),
         ),

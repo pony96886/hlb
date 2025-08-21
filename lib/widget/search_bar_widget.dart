@@ -69,11 +69,11 @@ class _SearchBarWidgetState extends State<SearchBarWidget>
 
   void onVisibleMenuAction() {
     var user = Provider.of<BaseStore>(context, listen: false).user;
-    if (user?.username?.isEmpty == true) {
-      debugPrint('登录');
-      Utils.navTo(context, "/mineloginpage/true");
-      return;
-    }
+    // if (user?.username?.isEmpty == true) {
+    //   debugPrint('去登录界面');
+    //   Utils.navTo(context, "/mineloginpage/true");
+    //   return;
+    // }
     _isOpen = !_isOpen;
     _controller.reset();
     _isOpen ? _controller.forward() : _controller.reverse();
