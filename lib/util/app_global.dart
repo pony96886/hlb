@@ -11,9 +11,11 @@ class AppGlobal {
   static Map appinfo = {};
   static String apiBaseURL = "";
   static List<String> apiLines = [
-    'https://api1.zx4ds5wa.com/api.php',
-    'https://api1.bjhjjuv.com/api.php',
-    'https://api2.zx4ds5wa.com/api.php',
+    'https://api4.klfskcrzm.com/api.php',
+    'https://api5.klfskcrzm.com/api.php'
+    // 'https://api1.zx4ds5wa.com/api.php',
+    // 'https://api1.bjhjjuv.com/api.php',
+    // 'https://api2.zx4ds5wa.com/api.php',
   ];
 
   static String uploadImgUrl = "";

@@ -14,10 +14,9 @@ import 'melon_item_widget.dart';
 class HomeContentPage extends StatefulWidget {
   final int? layoutType; //1 list ， 2 gird
   final int id;
-  final dynamic banners;
 
   const HomeContentPage(
-      {super.key, this.id = 0, this.banners, this.layoutType = 2});
+      {super.key, this.id = 0, this.layoutType = 2});
 
   @override
   State createState() => _HomeContentPageState();
@@ -34,7 +33,6 @@ class _HomeContentPageState extends State<HomeContentPage> {
   @override
   void initState() {
     super.initState();
-    banners = widget.banners;
     getData();
   }
 
@@ -45,13 +43,15 @@ class _HomeContentPageState extends State<HomeContentPage> {
         if (mounted) setState(() {});
         return false;
       }
-      List tmp = value?.data["article"]["list"] ?? [];
+      List tmp = value?.data["list"] ?? [];
+      if (page == 1) {
+        banners = value?.data["banner"] ?? [];
+      }
       if (page == 1) {
         noMore = false;
         tps = tmp;
       } else if (page > 1 && tmp.isNotEmpty) {
         tps.addAll(tmp);
-        tps = Utils.listMapNoDuplicate(tps);
       } else {
         noMore = true;
       }
@@ -63,11 +63,6 @@ class _HomeContentPageState extends State<HomeContentPage> {
 
   @override
   void didUpdateWidget(covariant HomeContentPage oldWidget) {
-    if (oldWidget.banners != widget.banners) {
-      setState(() {
-        banners = widget.banners;
-      });
-    }
     super.didUpdateWidget(oldWidget);
   }
 

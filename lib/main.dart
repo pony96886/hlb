@@ -74,7 +74,7 @@ Future<void> _initData(List<String> args) async {
     "oauth_id": AppGlobal.appBox?.get('oauth_id') ??
         Utils.toMD5(
             '${Utils.randomId(16)}_${DateTime.now().millisecondsSinceEpoch.toString()}'),
-    "bundleId": "com.pwa.hlw",
+    "bundleId": "com.pwa.hlwpc",
     "version": "1.0.0",
     "oauth_type": "web",
     "language": 'zh',

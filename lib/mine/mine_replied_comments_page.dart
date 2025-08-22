@@ -205,7 +205,7 @@ class _MineRepliedCommentsPageState
                                 ),
                               ),
                             )),
-                  RightModuleUI()
+                  // RightModuleUI()
                 ],
               );
   }

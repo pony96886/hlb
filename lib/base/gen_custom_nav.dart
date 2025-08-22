@@ -186,7 +186,7 @@ class _GenCustomNavState extends State<GenCustomNav>
     } else if (widget.isGuide) {
       curNavigationBar = _UserHeaderWidget(
         navigationBar: curNavigationBar,
-        url: cf?.office_site ?? "",
+        url: cf?.config?.office_site ?? "",
         // url: cf?.config?.forever_www ?? "",
       );
     }

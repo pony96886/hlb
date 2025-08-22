@@ -10,6 +10,6 @@ ext {
             storePassword: 'youyu2021'
     ]
     packagedata = [
-            applicationId: 'com.hlw.ct.hlw'
+            applicationId: 'com.hlw.ct.hlwpc'
     ]
 }

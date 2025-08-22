@@ -85,6 +85,9 @@ class GoSplitRouters {
       case 'homeeditorpage': //发帖
         Utils.splitToView(context, HomeEditorPage(id: params?['arg0'] ?? ''));
         break;
+      // case 'homeeditorpage': //发布文章
+      //   Utils.splitToView(context, const HomeEditorPage());
+        break;
       case 'mineupdatepage': //更新文本信息
         Utils.splitToView(
             context,
@@ -129,9 +132,6 @@ class GoSplitRouters {
         break;
       case 'minewithdrawalnow': //立即提现
         Utils.splitToView(context, MineWithdrawalNow());
-        break;
-      case 'homeeditorpage': //发布文章
-        Utils.splitToView(context, const HomeEditorPage());
         break;
       case 'minewithdrawalnowaccount': //選擇帳號
         Utils.splitToView(context, MineWithdrawalNowAccount());

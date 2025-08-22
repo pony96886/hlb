@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hlw/mine/mine_collect_page.dart';
 import 'package:hlw/model/config_model.dart';
 import 'package:hlw/util/app_global.dart';
 import 'package:hlw/util/local_png.dart';
@@ -21,6 +22,7 @@ class MineMenu extends StatefulWidget {
 
   /// -> split view state
   final BuildContext? sContext;
+
   const MineMenu({super.key, this.sContext, this.onTap});
 
   @override
@@ -40,15 +42,15 @@ class _MineMenuState extends State<MineMenu> {
   }
 
   void _getData() {
-    reqUserMeun(context).then((value) {
-      if (value?.status == 1) {
-        isHud = false;
-        netError = false;
-      } else {
-        netError = true;
-      }
-      if (mounted) setState(() {});
-    });
+    // reqUserMeun(context).then((value) {
+    //   if (value?.status == 1) {
+    //     isHud = false;
+    //     netError = false;
+    //   } else {
+    //     netError = true;
+    //   }
+    //   if (mounted) setState(() {});
+    // });
   }
 
   @override
@@ -59,19 +61,51 @@ class _MineMenuState extends State<MineMenu> {
   @override
   Widget build(BuildContext context) {
     final userModel = Provider.of<BaseStore>(context, listen: false).user;
-    final _isData = userModel?.username?.isEmpty == true;
     Widget current = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(height: _isData ? 24.w : 15.w),
-        _isData ? _buildNotLoginInWidget() : _buildUserInfoWidget(userModel),
-        SizedBox(height: _isData ? 24.w : 15.w),
+        SizedBox(height: 15.w),
+        _UserInfoWidget(user: userModel),
+        SizedBox(height: 5.w),
+        const _VipCoinsWidget(),
+        SizedBox(height: 15.w),
+        const _MidWidget(),
+        SizedBox(height: 15.w),
+        const _ListButtonWidget(),
         Divider(
           height: 1.w,
-          color: StyleTheme.gray238Color,
+          color: StyleTheme.white10,
         ),
-        _buildScrollWidget(_isData),
+        //退出登录
+        GestureDetector(
+          onTap: () {
+            //退出登录
+            Utils.startGif(tip: Utils.txt('tuichz'));
+            reqClearCached().then((_) {
+              AppGlobal.apiToken = '';
+              AppGlobal.appBox?.delete('hlw_token');
+              reqUserInfo(context).then((_) {
+                Utils.closeGif();
+                UtilEventbus().fire(EventbusClass({"login": "login"}));
+                Navigator.pop(context);
+                // UtilEventbus().fire(EventbusClass({"name": "rightBanner"}));
+              });
+            });
+          },
+          child: SizedBox(
+            height: 78.w,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                LocalPNG(name: 'hlw_mine_out_login', width: 28.w, height: 28.w),
+                SizedBox(width: 15.w),
+                Text('退出登录', style: StyleTheme.font_white_255_17),
+              ],
+            ),
+          ),
+        )
       ],
     );
 
@@ -85,366 +119,268 @@ class _MineMenuState extends State<MineMenu> {
     return Container(
       margin: EdgeInsets.fromLTRB(0, 0, 0, 13.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: StyleTheme.gray51Color,
         boxShadow: [
           BoxShadow(color: Colors.black12, blurRadius: 8.w),
         ],
         borderRadius: BorderRadius.all(Radius.circular(10.w)),
       ),
       clipBehavior: Clip.hardEdge,
-      width: 300.w,
+      width: 440.w,
       child: current,
     );
-  }
-
-  Widget _buildNotLoginInWidget() {
-    return const _NotLoginWidget();
-  }
-
-  Widget _buildUserInfoWidget(UserModel? user) {
-    return _UserInfoWidget(user: user);
-  }
-
-  Widget _buildScrollWidget(bool isData) {
-    if (AppGlobal.userMenu is! Map) return const SizedBox();
-    return _ScrollWidget(isData: isData);
-  }
-
-}
-
-class _NotLoginWidget extends StatelessWidget {
-  const _NotLoginWidget({Key? key}) : super(key: key);
-
-  Widget _buildWidget(BuildContext context, String path, Color backgroundColor, String text, TextStyle style) {
-    return GestureDetector(
-      onTap: () => Utils.navTo(context, path),
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 8.w, horizontal: 17.w),
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(36.w),
-        ),
-        child: Text(
-          Utils.txt(text),
-          style: style,
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(width: 20.w),
-          _buildWidget(context, "/mineloginpage/true", StyleTheme.black34Color, 'dneglu', StyleTheme.font_white_255_20),
-          SizedBox(width: 10.w),
-          _buildWidget(context, "/mineloginpage", StyleTheme.gray225Color45, 'zuche', StyleTheme.font_black_34_20),
-        ]);
   }
 }
 
 class _UserInfoWidget extends StatelessWidget {
   final UserModel? user;
+
   const _UserInfoWidget({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Ink(
+    return Container(
+      padding: EdgeInsets.all(13.w),
       child: InkWell(
         onTap: () {
           Utils.navTo(context, "/minesetpage");
           // UtilEventbus().fire(EventbusClass({"login": "login"})); // 收起菜單
         },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(children: [
-              SizedBox(width: 20.w),
-              SizedBox(
-                height: 54.w,
-                width: 54.w,
-                child: NetImageTool(
-                  radius: BorderRadius.circular(27.w),
-                  url: user?.thumb ?? "",
-                ),
-              ),
-              Expanded(child: Container()),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(
-                    color: StyleTheme.gray204Color,
-                    width: 1.w,
+        child: Row(children: [
+          SizedBox(
+            height: 54.w,
+            width: 54.w,
+            child: NetImageTool(
+              radius: BorderRadius.circular(27.w),
+              url: user?.thumb ?? "",
+            ),
+          ),
+          SizedBox(width: 15.w),
+          Expanded(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    user?.nickname ?? "",
+                    style: StyleTheme.font_white_255_22_bold,
+                    maxLines: 1,
                   ),
-                  borderRadius: BorderRadius.circular(18.w),
-                ),
-                padding: EdgeInsets.symmetric(vertical: 6.w, horizontal: 10.w),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    LocalPNG(
-                      name: 'hlw_mine_setting',
-                      width: 20.w,
-                      height: 20.w,
-                    ),
-                    SizedBox(width: 5.w),
-                    Text(
-                      '设置',
-                      style: StyleTheme.font_gray_194_20,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(width: 10.w),
-            ]),
-            SizedBox(height: 8.w),
-            Row(children: [
-              SizedBox(width: 20.w),
-              Expanded(
-                child: Text(
-                  user?.nickname ?? "",
-                  style: StyleTheme.font_black_34_20,
-                  maxLines: 1,
-                ),
-              ),
-              SizedBox(width: 10.w),
-            ]),
-          ],
-        ),
+                  SizedBox(height: 0.w),
+                  Text(
+                    "ID: ${user?.uid}",
+                    style: StyleTheme.font_gray_204_16,
+                    maxLines: 1,
+                  ),
+                ]),
+          ),
+          LocalPNG(
+            name: 'hlw_mine_set',
+            width: 28.w,
+            height: 28.w,
+          ),
+          SizedBox(width: 10.w),
+        ]),
       ),
     );
   }
 }
 
-class _ScrollWidget extends StatelessWidget {
-  final bool isData;
-  const _ScrollWidget({Key? key, required this.isData}) : super(key: key);
+class _VipCoinsWidget extends StatelessWidget {
+  const _VipCoinsWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15.w),
+      child: Row(
+          children: [
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: StyleTheme.gradient45,
+              borderRadius: BorderRadius.all(Radius.circular(5.w)),
+            ),
+            height: 80.w,
+            padding: EdgeInsets.symmetric(horizontal: 13.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('会员特权', style: StyleTheme.font_white_255_17),
+                Row(
+                  children: [
+                    Container(
+                        decoration: BoxDecoration(
+                          gradient: StyleTheme.gradientLinarYellow,
+                          borderRadius: BorderRadius.all(Radius.circular(5.w)),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 10.w),
+                        child: Text('开通', style: StyleTheme.font_brown_103_18_bold)),
+                    const Spacer(),
+                    LocalPNG(name: 'hlw_mine_vip', width: 36.w, height: 36.w),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(width: 20.w),
+            Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: StyleTheme.gradient45,
+              borderRadius: BorderRadius.all(Radius.circular(5.w)),
+            ),
+            height: 80.w,
+            padding: EdgeInsets.symmetric(horizontal: 13.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    Text('金币充值', style: StyleTheme.font_white_255_17),
+                    Text('(余额:0)', style: StyleTheme.font_white_255_15),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                        decoration: BoxDecoration(
+                          gradient: StyleTheme.gradientLinarYellow,
+                          borderRadius: BorderRadius.all(Radius.circular(5.w)),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 10.w),
+                        child: Text('开通', style: StyleTheme.font_brown_103_18_bold)),
+                    const Spacer(),
+                    LocalPNG(name: 'hlw_coin_icon', width: 36.w, height: 36.w),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        )
+      ]),
+    );
+  }
+}
+
+//立即领取，投稿，求瓜文章
+class _MidWidget extends StatelessWidget {
+  const _MidWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(mainAxisSize: MainAxisSize.min, children: [
-      _GroupWidget(
-        text: '求瓜投稿',
-        style: isData
-            ? StyleTheme.font_black_34_20
-            : StyleTheme.font_gray_153_20,
-        items: AppGlobal.userMenu['regular_menu'],
+      Container(
+        margin: EdgeInsets.symmetric(horizontal: 15.w),
+        height: 62.w,
+        color: StyleTheme.white10,
       ),
-      AppGlobal.userMenu['regular_menu'] is List &&
-          (AppGlobal.userMenu['regular_menu'] as List).isNotEmpty
-          ? Divider(
-        height: 1.w,
-        color: StyleTheme.gray238Color,
+      SizedBox(height: 10.w),
+      Container(
+        margin: EdgeInsets.symmetric(horizontal: 15.w),
+        height: 62.w,
+        color: StyleTheme.white10,
       )
-          : const SizedBox(),
-      _GroupWidget(
-        text: '更多选项',
-        style: isData
-            ? StyleTheme.font_black_34_20
-            : StyleTheme.font_gray_153_20,
-        items: AppGlobal.userMenu['more_menu'],
-      ),
     ]);
   }
 }
 
-class _GroupWidget extends StatelessWidget {
-  final String text;
-  final TextStyle style;
-  final List? items;
-  const _GroupWidget({Key? key, required this.text, required this.style, required this.items}) : super(key: key);
+class _ListButtonWidget extends StatelessWidget {
+  const _ListButtonWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(height: 12.w),
-            Padding(
-              padding: EdgeInsets.only(left: 20.w),
-              child: Text(text, style: style),
-            ),
-            Visibility(
-              visible: items != null && items?.isNotEmpty == true,
-                child: Column(
-                  children: [
-                    SizedBox(height: 8.w),
-                    _OperationListWidget(text: text, style: style, items: items!),
-                    SizedBox(height: 15.w),
-                  ],
-                )
-            ),
-          ],
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15.w),
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            //我的主页
+            Utils.navTo(context, '/');
+          },
+          child: Row(
+            children: [
+              LocalPNG(name: 'hlw_mine_center', width: 32.w, height: 32.w),
+              SizedBox(width: 15.w),
+              Text('我的主页', style: StyleTheme.font_white_255_17),
+              const Spacer(),
+              LocalPNG(name: '51_mine_arrow', width: 18.w, height: 20.w, color: Colors.grey),
+            ],
+          ),
+        ),
+        SizedBox(height: 10.w),
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            //我的勋章
+            Utils.navTo(context, '/');
+          },
+          child: Row(
+            children: [
+              LocalPNG(name: 'hlw_mine_xz', width: 32.w, height: 32.w),
+              SizedBox(width: 15.w),
+              Text('我的勋章', style: StyleTheme.font_white_255_17),
+              const Spacer(),
+              LocalPNG(name: '51_mine_arrow', width: 18.w, height: 20.w, color: Colors.grey),
+            ],
+          ),
+        ),
+        SizedBox(height: 15.w),
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            //评论回复
+            Utils.navTo(context, '/minerepliedcomments_page');
+          },
+          child: Row(
+            children: [
+              LocalPNG(name: 'hlw_mine_pl', width: 32.w, height: 32.w),
+              SizedBox(width: 15.w),
+              Text('评论回复', style: StyleTheme.font_white_255_17),
+              const Spacer(),
+              LocalPNG(name: '51_mine_arrow', width: 18.w, height: 20.w, color: Colors.grey),
+            ],
+          ),
+        ),
+        SizedBox(height: 15.w),
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            //我的悬赏
+            Utils.navTo(context, '/minecontributionpage');
+          },
+          child: Row(
+            children: [
+              LocalPNG(name: 'hlw_mine_xs', width: 32.w, height: 32.w),
+              SizedBox(width: 15.w),
+              Text('我的悬赏', style: StyleTheme.font_white_255_17),
+              const Spacer(),
+              LocalPNG(name: '51_mine_arrow', width: 18.w, height: 20.w, color: Colors.grey),
+            ],
+          ),
+        ),
+        SizedBox(height: 15.w),
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            //我的收藏
+            Utils.navTo(context, '/minecollectpage');
+          },
+          child: Row(
+            children: [
+              LocalPNG(name: 'hlw_mine_sc', width: 32.w, height: 32.w),
+              SizedBox(width: 15.w),
+              Text('我的收藏', style: StyleTheme.font_white_255_17),
+              const Spacer(),
+              LocalPNG(name: '51_mine_arrow', width: 18.w, height: 20.w, color: Colors.grey),
+            ],
+          ),
+        ),
+        SizedBox(height: 15.w),
+      ]),
     );
-  }
-}
-
-class _OperationListWidget extends StatefulWidget {
-  final String text;
-  final TextStyle style;
-  final List items;
-  const _OperationListWidget({Key? key, required this.text, required this.style, required this.items}) : super(key: key);
-
-  @override
-  State createState() => _OperationListWidgetState();
-}
-
-class _OperationListWidgetState extends State<_OperationListWidget> {
-
-  List<String> list = [], listTitle = [];
-  StreamSubscription? _streamSubscription;
-
-  @override
-  void initState() {
-    for (int i = 0; i < widget.items.length; i++) {
-      list.add('');
-      listTitle.add(widget.items[i]['title']);
-    }
-    _eventBus();
-    super.initState();
-  }
-
-  _eventBus() {
-    _streamSubscription = UtilEventbus().on<EventbusClass>().listen((event) {
-      String selected = '';
-      if (event.arg["Menu"] != null) {
-        selected = event.arg["Menu"];
-        if (!listTitle.contains(selected)) {
-          for (int i = 0; i < listTitle.length; i++) {
-            setState(() {
-              list[i] = '';
-            });
-          }
-        } else {
-          for (int i = 0; i < listTitle.length; i++) {
-            setState(() {
-              list[i] = listTitle[i] == selected ? selected : '';
-            });
-          }
-        }
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _streamSubscription?.cancel();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      itemCount: widget.items.length,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        childAspectRatio: 280 / 40,
-        crossAxisCount: 1,
-        mainAxisSpacing: 5.w,
-      ),
-      itemBuilder: (_, idx) => _OperationItemWidget(item: widget.items[idx], selected: list[idx])
-    );
-  }
-}
-
-class _OperationItemWidget extends StatelessWidget {
-  final dynamic item;
-  final String selected;
-  const _OperationItemWidget({Key? key, required this.item, required this.selected}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    if (item is! Map) return const SizedBox();
-    String icon = '';
-    String path = '';
-    switch (item['title']) {
-      case '我要求瓜':
-        icon = 'hlw_mine_find';
-        path = item['route'];
-        break;
-      case '我要投稿':
-        icon = 'hlw_mine_contribute';
-        path = item['route'];
-        break;
-      case '我的投稿':
-        icon = 'hlw_mine_contribute_my';
-        path = '/minecontributionpage';
-        break;
-      case '稿费收益':
-        icon = 'hlw_mine_income';
-        path = '/minecontributionincomepage';
-        break;
-      case '我的收藏':
-        icon = 'hlw_mine_collect';
-        path = '/minecollectpage';
-        break;
-      case '黑料回家路':
-        icon = 'hlw_mine_road';
-        path = item['route'];
-        break;
-      case '加入我们':
-        icon = 'hlw_mine_join';
-        path = item['route'];
-        break;
-      case '常见问题':
-        icon = 'hlw_mine_problems';
-        path = item['route'];
-        break;
-      case '商务合作':
-        icon = 'hlw_mine_business';
-        path = item['route'];
-        break;
-      case '分享活动规则':
-        icon = 'hlw_mine_rule';
-        path = item['route'];
-        break;
-      case '分享领现金红包':
-        icon = 'hlw_mine_red_bag';
-        path = item['route'];
-        break;
-      default:
-    }
-    Widget current = Row(mainAxisSize: MainAxisSize.min, children: [
-      SizedBox(width: 15.w),
-      icon.isEmpty
-          ? SizedBox(width: 22.w, height: 22.w)
-          : LocalPNG(name: icon, width: 22.w, height: 22.w),
-      SizedBox(width: 10.w),
-      Text(item['title'], style: StyleTheme.font_black_34_20),
-    ]);
-    current = Container(
-      padding: EdgeInsets.symmetric(vertical: 10.w),
-      alignment: Alignment.centerLeft,
-      color: selected == item['title'] ? StyleTheme.gray241Color : Colors.white,
-      child: current,
-    );
-    current = InkWell(
-      onTap: () {
-        if (selected != item['title']) {
-          UtilEventbus().fire(EventbusClass({"Menu": item['title']}));
-        }
-        if (item['title'] == '分享领现金红包') {
-          Clipboard.setData(ClipboardData(text: path));
-          Utils.showText(Utils.txt('fzcg') + '');
-          return; // 返回
-        }
-        // if (['我的投稿', '稿费收益', '我的收藏'].contains(item['title'])) {
-        //   Utils.navTo(context, path);
-        // } else {
-        //   if (path.isNotEmpty) Platform.isMacOS ? Utils.openWebViewMacos(PresentationStyle.sheet, path) : Utils.navTo(context, '/web/$path');
-        // }
-        ['我的投稿', '稿费收益', '我的收藏'].contains(item['title'])
-            ? Utils.navTo(context, path)
-            : path.isNotEmpty == true ? Utils.openURL(path) : Utils.showText(Utils.txt('cccwl') + '');
-        // UtilEventbus().fire(EventbusClass({"login": "login"})); 收起菜單
-      },
-      child: current,
-    );
-    return Ink(child: current);
   }
 }

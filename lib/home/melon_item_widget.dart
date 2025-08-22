@@ -21,6 +21,14 @@ class MelonItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget current = const SizedBox();
+
+    var bank = "";
+    for (var x in List.from(args["fields"] ?? [])) {
+      if (x["name"] == "redirect" && x["str_value"].isNotEmpty == true) {
+        bank = x["str_value"] ?? "";
+      }
+    }
+
     switch (style) {
       case 1:
         current = _buildStyleOneWidget(context);
@@ -35,8 +43,8 @@ class MelonItemWidget extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        if (args["badge"] == "AD") {
-          Utils.openURL(args["advertiser_url"]);
+        if (bank.isNotEmpty) {
+          Utils.openURL(bank);
           return;
         }
         Utils.navTo(context, "/homecontentdetailpage/${args["id"]}");
@@ -45,23 +53,17 @@ class MelonItemWidget extends StatelessWidget {
     );
   }
 
-  String get plates {
-    String plates = '';
-    if (args["plates"] is Map && (args["plates"] as Map).isNotEmpty) {
-      plates += (args["plates"] as Map).values.toList().join(' ');
-    }
-    if (args["plates"] is List && (args["plates"] as List).isNotEmpty) {
-      plates += (args["plates"] as List).map((i) {
-        if (i is String) return i;
-        if (i is Map) return '${i['name']}';
-        return ''; // 未知类型
-      }).join(' ');
-    }
-
-    return plates;
-  }
-
   Widget _buildStyleOneWidget(BuildContext context) {
+    var img_url = "";
+    var str_value = "0";
+    for (var x in List.from(args["fields"] ?? [])) {
+      if (x["name"] == "banner") {
+        img_url = x["str_value"];
+      }
+      if (x["name"] == "hotSearch") {
+        str_value = x["str_value"].toString();
+      }
+    }
     return Row(children: [
       Stack(children: [
         SizedBox(
@@ -69,16 +71,16 @@ class MelonItemWidget extends StatelessWidget {
           height: 180.w,
           child: NetImageTool(
             radius: BorderRadius.all(Radius.circular(5.w)),
-            url: args['thumb'] ?? '',
+            url: img_url,
           ),
         ),
         Positioned(
-          right: 0,
-          top: 0,
-          child: (args['is_hot'] != 1 || args['is_ad'] == 1)
-              ? Container()
-              : LocalPNG(name: "hlw_new_hot", width: 54.w, height: 43.w),
-        ),
+            right: 0,
+            top: 0,
+            child: str_value == "0"
+                ? Container()
+                : LocalPNG(
+                name: "hlw_new_hot", width: 54.w, height: 43.w))
       ]),
       SizedBox(width: 20.w),
       Expanded(
@@ -93,14 +95,13 @@ class MelonItemWidget extends StatelessWidget {
             SizedBox(height: 10.w),
             Expanded(
               child: Text(
-                plates,
+                args?["author"]?['screenName'] ?? '',
                 style: StyleTheme.font_gray_153_18,
                 maxLines: 3,
               ),
             ),
             Text(
-              DateUtil.formatDateStr(args["created_date"],
-                  format: "yyyy年MM日dd"),
+              DateUtil.formatDateStr(args["created"], format: "yyyy年MM日dd"),
               style: StyleTheme.font_gray_153_18,
               maxLines: 1,
             ),
@@ -111,50 +112,108 @@ class MelonItemWidget extends StatelessWidget {
   }
 
   Widget _buildStyleTwoWidget(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SizedBox(
-        height: 265.w,
-        width: 505.w,
-        child: Stack(children: [
-          NetImageTool(
-            radius: BorderRadius.circular(12.w),
-            url: args['thumb'],
-          ),
-          Positioned(
-            right: 0,
-            top: 0,
-            child: (args['is_hot'] != 1 || args['is_ad'] == 1)
-                ? Container()
-                : LocalPNG(name: "hlw_new_hot", width: 54.w, height: 43.w),
-          ),
-        ]),
-      ),
-      Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 8.w),
+    var img_url = "";
+    var str_value = "0";
+    var bank = "";
+    var category = List.from(args["category"]).map((e) => e["name"]).join("・");
+    for (var x in List.from(args["fields"] ?? [])) {
+      if (x["name"] == "banner") {
+        img_url = x["str_value"];
+      }
+      if (x["name"] == "hotSearch") {
+        str_value = x["str_value"].toString();
+      }
+      if (x["name"] == "redirect" && x["str_value"].isNotEmpty == true) {
+        bank = x["str_value"] ?? "";
+      }
+    }
+    return bank.isNotEmpty
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 265.w,
+                        width: 505.w,
+                        child: NetImageTool(
+                          url: img_url,
+                          radius: BorderRadius.circular(12.w),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: StyleTheme.margin),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 8.w),
+                            Text('${args["title"]}',
+                              style: StyleTheme.font_white_255_22_medium,
+                              maxLines: 2,
+                            ),
+                            SizedBox(height: 10.w),
+                            Text(
+                                "${args["author"]["screenName"]}・${DateUtil.formatDateStr(args["created"], format: "yyyy年MM月dd日")}${category.isEmpty ? "" : "・$category"}",
+                                style: StyleTheme.font_gray_153_18,
+                                maxLines: 1),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  Positioned(
+                      right: 0,
+                      top: 0,
+                      child: str_value == "0"
+                          ? Container()
+                          : LocalPNG(
+                          name: "hl_new_hot", width: 54.w, height: 43.w))
+                ],
+              ),
+            ],
+          )
+        : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            SizedBox(
+              height: 265.w,
+              width: 505.w,
+              child: Stack(children: [
+                NetImageTool(
+                  radius: BorderRadius.circular(12.w),
+                  url: img_url,
+                ),
+                Positioned(
+                    right: 0,
+                    top: 0,
+                    child: str_value == "0"
+                        ? Container()
+                        : LocalPNG(
+                        name: "hlw_new_hot", width: 54.w, height: 43.w))
+              ]),
+            ),
             Expanded(
-              child: Text(
-                args['is_ad'] == 1 &&
-                        args['ad'] is Map &&
-                        args['ad']['name'] != null &&
-                        args['ad']['name'] != ''
-                    ? '${args['ad']['name']}'
-                    : '${args["title"]}',
-                style: StyleTheme.font_white_255_22_medium,
-                maxLines: 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 8.w),
+                  Expanded(
+                    child: Text('${args["title"]}',
+                      style: StyleTheme.font_white_255_22_medium,
+                      maxLines: 2,
+                    ),
+                  ),
+                  SizedBox(height: 10.w),
+                  Text(
+                    '${args?["author"]?['screenName'] ?? ''} • ${DateUtil.formatDateStr(args["created"], format: "yyyy年MM日dd")}',
+                    style: StyleTheme.font_gray_153_18,
+                    maxLines: 1,
+                  )
+                ],
               ),
             ),
-            SizedBox(height: 10.w),
-            Text(
-              plates,
-              style: StyleTheme.font_gray_153_18,
-              maxLines: 1,
-            )
-          ],
-        ),
-      ),
-    ]);
+          ]);
   }
 }
