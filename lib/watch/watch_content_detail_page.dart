@@ -9,6 +9,7 @@ import 'package:hlw/base/input_container.dart';
 import 'package:hlw/base/request_api.dart';
 import 'package:hlw/base/update_sysalert.dart';
 import 'package:hlw/home/home_comments_page.dart';
+import 'package:hlw/model/alert_ads_model.dart';
 import 'package:hlw/model/general_ads_model.dart';
 import 'package:hlw/util/easy_pull_refresh.dart';
 import 'package:hlw/util/encdecrypt.dart';
@@ -163,7 +164,7 @@ class _WatchContentDetailPageState
         comments = st;
         Future.delayed(const Duration(milliseconds: 1000), () {
           if (data["notice"] != null) {
-            showActivity(GeneralAdsModel.fromJson(data["notice"]));
+            showActivity(AlertAdsModel.fromJson(data["notice"]));
           }
         });
       } else if (page > 1 && st.isNotEmpty) {
@@ -179,7 +180,7 @@ class _WatchContentDetailPageState
   }
 
   // 显示弹窗
-  void showActivity(GeneralAdsModel? ad) {
+  void showActivity(AlertAdsModel? ad) {
     if (ad == null) return;
     UpdateSysAlert.showAvtivetysAlert(
       ad: ad,
