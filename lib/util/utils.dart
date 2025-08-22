@@ -1036,8 +1036,8 @@ class Utils {
   static Widget newsModuleUI(BuildContext context, dynamic e,
       {int style = 1, int state = 1}) {
     String JsonStr = e.toString();
-    String plates =
-        DateUtil.formatDateStr(e["created_date"], format: "yyyy年MM日dd");
+    String plates = DateUtil.formatDateStr(e["created_date"] ?? e["created"],
+        format: "yyyy年MM日dd");
     if (e["plates"] is Map && (e["plates"] as Map).isNotEmpty) {
       plates += ' · ${(e["plates"] as Map).values.toList().join(' ')}';
     }

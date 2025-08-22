@@ -28,8 +28,7 @@ Future<ResponseModel<dynamic>?> reqReportLine({List? list}) async {
 Future<ResponseModel<ConfigModel>?> reqConfig(BuildContext context) async {
   try {
     // Response<dynamic> res = await NetworkHttp.post('/api/index/config');
-    Response<dynamic> res =
-        await NetworkHttp.post('/api/home/config');
+    Response<dynamic> res = await NetworkHttp.post('/api/home/config');
     Utils.log(res.data);
     ResponseModel<ConfigModel> tp = ResponseModel<ConfigModel>.fromJson(
         res.data, (json) => ConfigModel.fromJson(json));
@@ -136,8 +135,7 @@ Future<ResponseModel<dynamic>?> reqAdClickCount({int? id, int? type}) async {
 /// 看片-分类
 Future<ResponseModel<dynamic>?> reqVideoCategory() async {
   try {
-    Response<dynamic> res =
-        await NetworkHttp.post('/api/videos/list_category');
+    Response<dynamic> res = await NetworkHttp.post('/api/videos/list_category');
     Utils.log(res.data);
     return ResponseModel<dynamic>.fromJson(res.data, (json) => json);
   } catch (e) {
@@ -160,11 +158,54 @@ Future<ResponseModel<dynamic>?> reqVideoCategoryList(
   }
 }
 
+/// 历史往期
+Future<ResponseModel<dynamic>?> reqHistoryCalendar(
+    {String date = '', int page = 1, int pageSize = 20}) async {
+  try {
+    Response<dynamic> res = await NetworkHttp.post('/api/history/calendar',
+        data: {"date": date, "page": page, 'limit': pageSize});
+    Utils.log(res.data);
+    return ResponseModel<dynamic>.fromJson(res.data, (json) => json);
+  } catch (e) {
+    Utils.log(e);
+    return null;
+  }
+}
+
+/// 历史榜单
+Future<ResponseModel<dynamic>?> reqHistoryRanking(
+    {String type = 'view', String during = 'all'}) async {
+  try {
+    Response<dynamic> res = await NetworkHttp.post('/api/history/ranking',
+        data: {"type": type, 'during': during});
+    Utils.log(res.data);
+    return ResponseModel<dynamic>.fromJson(res.data, (json) => json);
+  } catch (e) {
+    Utils.log(e);
+    return null;
+  }
+}
+
+/// 历史尘封
+Future<ResponseModel<dynamic>?> reqHistoryCategories(
+    {int id = 0, String sort = '', int page = 1, int pageSize = 20}) async {
+  try {
+    Response<dynamic> res =
+        await NetworkHttp.post('/api/history/categories', data: {});
+    Utils.log(res.data);
+    return ResponseModel<dynamic>.fromJson(res.data, (json) => json);
+  } catch (e) {
+    Utils.log(e);
+    return null;
+  }
+}
+
 /// 首页黑料-分类列表
 Future<ResponseModel<dynamic>?> reqHomeCategoryList(
     {int id = 0, int page = 1, int pageSize = 18}) async {
   try {
-    Response<dynamic> res = await NetworkHttp.post('/api/contents/list_contents',
+    Response<dynamic> res = await NetworkHttp.post(
+        '/api/contents/list_contents',
         data: {"mid": id, "page": page, 'limit': pageSize});
     Utils.log(res.data);
     return ResponseModel<dynamic>.fromJson(res.data, (json) => json);

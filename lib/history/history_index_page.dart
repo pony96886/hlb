@@ -1,3 +1,4 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hlw/base/gen_custom_nav.dart';
 import 'package:hlw/util/desktop_extension.dart';
@@ -56,12 +57,10 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
           setState(() {});
         },
         titles: const ["尘封", "榜单", "往期"],
-        pages: const [
-          HistoryContentPage(
-            index: 0,
-          ),
-          HistoryContentPage(index: 1),
-          HistoryContentPage(index: 2),
+        pages: [
+          HistoryContentPage(index: 0, selectedDate: selectedDate!),
+          HistoryContentPage(index: 1, selectedDate: selectedDate!),
+          HistoryContentPage(index: 2, selectedDate: selectedDate!),
         ],
         rightWidget: tabSelectIndex == 0
             ? null
@@ -88,7 +87,7 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
                   ),
                 ),
               ),
-            ),
+      ),
     );
   }
 
