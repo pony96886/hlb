@@ -56,17 +56,12 @@ class MelonItemWidget extends StatelessWidget {
   Widget _buildStyleOneWidget(BuildContext context) {
     var img_url = "";
     var str_value = "0";
-    var bank = "";
-    var category = List.from(args["category"]).map((e) => e["name"]).join("・");
     for (var x in List.from(args["fields"] ?? [])) {
       if (x["name"] == "banner") {
         img_url = x["str_value"];
       }
       if (x["name"] == "hotSearch") {
         str_value = x["str_value"].toString();
-      }
-      if (x["name"] == "redirect" && x["str_value"].isNotEmpty == true) {
-        bank = x["str_value"] ?? "";
       }
     }
     return Row(children: [
@@ -80,12 +75,12 @@ class MelonItemWidget extends StatelessWidget {
           ),
         ),
         Positioned(
-          right: 0,
-          top: 0,
-          child: (args['is_hot'] != 1 || args['is_ad'] == 1)
-              ? Container()
-              : LocalPNG(name: "hlw_new_hot", width: 54.w, height: 43.w),
-        ),
+            right: 0,
+            top: 0,
+            child: str_value == "0"
+                ? Container()
+                : LocalPNG(
+                name: "hlw_new_hot", width: 54.w, height: 43.w))
       ]),
       SizedBox(width: 20.w),
       Expanded(
@@ -187,13 +182,12 @@ class MelonItemWidget extends StatelessWidget {
                   url: img_url,
                 ),
                 Positioned(
-                  right: 0,
-                  top: 0,
-                  child: (args?['is_hot'] != 1 || args?['is_ad'] == 1)
-                      ? Container()
-                      : LocalPNG(
-                          name: "hlw_new_hot", width: 54.w, height: 43.w),
-                ),
+                    right: 0,
+                    top: 0,
+                    child: str_value == "0"
+                        ? Container()
+                        : LocalPNG(
+                        name: "hlw_new_hot", width: 54.w, height: 43.w))
               ]),
             ),
             Expanded(
