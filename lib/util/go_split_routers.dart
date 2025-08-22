@@ -24,6 +24,7 @@ import 'package:hlw/mine/mine_withdrawal_now_account.dart';
 import 'package:hlw/mine/mine_withdrawal_record.dart';
 import 'package:hlw/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:hlw/watch/watch_content_detail_page.dart';
 
 import '../home/home_page.dart';
 
@@ -64,13 +65,22 @@ class GoSplitRouters {
         Utils.splitToView(context, NormalWeb(url: params?['arg0'] ?? ''));
         break;
       case 'homecontentdetailpage': //详情页面
-        Utils.splitToView(context, HomeContentDetailPage(cid: params?['arg0'] ?? '0'));
+        Utils.splitToView(
+            context, HomeContentDetailPage(cid: params?['arg0'] ?? '0'));
+        break;
+      case 'homevideocontentdetailpage': //详情页面
+        Utils.splitToView(
+            context, WatchContentDetailPage(cid: params?['arg0'] ?? '0'));
         break;
       case 'homeplayerpage': //播放页
-        Utils.splitToView(context, HomePlayerPage(cover: params?['arg0'] ?? '', url: params?['arg1'] ?? ''));
+        Utils.splitToView(
+            context,
+            HomePlayerPage(
+                cover: params?['arg0'] ?? '', url: params?['arg1'] ?? ''));
         break;
       case 'homepreviewviewpage': //图片预览
-        Utils.splitToView(context, HomePreviewViewPage(url: params?['arg0'] ?? ''));
+        Utils.splitToView(
+            context, HomePreviewViewPage(url: params?['arg0'] ?? ''));
         break;
       case 'homeeditorpage': //发帖
         Utils.splitToView(context, HomeEditorPage(id: params?['arg0'] ?? ''));
@@ -79,7 +89,10 @@ class GoSplitRouters {
       //   Utils.splitToView(context, const HomeEditorPage());
         break;
       case 'mineupdatepage': //更新文本信息
-        Utils.splitToView(context, MineUpdatePage(type: params?['arg0'] ?? '', title: params?['arg1'] ?? ''));
+        Utils.splitToView(
+            context,
+            MineUpdatePage(
+                type: params?['arg0'] ?? '', title: params?['arg1'] ?? ''));
         break;
       case 'minenorquestionpage': //常见问题
         Utils.splitToView(context, const MineNorquestionPage());

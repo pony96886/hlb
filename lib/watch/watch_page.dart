@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 class WatchPage extends StatefulWidget {
   final bool isShow;
+
   const WatchPage({Key? key, this.isShow = false}) : super(key: key);
 
   @override
@@ -59,7 +60,8 @@ class WatchPageState extends State<WatchPage> with TickerProviderStateMixin {
   Widget _widget() {
     return Stack(children: [
       Positioned(
-        top: 90.w + 5.w, // 5 边距
+        top: 90.w + 5.w,
+        // 5 边距
         bottom: 0,
         left: 0,
         right: 0,
