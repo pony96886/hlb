@@ -126,6 +126,14 @@ class StyleTheme {
     end: Alignment.bottomCenter,
   );
 
+  static LinearGradient gradient129 = const LinearGradient(
+    colors: [
+      Color.fromRGBO(129, 0, 181, 1),
+      Color.fromRGBO(66, 134, 255, 1)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  );
+
   //字体
   static TextStyle nav_title_font =
       font(size: 18, weight: FontWeight.normal, color: Colors.white);

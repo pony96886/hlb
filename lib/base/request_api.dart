@@ -148,7 +148,7 @@ Future<ResponseModel<dynamic>?> reqVideoCategory() async {
 
 /// 看片分类列表
 Future<ResponseModel<dynamic>?> reqVideoCategoryList(
-    {int id = 0, String sort = '', int page = 1, int pageSize = 18}) async {
+    {int id = 0, String sort = '', int page = 1, int pageSize = 20}) async {
   try {
     Response<dynamic> res = await NetworkHttp.post('/api/videos/list_contents',
         data: {"id": id, 'sort': sort, "page": page, 'limit': pageSize});

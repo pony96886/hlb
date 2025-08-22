@@ -90,11 +90,12 @@ class _RightModuleUIState extends State<RightModuleUI> {
                       );
                       return;
                     }
-                    if (user?.create_content?.allow == 1) {
-                      Utils.navTo(context, '/homeeditorpage');
-                    } else {
-                      Utils.showText(user?.create_content?.msg ?? '', time: 2);
-                    }
+                    //todo: create_content
+                    // if (user?.create_content?.allow == 1) {
+                    //   Utils.navTo(context, '/homeeditorpage');
+                    // } else {
+                    //   Utils.showText(user?.create_content?.msg ?? '', time: 2);
+                    // }
                   },
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

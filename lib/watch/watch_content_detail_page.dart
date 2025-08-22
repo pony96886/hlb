@@ -164,7 +164,7 @@ class _WatchContentDetailPageState
         comments = st;
         Future.delayed(const Duration(milliseconds: 1000), () {
           if (data["notice"] != null) {
-            showActivity(GeneralAdsModel.fromJson(data["notice"]));
+            showActivity(AlertAdsModel.fromJson(data["notice"]));
           }
         });
       } else if (page > 1 && st.isNotEmpty) {
@@ -180,7 +180,7 @@ class _WatchContentDetailPageState
   }
 
   // 显示弹窗
-  void showActivity(GeneralAdsModel? ad) {
+  void showActivity(AlertAdsModel? ad) {
     if (ad == null) return;
     UpdateSysAlert.showAvtivetysAlert(
       ad: AlertAdsModel(
