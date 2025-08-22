@@ -1,3 +1,4 @@
+import 'package:hlw/util/local_png.dart';
 import 'package:hlw/util/style_theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -113,30 +114,38 @@ class __NetImageWorkState extends State<_NetImageWork>
   Widget build(BuildContext context) {
     return _loading
         ? (kIsWeb && widget.fit == BoxFit.cover
-            ? Container(color: const Color.fromRGBO(204, 204, 204, 1))
-            : widget.fit == BoxFit.contain
-                ? Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(StyleTheme.margin),
-                      child: SizedBox(
-                        height: 20.w,
-                        width: 20.w,
-                        child: CircularProgressIndicator(
-                          color: StyleTheme.gray77Color,
-                          strokeWidth: 2,
+                ? Container(color: const Color.fromRGBO(204, 204, 204, 1))
+                : widget.fit == BoxFit.contain
+                    ? Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(StyleTheme.margin),
+                          child: SizedBox(
+                            height: 20.w,
+                            width: 20.w,
+                            child: CircularProgressIndicator(
+                              color: StyleTheme.gray77Color,
+                              strokeWidth: 2,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  )
-                : Shimmer.fromColors(
-                    baseColor: const Color.fromRGBO(204, 204, 204, 0.3),
-                    highlightColor: const Color.fromRGBO(204, 204, 204, .5),
-                    enabled: _loading,
-                    child: Container(color: Colors.white),
-                  ))
+                      )
+                    : Center(
+                        child: LocalPNG(
+                            name: 'hlw_defaul_bg',
+                            fit: BoxFit.fitWidth,
+                            width: 120.w,
+                            height: 30.w))
+            // Shimmer.fromColors(
+            //                 baseColor: const Color.fromRGBO(204, 204, 204, 0.3),
+            //                 highlightColor: const Color.fromRGBO(204, 204, 204, .5),
+            //                 enabled: _loading,
+            //                 child: Container(color: Colors.white),
+            //               )
+            )
         : widget.fit == BoxFit.cover
             ? RawImage(
-                filterQuality: FilterQuality.medium, //质量越高容易花屏
+                filterQuality: FilterQuality.medium,
+                //质量越高容易花屏
                 width: double.infinity,
                 height: double.infinity,
                 opacity: _animation,

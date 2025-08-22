@@ -192,6 +192,15 @@ class Utils {
     // if (!inProduction) dev.log(jsonEncode(object).toString());
   }
 
+  static getHMTime(int time) {
+    int s = (time / 60).truncate();
+    int h = (time - (s * 60)).truncate();
+    String timeStr(int numb) {
+      return numb < 10 ? '0$numb' : numb.toString();
+    }
+    return '${timeStr(s)}:${timeStr(h)}';
+  }
+
   //提示alert
   static showText(String text, {int time = 1, Function()? call}) {
     BotToast.showCustomText(
@@ -1352,6 +1361,7 @@ class Utils {
         )
       ]);
     }
+
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -1359,21 +1369,152 @@ class Utils {
           Utils.openURL(e["advertiser_url"]);
           return;
         }
-        // Utils.navTo(context,
-        //     "/${style == 1 ? "homeeditorpage" : "homecontentdetailpage"}/${e["id"]}");
-        switch (state) {
-          case 1:
-          case 2:
-            Utils.navTo(context, "/homecontentdetailpage/${e["id"]}");
-            break;
-          // case 3: // 待审核
-          case 4: //
-            Utils.navTo(context, "/homeeditorpage/${e["id"]}");
-            break;
-          default:
-        }
+        Utils.navTo(context, "/homecontentdetailpage/${e["id"]}");
       },
       child: current,
+    );
+  }
+
+  //看片UI
+  static Widget videoModuleUI(BuildContext context, {dynamic e}) {
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        Utils.navTo(context, "/homecontentdetailpage/${e["id"]}");
+      },
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Expanded(
+          child: Stack(children: [
+            NetImageTool(
+              radius: BorderRadius.circular(12.w),
+              url: e['cover_thumb'] ?? '',
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: -1,
+              child: Container(
+                padding: EdgeInsets.only(
+                    left: 20.w, right: 20.w, top: 40.w, bottom: 24.w),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    colors: [
+                      Colors.black,
+                      Colors.black.withOpacity(0),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(12.w),
+                    bottomRight: Radius.circular(12.w),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        LocalPNG(name: "icon_play", width: 18.w, height: 16.w),
+                        SizedBox(
+                          width: 8.w,
+                        ),
+                        Text(Utils.renderFixedNumber(
+                            e["play_count"] ?? 0),
+                          style: StyleTheme.font_white_255_20,
+                          maxLines: 1,
+                        )
+                      ],
+                    ),
+                    Text(
+                      "${Utils.getHMTime(e["duration"] ?? 0)}",
+                      style: StyleTheme.font_white_255_20,
+                      maxLines: 1,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+                child: e['isfree'] == 1
+                    ? Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                    ),
+                    decoration: BoxDecoration(
+                        gradient: StyleTheme.gradient129,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(5.w),
+                            bottomRight: Radius.circular(5.w))),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "VIP",
+                          style: StyleTheme.font(
+                              color: Colors.white,
+                              size: 20,
+                              weight: FontWeight.w600),
+                        ),
+                      ],
+                    ))
+                    : e['isfree'] == 2
+                    ? Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    decoration: BoxDecoration(
+                        gradient:
+                        StyleTheme.gradient129,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(5.w),
+                            bottomRight: Radius.circular(5.w))),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text("${e['coins']}",
+                            style: StyleTheme
+                                .font_white_255_20),
+                        SizedBox(width: 5.w),
+                        LocalPNG(
+                          name: 'hlw_coin_icon',
+                          width: 22.w,
+                          height: 22.w,
+                        ),
+                      ],
+                    ))
+                    : Container())
+          ]),
+        ),
+        SizedBox(height: 16.w),
+        SizedBox(
+          height: 60.w,
+          child: Text('${e["title"]}',
+            style: StyleTheme.font_white_255_20,
+            maxLines: 2,
+          ),
+        ),
+        SizedBox(height: 16.w),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              (e['created_at'] != null
+                  ? format(
+                  DateTime.parse(e["created_at"] ?? ""))
+                  : ''),
+              style: StyleTheme.font_gray_153_18,
+              maxLines: 1,
+            ),
+            Text(
+              Utils.txt('pl') + ' ' + '${e['comment_ct']}',
+              style: StyleTheme.font_gray_153_18,
+              maxLines: 1,
+            )
+          ],
+        ),
+      ]),
     );
   }
 
