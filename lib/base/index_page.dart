@@ -10,6 +10,7 @@ import 'package:hlw/jinxuan/welfare_page.dart';
 import 'package:hlw/mine/mine_groups_page.dart';
 import 'package:hlw/mine/mine_norquestion_page.dart';
 import 'package:hlw/mine/mine_share_page.dart';
+import 'package:hlw/model/alert_ads_model.dart';
 import 'package:hlw/model/config_model.dart';
 import 'package:hlw/util/app_global.dart';
 import 'package:hlw/util/eventbus_class.dart';
@@ -53,9 +54,10 @@ class _IndexPageState extends State<IndexPage> {
     reqConfig(context).then((value) {
       // Utils.log('Config Response: $value');
       if (value?.status == 1) {
-        AppGlobal.appBox?.put("lines_url", value?.data?.lines_url);
-        AppGlobal.appBox?.put("github_url", value?.data?.github_url);
-        AppGlobal.appBox?.put('office_web', value?.data?.office_site);
+        AppGlobal.appBox?.put("lines_url", value?.data?.config?.lines_url);
+        AppGlobal.appBox?.put("github_url", value?.data?.config?.github_url);
+        AppGlobal.appBox?.put('office_web', value?.data?.config?.office_site);
+        AppGlobal.appBox?.put('office_site', value?.data?.config?.office_site);
         reqUserInfo(context).then((res) {
           // Utils.log('UserInfo Response: $res');
           isHud = false;
@@ -68,23 +70,37 @@ class _IndexPageState extends State<IndexPage> {
             Utils.showText(Utils.txt('hqsbcs'));
           }
           setState(() {});
-          // reqUserMeun(context).then((value) {
-          //   if (value?.status == 1) {
-          //     AppGlobal.userMenu = value?.data;
-          //   }
-          // });
         });
         //缓存广告AD
-        String? _adurl = value?.data?.adStart?.first?.thumb;
+        String? _adurl = value?.data?.ads?.img_url;
         if (_adurl != null) {
           ImageRequestAsync.getImageRequest(_adurl).then((_) {
             AppGlobal.appBox?.put('adsmap', {
               'image': _adurl,
-              'url': value?.data?.adStart?.first?.url_config
+              'url': value?.data?.ads?.url
             });
           });
         } else {
           AppGlobal.appBox?.put('adsmap', null);
+        }
+        //seo设置
+        if (kIsWeb) {
+          final descTag = html.document.head!
+              .querySelector('meta[name="description"]') as html.MetaElement?;
+          final description = value?.data?.config?.description ?? "";
+          final kwTag = html.document.head!
+              .querySelector('meta[name="keywords"]') as html.MetaElement?;
+          final keywords = value?.data?.config?.keywords ?? "";
+          final title = value?.data?.config?.title ?? "";
+          if (kwTag != null &&
+              descTag != null &&
+              description.isNotEmpty &&
+              keywords.isNotEmpty &&
+              title.isNotEmpty) {
+            kwTag.content = keywords;
+            descTag.content = description;
+            html.document.title = title;
+          }
         }
       } else {
         netError = true;
@@ -97,7 +113,7 @@ class _IndexPageState extends State<IndexPage> {
   void _clipBoardText() {
     if (kIsWeb) {
       Uri u = Uri.parse(html.window.location.href);
-      String? aff = u.queryParameters['hlwpp_aff'];
+      String? aff = u.queryParameters['hlwpc_aff'];
       if (aff != null) {
         reqInvitation(affCode: aff);
       }
@@ -106,7 +122,7 @@ class _IndexPageState extends State<IndexPage> {
         if (value?.text != null) {
           List cliptextList = value?.text?.split(":").toList() ?? [];
           if (cliptextList.length > 1) {
-            if (cliptextList[0] == 'hlwpp_aff') {
+            if (cliptextList[0] == 'hlwpc_aff') {
               if (cliptextList[1] != '') {
                 reqInvitation(affCode: cliptextList[1]);
               }
@@ -121,8 +137,8 @@ class _IndexPageState extends State<IndexPage> {
   void _loadSysAlert(ConfigModel? data) {
     if (data == null) return;
 
-    if (data.version != null) {
-      var targetVersion = data.version?.version?.replaceAll('.', '');
+    if (data.versionMsg != null) {
+      var targetVersion = data.versionMsg?.version?.replaceAll('.', '');
       var currentVersion = AppGlobal.appinfo['version'].replaceAll('.', '');
       var needUpdate =
           int.parse(targetVersion ?? "100") > int.parse(currentVersion);
@@ -137,17 +153,52 @@ class _IndexPageState extends State<IndexPage> {
       } else {
         _showActivety(data);
       }
+    } else {
+      _showActivety(data);
     }
   }
+
+
+  //APPS显示
+  void _appsAlert(ConfigModel? data) {
+    List<dynamic> apps = data?.popup_apps ?? [];
+    if (apps.isEmpty == true) {
+      _noticeAlert(data);
+      return;
+    }
+    UpdateSysAlert.showAppAlert(apps, cancel: () {
+      _noticeAlert(data);
+    });
+  }
+
+  //公告显示
+  void _noticeAlert(ConfigModel? data) {
+    if (data?.versionMsg?.mstatus == 1) {
+      UpdateSysAlert.showAnnounceAlert(
+        text: data?.versionMsg?.message,
+        cancel: () {
+          _addMainScreen();
+        },
+        confirm: () {
+          _addMainScreen();
+        },
+      );
+      return;
+    }
+    _addMainScreen();
+  }
+
+  //加载添加到主屏幕功能
+  void _addMainScreen() async {}
 
   //版本更新
   void _updateAlert(ConfigModel? data) {
     UpdateSysAlert.showUpdateAlert(
       site: () {
-        Utils.openURL(data?.office_site ?? "");
+        Utils.openURL(data?.config?.office_site ?? "");
       },
       guide: () {
-        Utils.openURL(data?.solution ?? "");
+        Utils.openURL(data?.config?.solution ?? "");
       },
       cancel: () {
         _showActivety(data);
@@ -155,45 +206,67 @@ class _IndexPageState extends State<IndexPage> {
       confirm: () {
         if (Platform.isAndroid) {
           UpdateSysAlert.androidUpdateAlert(
-              version: data?.version?.version, url: data?.version?.apk);
+              version: data?.versionMsg?.version, url: data?.versionMsg?.apk);
         } else {
-          Utils.openURL(data?.version?.apk ?? "");
+          Utils.openURL(data?.versionMsg?.apk ?? "");
         }
       },
-      version: "V${data?.version?.version}",
-      text: data?.version?.tips,
-      mustupdate: data?.version?.must == 1,
+      version: "V${data?.versionMsg?.version}",
+      text: data?.versionMsg?.tips,
+      mustupdate: data?.versionMsg?.must == 1,
     );
-  }
-
-  //公告显示
-  void _noticeAlert(ConfigModel? data) {
-    if (data?.version?.mstatus == 1) {
-      UpdateSysAlert.showAnnounceAlert(
-        text: data?.version?.message,
-        cancel: () {},
-        confirm: () {},
-      );
-    }
   }
 
   //显示弹窗
   void _showActivety(ConfigModel? data, {int index = 0}) {
-    if (data?.adAlert?.isEmpty == true) return;
-    GeneralAdsModel? tp = data?.adAlert?[index];
+    if (data?.pop_ads == null) {
+      _appsAlert(data);
+      return;
+    }
+    AlertAdsModel? tp = data?.pop_ads?[index];
     UpdateSysAlert.showAvtivetysAlert(
         ad: tp,
         cancel: () {
-          if (index == (data?.adAlert?.length ?? 0) - 1) {
-            _noticeAlert(data);
+          if (index == (data?.pop_ads?.length ?? 0) - 1) {
+            _appsAlert(data);
           } else {
             _showActivety(data, index: index + 1);
           }
         },
         confirm: () {
           //上报点击量
-          reqAdClickCount(id: tp?.id, type: tp?.type);
-          Utils.openRoute(context, tp);
+          reqAdClickCount(id: tp?.report_id, type: tp?.report_type);
+          if (tp?.type == "router") {
+            String _url = tp?.url_str ?? "";
+            List _urlList = _url.split('??');
+            Map<String, dynamic> pramas = {};
+            if (_urlList.first == "web") {
+              pramas["url"] = _urlList.last.toString().substring(4);
+              Utils.navTo(context, "/${_urlList.first}/${pramas.values.first}");
+            } else {
+              if (_urlList.length > 1 && _urlList.last != "") {
+                _urlList[1].split("&").forEach((item) {
+                  List stringText = item.split('=');
+                  pramas[stringText[0]] =
+                  stringText.length > 1 ? stringText[1] : null;
+                });
+              }
+              String pramasStrs = "";
+              if (pramas.values.isNotEmpty) {
+                pramas.forEach((key, value) {
+                  pramasStrs += "/$value";
+                });
+              }
+              Utils.navTo(context, "/${_urlList.first}$pramasStrs");
+            }
+          } else {
+            Utils.openURL(tp?.url_str?.trim() ?? "");
+            if (index == (data?.pop_ads?.length ?? 0) - 1) {
+              _appsAlert(data);
+            } else {
+              _showActivety(data, index: index + 1);
+            }
+          }
         });
   }
 
@@ -371,7 +444,7 @@ class _MainPageState extends State<MainPage> {
                   // 官網
                   behavior: HitTestBehavior.translucent,
                   onTap: () {
-                    final _url = config?.pc_site_url;
+                    final _url = config?.config?.office_site;
                     _url != null && _url.isNotEmpty == true
                         ? Utils.openURL(_url)
                         : Utils.showText(Utils.txt('cccwl') + '');
@@ -438,8 +511,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget _buildOperationListWidget() {
-    int len = 7;
-    if (config?.client_forum_bbs?.isEmpty ?? true) len = 6;
+    int len = 6;
     return GridView.builder(
       padding: EdgeInsets.zero,
       shrinkWrap: false,
@@ -489,7 +561,7 @@ class _MainPageState extends State<MainPage> {
       case 6: // 黑料官方论坛
         text = '黑料官方论坛';
         icon = 'hlw_tab_0_forum';
-        link = config?.client_forum_bbs ?? '';
+        // link = config?.client_forum_bbs ?? '';
         break;
       default:
         text = '测试天';

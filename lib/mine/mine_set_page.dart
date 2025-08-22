@@ -46,23 +46,23 @@ class _MineSetPageState extends BaseWidgetState<MineSetPage> {
   void _updateAlert(ConfigModel? data) {
     UpdateSysAlert.showUpdateAlert(
       site: () {
-        Utils.openURL(data?.office_site ?? "");
+        Utils.openURL(data?.config?.office_site ?? "");
       },
       guide: () {
-        Utils.openURL(data?.solution ?? "");
+        Utils.openURL(data?.config?.solution ?? "");
       },
       cancel: () {},
       confirm: () {
         if (Platform.isAndroid) {
           UpdateSysAlert.androidUpdateAlert(
-              version: data?.version?.version, url: data?.version?.apk);
+              version: data?.versionMsg?.version, url: data?.versionMsg?.apk);
         } else {
-          Utils.openURL(data?.version?.apk ?? "");
+          Utils.openURL(data?.versionMsg?.apk ?? "");
         }
       },
-      version: "V${data?.version?.version}",
-      text: data?.version?.tips,
-      mustupdate: data?.version?.must == 1,
+      version: "V${data?.versionMsg?.version}",
+      text: data?.versionMsg?.tips,
+      mustupdate: data?.versionMsg?.must == 1,
     );
   }
 
@@ -185,14 +185,14 @@ class _MineSetPageState extends BaseWidgetState<MineSetPage> {
                                 Provider.of<BaseStore>(context, listen: false)
                                     .config;
                             var targetVersion =
-                                cf?.version?.version?.replaceAll('.', '');
+                                cf?.versionMsg?.version?.replaceAll('.', '');
                             var currentVersion = AppGlobal.appinfo['version']
                                 .replaceAll('.', '');
                             var needUpdate = int.parse(targetVersion ?? "100") >
                                 int.parse(currentVersion);
                             if (kIsWeb) {
                               //web不需要更新
-                              Utils.openURL(cf?.office_site ?? "");
+                              Utils.openURL(cf?.config?.office_site ?? "");
                               return;
                             }
                             if (needUpdate) {

@@ -151,6 +151,11 @@ class MelonItemWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(height: 8.w),
+                            Text('${args["title"]}',
+                              style: StyleTheme.font_white_255_22_medium,
+                              maxLines: 2,
+                            ),
+                            SizedBox(height: 10.w),
                             Text(
                                 "${args["author"]["screenName"]}・${DateUtil.formatDateStr(args["created"], format: "yyyy年MM月dd日")}${category.isEmpty ? "" : "・$category"}",
                                 style: StyleTheme.font_gray_153_18,
@@ -169,7 +174,6 @@ class MelonItemWidget extends StatelessWidget {
                           name: "hl_new_hot", width: 54.w, height: 43.w))
                 ],
               ),
-              SizedBox(height: 20.w)
             ],
           )
         : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -196,13 +200,7 @@ class MelonItemWidget extends StatelessWidget {
                 children: [
                   SizedBox(height: 8.w),
                   Expanded(
-                    child: Text(
-                      args['is_ad'] == 1 &&
-                              args['ad'] is Map &&
-                              args['ad']['name'] != null &&
-                              args['ad']['name'] != ''
-                          ? '${args['ad']['name']}'
-                          : '${args["title"]}',
+                    child: Text('${args["title"]}',
                       style: StyleTheme.font_white_255_22_medium,
                       maxLines: 2,
                     ),

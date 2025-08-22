@@ -25,27 +25,20 @@ class WatchPageState extends State<WatchPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    getDataBanners();
     getData();
   }
 
   void getData() {
-    elements =
-        Provider.of<BaseStore>(context, listen: false).config?.plate_tab ?? [];
-    _loading = false;
-    if (mounted) setState(() {});
-  }
-
-  getDataBanners() {
-    reqAds(position_id: 2).then((value) {
+    reqVideoCategory().then((value) {
       if (value?.data == null) {
         netError = true;
         if (mounted) setState(() {});
         return;
       }
       if (value?.status == 1) {
-        banners = List.from(value?.data["ad_list"]);
+        elements = List.from(value?.data['list'] ?? []);
       }
+      _loading = false;
       if (mounted) setState(() {});
     });
   }
@@ -82,7 +75,7 @@ class WatchPageState extends State<WatchPage> with TickerProviderStateMixin {
       titles: elements.map((e) => e["name"].toString()).toList(),
       pages: elements.map((e) {
         return PageViewMixin(
-          child: WatchContentPage(id: e["id"], banners: banners),
+          child: WatchContentPage(id: e["id"]),
         );
       }).toList(),
     );

@@ -36,11 +36,11 @@ Future<ResponseModel<ConfigModel>?> reqConfig(BuildContext context) async {
     if (tp.data != null) {
       //存储基础数据
       Provider.of<BaseStore>(context, listen: false).setConfig(tp.data!);
-      AppGlobal.imgBaseUrl = tp.data?.img_base ?? "";
-      AppGlobal.uploadImgKey = tp.data?.upload_img_key ?? "";
-      AppGlobal.uploadImgUrl = tp.data?.img_upload_url ?? "";
-      AppGlobal.uploadMp4Key = tp.data?.upload_mp4_key ?? "";
-      AppGlobal.uploadMp4Url = tp.data?.mp4_upload_url ?? "";
+      AppGlobal.imgBaseUrl = tp.data?.config?.img_base ?? "";
+      AppGlobal.uploadImgKey = tp.data?.config?.upload_img_key ?? "";
+      AppGlobal.uploadImgUrl = tp.data?.config?.img_upload_url ?? "";
+      AppGlobal.uploadMp4Key = tp.data?.config?.upload_mp4_key ?? "";
+      AppGlobal.uploadMp4Url = tp.data?.config?.mp4_upload_url ?? "";
     }
     return tp;
   } catch (e) {
@@ -133,20 +133,34 @@ Future<ResponseModel<dynamic>?> reqAdClickCount({int? id, int? type}) async {
 /// 首页
 ///
 
-/// 首页-分类
-// Future<ResponseModel<dynamic>?> reqHomeCategory() async {
-//   try {
-//     Response<dynamic> res =
-//         await NetworkHttp.post('/api/contents/list_category');
-//     Utils.log(res.data);
-//     return ResponseModel<dynamic>.fromJson(res.data, (json) => json);
-//   } catch (e) {
-//     Utils.log(e);
-//     return null;
-//   }
-// }
+/// 看片-分类
+Future<ResponseModel<dynamic>?> reqVideoCategory() async {
+  try {
+    Response<dynamic> res =
+        await NetworkHttp.post('/api/videos/list_category');
+    Utils.log(res.data);
+    return ResponseModel<dynamic>.fromJson(res.data, (json) => json);
+  } catch (e) {
+    Utils.log(e);
+    return null;
+  }
+}
 
-/// 首页-分类列表
+/// 看片分类列表
+Future<ResponseModel<dynamic>?> reqVideoCategoryList(
+    {int id = 0, String sort = '', int page = 1, int pageSize = 18}) async {
+  try {
+    Response<dynamic> res = await NetworkHttp.post('/api/videos/list_contents',
+        data: {"id": id, 'sort': sort, "page": page, 'limit': pageSize});
+    Utils.log(res.data);
+    return ResponseModel<dynamic>.fromJson(res.data, (json) => json);
+  } catch (e) {
+    Utils.log(e);
+    return null;
+  }
+}
+
+/// 首页黑料-分类列表
 Future<ResponseModel<dynamic>?> reqHomeCategoryList(
     {int id = 0, int page = 1, int pageSize = 18}) async {
   try {

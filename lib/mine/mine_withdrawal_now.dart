@@ -32,7 +32,8 @@ class _MineWithdrawalNowState extends BaseWidgetState<MineWithdrawalNow> {
   @override
   void onCreate() {
     final cf = Provider.of<BaseStore>(context, listen: false).config;
-    ruleTxt = cf?.client_withdraw_rule;
+    //todo: client_withdraw_rule
+    // ruleTxt = cf?.config?.client_withdraw_rule;
     _getData();
   }
 

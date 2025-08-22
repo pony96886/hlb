@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:app_install/api_generated.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:hlw/base/request_api.dart';
+import 'package:hlw/model/alert_ads_model.dart';
 import 'package:hlw/util/local_png.dart';
 import 'package:hlw/util/netimage_tool.dart';
 import 'package:hlw/util/network_http.dart';
@@ -19,7 +21,7 @@ class UpdateSysAlert {
   static void showAvtivetysAlert({
     VoidCallback? cancel,
     VoidCallback? confirm,
-    GeneralAdsModel? ad,
+    AlertAdsModel? ad,
   }) {
     BotToast.showWidget(
       toastBuilder: (cancelFunc) => GestureDetector(
@@ -44,11 +46,11 @@ class UpdateSysAlert {
                     confirm?.call();
                   },
                   child: SizedBox(
-                    // width: (ad?.show_width ?? 305).w,
-                    // height: (ad?.show_height ?? 340).w,
-                    width: (ad?.show_width ?? 305).w * 1.35,
-                    height: (ad?.show_height ?? 340).w * 1.35,
-                    child: NetImageTool(url: ad?.thumb ?? ""),
+                    width: (ad?.width ?? 400).w,
+                    height: (ad?.height ?? 400).w,
+                    child: NetImageTool(
+                        url: ad?.img_url ?? "",
+                        radius: BorderRadius.all(Radius.circular(10.w))),
                   ),
                 ),
                 SizedBox(height: 20.w),
@@ -61,6 +63,124 @@ class UpdateSysAlert {
                     width: 35.w,
                     height: 35.w,
                     child: const LocalPNG(name: "51_alert_close"),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  //应用弹窗
+  static void showAppAlert(
+    List<dynamic> apps, {
+    VoidCallback? cancel,
+    VoidCallback? confirm,
+  }) {
+    double itemWidth = 610.w / 4;
+    BotToast.showWidget(
+      toastBuilder: (cancelFunc) => GestureDetector(
+        onTap: () {
+          cancelFunc();
+          cancel?.call();
+        },
+        child: Container(
+          constraints: BoxConstraints(
+            maxHeight: ScreenHeight,
+          ),
+          width: ScreenWidth,
+          decoration: const BoxDecoration(color: Color.fromRGBO(0, 0, 0, 0.60)),
+          child: GestureDetector(
+            onTap: () {},
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                LocalPNG(
+                  name: "hl_app_top_bg",
+                  width: 610.w,
+                  height: 140.w,
+                  fit: BoxFit.fill,
+                ),
+                Builder(builder: (context) {
+                  double itemHeight = itemWidth * 1.3;
+                  double fullHeight =
+                      (apps.length / 4 + (apps.length % 4 > 0 ? 1 : 0)) *
+                              (itemHeight + 10.w) -
+                          10.w;
+
+                  double maxHeight = ScreenHeight * 0.7;
+                  // 需要约束
+                  bool needConstrains = fullHeight > maxHeight;
+
+                  return Container(
+                      width: 610.w,
+                      margin: EdgeInsets.symmetric(horizontal: 25.w),
+                      constraints: needConstrains
+                          ? BoxConstraints(
+                              maxHeight: maxHeight,
+                            )
+                          : null,
+                      decoration: BoxDecoration(
+                          color: StyleTheme.bgColor,
+                          borderRadius: BorderRadius.vertical(
+                              bottom: Radius.circular(10.w))),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 20.w, horizontal: 20.w),
+                      child: GridView.count(
+                        padding: EdgeInsets.zero,
+                        crossAxisCount: 4,
+                        mainAxisSpacing: 10.w,
+                        crossAxisSpacing: 10.w,
+                        childAspectRatio: 1 / 1.3,
+                        // physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: needConstrains ? false : true,
+                        children: apps
+                            .map((e) => GestureDetector(
+                                  onTap: () {
+                                    //上报点击量
+                                    reqAdClickCount(
+                                        id: e['report_id'],
+                                        type: e['report_type']);
+                                    Utils.openURL(e["url"] ?? "");
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: itemWidth * 0.8,
+                                        height: itemWidth * 0.8,
+                                        child: NetImageTool(
+                                          url: Utils.getPICURL(e),
+                                          radius: BorderRadius.all(
+                                              Radius.circular(10.w)),
+                                        ),
+                                      ),
+                                      SizedBox(height: 10.w),
+                                      Text(
+                                        e["title"] ?? "",
+                                        style: StyleTheme.font(
+                                            size: 20,
+                                            weight: FontWeight.normal),
+                                      )
+                                    ],
+                                  ),
+                                ))
+                            .toList(),
+                      ));
+                }),
+                SizedBox(height: 20.w),
+                GestureDetector(
+                  onTap: () {
+                    cancelFunc();
+                    cancel?.call();
+                  },
+                  child: SizedBox(
+                    width: 35.w,
+                    height: 35.w,
+                    child: LocalPNG(name: "51_alert_close"),
                   ),
                 ),
               ],

@@ -137,7 +137,8 @@ class _ActionsWidget extends StatelessWidget {
       child: Row(children: [
         _btn(() => Utils.navTo(context, '/minewithdrawalrecord'), '明细', StyleTheme.black34Color),
         SizedBox(width: 60.w),
-        _btn(() => Utils.openURL('${Provider.of<BaseStore>(context, listen: false).config?.client_withdraw_tg}'), '立即提现', StyleTheme.orange255Color), // /minewithdrawalnow
+        //todo: client_withdraw_tg
+        // _btn(() => Utils.openURL('${Provider.of<BaseStore>(context, listen: false).config?.client_withdraw_tg}'), '立即提现', StyleTheme.orange255Color), // /minewithdrawalnow
       ]),
     );
   }

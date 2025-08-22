@@ -151,14 +151,14 @@ class BaseMainViewState extends State<BaseMainView> {
               "titleContent": "商务合作/代理合作",
               "subTitle": "Telegram",
               "subContent": "大平台高分成月入十万！",
-              "url": "${cf?.client_official_tg}",
+              // "url": "${cf?.client_official_tg}",
             },
             {
               "title": "联系官方审核提现",
               "titleContent": "投稿收益请联系官方",
               "subTitle": "Telegram",
               "subContent": "大平台高收入无限制",
-              "url": "${cf?.client_withdraw_tg}",
+              // "url": "${cf?.client_withdraw_tg}",
             }
           ]
         : [
@@ -167,7 +167,7 @@ class BaseMainViewState extends State<BaseMainView> {
               "titleContent": "一起看片一起分享心得",
               "subTitle": "Telegram",
               "subContent": "马上加入，福利多多！",
-              "url": "${cf?.tg_group}",
+              // "url": "${cf?.tg_group}",
             }
           ];
     return Stack(
@@ -421,14 +421,14 @@ class _RedBagWidget extends StatelessWidget {
         GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: () {
-            if (Utils.unFocusNode(context) &&
-                configModel?.share != null &&
-                configModel?.share != 0) {
-              final path = Uri.decodeComponent(
-                  Utils.spliceAddress(context, configModel?.share));
-              Utils.openURL(path);
-              // Platform.isMacOS ? Utils.openWebViewMacos(PresentationStyle.sheet, path) : Utils.navTo(context, '/web/$path');
-            }
+            // if (Utils.unFocusNode(context) &&
+            //     configModel?.share != null &&
+            //     configModel?.share != 0) {
+            //   final path = Uri.decodeComponent(
+            //       Utils.spliceAddress(context, configModel?.share));
+            //   Utils.openURL(path);
+            //   // Platform.isMacOS ? Utils.openWebViewMacos(PresentationStyle.sheet, path) : Utils.navTo(context, '/web/$path');
+            // }
           },
           child: Container(
             height: 64.w,
@@ -448,8 +448,8 @@ class _RedBagWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(configModel!.tips_share_text!,
-                          style: StyleTheme.font_black_34_15_medium),
+                      // Text(configModel!.tips_share_text!,
+                      //     style: StyleTheme.font_black_34_15_medium),
                       SizedBox(height: 2.w),
                       Text('点击复制，发给色友即可', style: StyleTheme.font_gray_153_12),
                     ],

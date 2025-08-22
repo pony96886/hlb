@@ -24,318 +24,306 @@ class WelfarePage extends StatefulWidget {
 }
 
 class _WelfarePageState extends State<WelfarePage> {
+  bool isHud = true;
+  bool netError = false;
+  List banners = [];
+  List categories = [];
+
+  void getData() {
+    reqAppCategory().then((value) {
+      if (value?.data == null || value?.status != 1) {
+        netError = true;
+        setState(() {});
+        return;
+      }
+      banners = List.from(value?.data["banner"]);
+      categories = List.from(value?.data["categories"]);
+      isHud = false;
+      setState(() {});
+    });
+  }
+
+  //banner
+  Widget bannerWidget() {
+    return banners.isEmpty
+        ? Container()
+        : Column(children: [
+      Utils.bannerSwiper(
+        width: ScreenWidth,
+        whRate: 150 / 350,
+        data: banners,
+      ),
+      SizedBox(height: 18.w),
+    ]);
+  }
+
+  @override
+  void didUpdateWidget(covariant WelfarePage oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    if (widget.isShow && isHud) {
+      getData();
+    } else {}
+  }
+
   @override
   Widget build(BuildContext context) {
-    final ConfigModel? configModel =
-        Provider.of<BaseStore>(context, listen: false).config;
-    return Stack(children: [
-      Positioned(
-        top: 100.w,
-        left: 30.w,
-        right: 30.w,
-        bottom: 0,
-        child: configModel?.welfare_tab == null
-            ? Container()
-            : GenCustomNav(
-                tabPadding: 0,
-                isCenter: false,
-                titles: configModel!.welfare_tab!
-                    .map((e) => e["name"].toString())
-                    .toList(),
-                pages: configModel.welfare_tab!.map((e) {
-                  return PageViewMixin(
-                    child: WelfareRecApps(
-                        isShow: widget.isShow,
-                        id: e["id"],
-                        isRec: e["name"] == Utils.txt('tj')),
-                  );
-                }).toList(),
+    return Stack(
+      children: [
+        Column(children: [
+          Utils.createNav(
+            right: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                Utils.navTo(context, "/homesearchpage");
+              },
+              child: Container(
+                alignment: Alignment.centerRight,
+                width: 40.w,
+                height: 40.w,
+                child: LocalPNG(
+                  name: "hl_label_search",
+                  width: 14.w,
+                  height: 14.w,
+                  fit: BoxFit.contain,
+                ),
               ),
-        // CustomExpandedWidget(
-        //   isTabBar: false,
-        //   titles: configModel?.welfare_tab!.map((e) => e["name"].toString()).toList(),
-        //   pages: configModel?.welfare_tab!.map((e) => PageCacheMixin(
-        //     child: WelfareRecApps(
-        //         id: e["id"],
-        //         isRec: e["name"] == Utils.txt('tj')),
-        //   ),
-        //   ).toList(),
-        //   expandedWidget: netError
-        //       ? LoadStatus.netErrorWork(onTap: () => netError = false)
-        //       : isHud || banners.isEmpty
-        //       ? LoadStatus.showLoading(mounted)
-        //       : Utils.bannerScaleExtSwiper(
-        //     data: banners,
-        //     itemWidth: 710.w, // 图片宽
-        //     itemHeight: 240.w, // 图片高(240) + 23 + 10
-        //     viewportFraction: 0.6827, // 710 / 1040
-        //     scale: 1,
-        //     spacing: 5.w,
-        //     lineWidth: 20.w,
-        //   ),
-        // )
-      ),
-      const SearchBarWidget(),
-    ]);
+            ),
+            title: Utils.txt('flmfl'),
+          ),
+          Expanded(
+            child: netError
+                ? LoadStatus.netErrorWork(onTap: () {
+              netError = false;
+              getData();
+            })
+                : isHud
+                ? LoadStatus.showLoading(mounted)
+                : Column(
+              children: [
+                bannerWidget(),
+                Expanded(
+                    child: GenCustomNav(
+                        tabPadding: 15,
+                        titles: categories
+                            .map((e) => e["name"].toString())
+                            .toList(),
+                        pages: categories
+                            .map((e) => WelfareRecApps(
+                          id: e["id"],
+                          isRec: e["name"] == Utils.txt('tj'),
+                        ))
+                            .toList()))
+              ],
+            ),
+          ),
+        ]),
+        // BuoyantAdsBackgroundWidget()
+      ],
+    );
   }
 }
 
 //推荐APP
 class WelfareRecApps extends StatefulWidget {
+  WelfareRecApps({Key? key, this.id = 0, this.isRec = false}) : super(key: key);
   final int id;
   final bool isRec;
-  final bool isShow;
-  final dynamic data;
-
-  const WelfareRecApps(
-      {Key? key,
-      this.id = 0,
-      this.isRec = false,
-      this.isShow = false,
-      this.data})
-      : super(key: key);
 
   @override
   State<WelfareRecApps> createState() => _WelfareRecAppsState();
 }
 
 class _WelfareRecAppsState extends State<WelfareRecApps> {
-  List apps = [], apps2 = [], banners = [], banners2 = [];
-  bool netError1 = false, netError2 = false, netError3 = false;
-  bool isHud1 = true, isHud2 = true, isHud3 = true;
+  List apps = [];
+  bool netError = false;
+  bool isHud = true;
+  bool noMore = false;
+  int page = 1;
+  String last_ix = "";
+
+  Future<bool> getData() {
+    return reqApps(id: widget.id, page: page, last_ix: last_ix).then((value) {
+      if (value?.data == null || value?.status != 1) {
+        netError = true;
+        if (mounted) setState(() {});
+        return false;
+      }
+      last_ix = value?.data["last_ix"];
+      List tp = List.from(value?.data["list"] ?? []);
+      if (page == 1) {
+        noMore = false;
+        apps = tp;
+      } else if (tp.isNotEmpty) {
+        apps.addAll(tp);
+      } else {
+        noMore = true;
+      }
+      isHud = false;
+      if (mounted) setState(() {});
+      return noMore;
+    });
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getDataAll();
-  }
-
-  Future<bool> getDataAll() async {
-    getDataBanners();
-    // getDataAds();
     getData();
-    return false;
-  }
-
-  getData() {
-    reqApps(id: widget.id, page: 1, last_ix: "").then((value) {
-      if (value?.data == null) {
-        netError1 = true;
-        if (mounted) setState(() {});
-        return false;
-      }
-      List tp = List.from(value?.data["product"]);
-      if (value?.status == 1) {
-        apps = tp;
-        if (apps.length > 9) {
-          apps = apps.getRange(0, 9).toList();
-          apps2 = tp.getRange(9, tp.length).toList();
-        }
-      } else {
-        Utils.showText('${value?.msg}', call: () {});
-      }
-      isHud1 = false;
-      if (mounted) setState(() {});
-    });
-  }
-
-  getDataAds() {
-    reqAds(position_id: 8).then((value) {
-      if (value?.data == null) {
-        netError2 = true;
-        if (mounted) setState(() {});
-        return;
-      }
-      if (value?.status == 1) {
-        banners = List.from(value?.data["ad_list"]);
-      }
-      isHud2 = false;
-      if (mounted) setState(() {});
-    });
-  }
-
-  getDataBanners() {
-    reqAds(position_id: 2).then((value) {
-      if (value?.data == null) {
-        netError3 = true;
-        if (mounted) setState(() {});
-        return;
-      }
-      if (value?.status == 1) {
-        banners2 = List.from(value?.data["ad_list"]);
-      }
-      isHud3 = false;
-      if (mounted) setState(() {});
-    });
-  }
-
-  @override
-  void didUpdateWidget(covariant WelfareRecApps oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (apps.isEmpty && oldWidget.isShow == false && widget.isShow == true) {
-      getDataAll();
-    }
-  }
-
-  @override
-  void dispose() {
-    // _scrollController.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return EasyPullRefresh(
+    return netError
+        ? LoadStatus.netErrorWork(onTap: () {
+      netError = false;
+      getData();
+    })
+        : isHud
+        ? Container()
+        : apps.isEmpty
+        ? LoadStatus.noData()
+        : EasyPullRefresh(
       onRefresh: () {
-        return getDataAll();
+        page = 1;
+        return getData();
       },
-      sameChild: ListView(
-        addAutomaticKeepAlives: false,
-        addRepaintBoundaries: false,
-        cacheExtent: ScreenHeight * 3,
-        children: [
-          Visibility(
-              visible: !netError3 && banners2.isNotEmpty,
-              child: Column(
-                children: [
-                  Utils.bannerScaleExtSwiper(
-                    data: banners2,
-                    itemWidth: 710.w,
-                    // 图片宽
-                    itemHeight: 240.w,
-                    // 图片高(240) + 23 + 10
-                    viewportFraction: 0.777,
-                    // （710 + 5）/ 920（1040 - 120）
-                    scale: 1,
-                    spacing: 5.w,
-                    lineWidth: 20.w,
-                  ),
-                  SizedBox(height: 30.w),
-                ],
-              )),
-          netError1
-              ? LoadStatus.netErrorWork(onTap: () {
-                  netError1 = false;
-                  getData();
-                })
-              : isHud1
-                  ? LoadStatus.showLoading(mounted)
-                  : apps.isEmpty || apps.first['name'] == null
-                      ? LoadStatus.noData(text: '此功能尚未开放')
-                      : SizedBox(
-                          width: double.infinity,
-                          child: Wrap(
-                            spacing: 25.w,
-                            runSpacing: 25.w,
-                            children: apps
-                                .asMap()
-                                .keys
-                                .map((index) => _AppGridWidget(e: apps[index]))
-                                .toList(),
+      onLoading: () {
+        page++;
+        return getData();
+      },
+      child: widget.isRec
+          ? ListView.builder(
+        shrinkWrap: true,
+        itemCount: apps.length,
+        padding: EdgeInsets.symmetric(
+            horizontal: StyleTheme.margin),
+        itemBuilder: (context, index) {
+          dynamic e = apps[index];
+          return GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () {
+              Utils.openURL(e["url"]);
+            },
+            child: Column(
+              children: [
+                SizedBox(height: 17.w),
+                Row(
+                  children: [
+                    SizedBox(
+                      height: 60.w,
+                      width: 60.w,
+                      child: NetImageTool(
+                        url: Utils.getPICURL(e),
+                        radius: BorderRadius.all(
+                            Radius.circular(2.w)),
+                      ),
+                    ),
+                    SizedBox(width: 15.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment:
+                        CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            e["name"],
+                            style: StyleTheme
+                                .font_white_255_20,
                           ),
-                        ),
-          SizedBox(height: 30.w),
-          // Visibility(
-          //   visible: !netError2 && banners.isNotEmpty,
-          //   child: SizedBox(
-          //   height: 240.w,
-          //   child: Utils.bannerScaleExtSwiper(
-          //     data: banners,
-          //     itemWidth: 710.w,
-          //     itemHeight: 240.w, // 240 + 23 + 10
-          //     viewportFraction: 0.777, // （710 + 5）/ 920（1040 - 120）
-          //     scale: 1,
-          //     spacing: 5.w,
-          //     lineWidth: 20.w,
-          //     ),
-          //   )
-          // ),
-          // SizedBox(height: 30.w),
-          Visibility(
-            visible: apps2.isNotEmpty,
-            child: SizedBox(
-              key: ValueKey(apps2),
-              width: double.infinity,
-              child: Wrap(
-                spacing: 25.w,
-                runSpacing: 25.w,
-                children: apps2
-                    .asMap()
-                    .keys
-                    .map((index) => _AppGridWidget(e: apps2[index]))
-                    .toList(),
-              ),
+                          SizedBox(height: 1.w),
+                          Text(
+                            Utils.renderFixedNumber(
+                                e["clicked"]) +
+                                Utils.txt('cxiaz'),
+                            style:
+                            StyleTheme.font_gray_153_12,
+                          ),
+                          SizedBox(height: 1.w),
+                          Text(
+                            e["intro"],
+                            style:
+                            StyleTheme.font_black_31_12,
+                            maxLines: 2,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 13.w),
+                    Container(
+                      height: 26.w,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 10.w),
+                      decoration: BoxDecoration(
+                          color: StyleTheme.yellow255Color,
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(13.w))),
+                      alignment: Alignment.center,
+                      child: Text(
+                        Utils.txt('xiazi'),
+                        style:
+                        StyleTheme.font_white_255_17,
+                      ),
+                    )
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 17.w),
+                  color: StyleTheme.white10,
+                  height: index == apps.length - 1
+                      ? 0.w
+                      : 0.5.w,
+                )
+              ],
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _AppGridWidget extends StatelessWidget {
-  final dynamic e;
-
-  const _AppGridWidget({Key? key, required this.e}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.transparent,
-      width: 290.w,
-      height: 140.w,
-      child: GestureDetector(
-        onTap: () {
-          //上报点击量
-          // reqAdClickCount(id: e['report_id'], type: e['report_type']);
-          if (e['url'] != null && e['url'].isNotEmpty) Utils.openURL(e["url"]);
+          );
         },
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 64.w,
-              width: 64.w,
-              child: NetImageTool(
-                url: Utils.getPICURL(e),
-                radius: BorderRadius.all(Radius.circular(2.w)),
-              ),
+      )
+          : GridView.count(
+        crossAxisCount: 4,
+        shrinkWrap: true,
+        padding: EdgeInsets.symmetric(
+            horizontal: StyleTheme.margin, vertical: 17.w),
+        mainAxisSpacing: 20.w,
+        crossAxisSpacing: 20.w,
+        childAspectRatio: 72 / 124,
+        children: apps.map((e) {
+          return GestureDetector(
+            onTap: () {
+              Utils.openURL(e["url"]);
+            },
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 60.w,
+                  width: 60.w,
+                  child: NetImageTool(
+                    url: Utils.getPICURL(e),
+                    radius: BorderRadius.all(
+                        Radius.circular(2.w)),
+                  ),
+                ),
+                SizedBox(height: 8.w),
+                Text(
+                  e["name"],
+                  style: StyleTheme.font_white_255_20,
+                ),
+                SizedBox(height: 8.w),
+                Container(
+                  height: 26.w,
+                  decoration: BoxDecoration(
+                      color: StyleTheme.yellow255Color,
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(13.w))),
+                  alignment: Alignment.center,
+                  child: Text(
+                    Utils.txt('xiazi'),
+                    style: StyleTheme.font_white_255_17,
+                  ),
+                )
+              ],
             ),
-            SizedBox(width: 20.w),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    e["name"] ?? '',
-                    style: StyleTheme.font_white_255_20,
-                  ),
-                  SizedBox(height: 2.w),
-                  Text(
-                    e["intro"] ?? '',
-                    style: StyleTheme.font_gray_153_17,
-                    maxLines: 3,
-                    softWrap: false,
-                  ),
-                  // SizedBox(height: 15.w),
-                  Expanded(child: Container()),
-                  LocalPNG(
-                    key: ValueKey(e),
-                    name: 'hlw_btn_download',
-                    height: 30.w,
-                    width: 65.w,
-                  ),
-                  SizedBox(height: 20.w),
-                  Divider(
-                    height: 1.w,
-                    color: StyleTheme.gray77Color,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          );
+        }).toList(),
       ),
     );
   }

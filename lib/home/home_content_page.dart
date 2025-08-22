@@ -52,7 +52,6 @@ class _HomeContentPageState extends State<HomeContentPage> {
         tps = tmp;
       } else if (page > 1 && tmp.isNotEmpty) {
         tps.addAll(tmp);
-        // tps = Utils.listMapNoDuplicate(tps);
       } else {
         noMore = true;
       }

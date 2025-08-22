@@ -36,7 +36,6 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   void getData() {
-
     reqHome().then((value) {
       if (value?.data == null) {
         netError = true;

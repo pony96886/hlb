@@ -6,6 +6,7 @@ import 'dart:math';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:hlw/base/base_store.dart';
+import 'package:hlw/model/alert_ads_model.dart';
 import 'package:hlw/util/go_split_routers.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -153,11 +154,6 @@ class Utils {
   //加载本地文字
   static String txt(String key) {
     return _cacheJSON[key] ?? "未知";
-  }
-
-  static String spliceAddress(BuildContext ctx, id) {
-    var conf = Provider.of<BaseStore>(ctx, listen: false).config;
-    return '${conf?.pc_site_url}/archives/$id.html';
   }
 
   //设置状态栏颜色
@@ -476,44 +472,33 @@ class Utils {
     return textPainter.size;
   }
 
-  static openRoute(BuildContext context, GeneralAdsModel? ad) {
-    if (ad == null) return;
-    if (ad.url_config?.isEmpty == true) return;
-    if (ad.type == 2) {
-      String _url = ad.url_config ?? "";
-      List _urlList = _url.split('??');
+  static openRoute(BuildContext context, dynamic data) {
+    if (data == null || data['url_str'].isEmpty) return;
+    if (data['redirect_type'] == 1) {
+      String linkUrl = data['url_str'];
+      List urlList = linkUrl.split('??');
       Map<String, dynamic> pramas = {};
-      if (_urlList.first == "web") {
-        pramas["url"] = _urlList.last.toString().substring(4);
-        if (kIsWeb) {
-          final _url = Uri.decodeComponent(pramas.values.first.trim() ?? '');
-          _url.isNotEmpty == true
-              ? Utils.openURL(_url)
-              : Utils.showText(Utils.txt('cccwl') + '');
-        } else {
-          Utils.navTo(context, "/${_urlList.first}/${pramas.values.first}");
-        }
+      if (urlList.first == "web") {
+        pramas["url"] = urlList.last.toString().substring(4);
+        Utils.navTo(context, "/${urlList.first}/${pramas.values.first}");
       } else {
-        if (_urlList.length > 1 && _urlList.last != "") {
-          _urlList[1].split("&").forEach((item) {
+        if (urlList.length > 1 && urlList.last != "") {
+          urlList[1].split("&").forEach((item) {
             List stringText = item.split('=');
             pramas[stringText[0]] =
-                stringText.length > 1 ? stringText[1] : null;
+            stringText.length > 1 ? stringText[1] : null;
           });
         }
         String pramasStrs = "";
         if (pramas.values.isNotEmpty) {
           pramas.forEach((key, value) {
-            pramasStrs += "/$value";
+            pramasStrs += "/${Uri.decodeComponent(value)}";
           });
         }
-        Utils.navTo(context, "/${_urlList.first}$pramasStrs");
+        Utils.navTo(context, "/${urlList.first}$pramasStrs");
       }
     } else {
-      final _url = ad.url_config?.trim() ?? '';
-      _url.isNotEmpty == true
-          ? Utils.openURL(_url)
-          : Utils.showText(Utils.txt('cccwl') + '');
+      Utils.openURL(data['url_str'].trim());
     }
   }
 

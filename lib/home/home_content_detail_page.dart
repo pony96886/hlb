@@ -7,6 +7,7 @@ import 'package:hlw/base/input_container.dart';
 import 'package:hlw/base/request_api.dart';
 import 'package:hlw/base/update_sysalert.dart';
 import 'package:hlw/home/home_comments_page.dart';
+import 'package:hlw/model/alert_ads_model.dart';
 import 'package:hlw/model/general_ads_model.dart';
 import 'package:hlw/util/easy_pull_refresh.dart';
 import 'package:hlw/util/encdecrypt.dart';
@@ -152,7 +153,7 @@ class _HomeContentDetailPageState
         comments = st;
         Future.delayed(const Duration(milliseconds: 1000), () {
           if (data["notice"] != null) {
-            showActivity(GeneralAdsModel.fromJson(data["notice"]));
+            showActivety(AlertAdsModel.fromJson(data["notice"]));
           }
         });
       } else if (page > 1 && st.isNotEmpty) {
@@ -167,13 +168,44 @@ class _HomeContentDetailPageState
     });
   }
 
-  // 显示弹窗
-  void showActivity(GeneralAdsModel? ad) {
-    if (ad == null) return;
+  //显示弹窗
+  void showActivety(AlertAdsModel? notice) {
+    if (notice == null) return;
     UpdateSysAlert.showAvtivetysAlert(
-      ad: ad,
-      confirm: () => Utils.openRoute(context, ad),
-    );
+        ad: notice,
+        confirm: () {
+          if (notice.type == "router") {
+            String _url = notice.url_str ?? "";
+            List _urlList = _url.split('??');
+            Map<String, dynamic> pramas = {};
+            if (_urlList.first == "web") {
+              pramas["url"] = _urlList.last.toString().substring(4);
+              if (kIsWeb) {
+                Utils.openURL(Uri.decodeComponent(pramas.values.first.trim()));
+              } else {
+                Utils.navTo(
+                    context, "/${_urlList.first}/${pramas.values.first}");
+              }
+            } else {
+              if (_urlList.length > 1 && _urlList.last != "") {
+                _urlList[1].split("&").forEach((item) {
+                  List stringText = item.split('=');
+                  pramas[stringText[0]] =
+                  stringText.length > 1 ? stringText[1] : null;
+                });
+              }
+              String pramasStrs = "";
+              if (pramas.values.isNotEmpty) {
+                pramas.forEach((key, value) {
+                  pramasStrs += "/$value";
+                });
+              }
+              Utils.navTo(context, "/${_urlList.first}$pramasStrs");
+            }
+          } else {
+            Utils.openURL(notice.url_str?.trim() ?? "");
+          }
+        });
   }
 
   // 发表评论

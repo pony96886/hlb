@@ -1,5 +1,7 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hlw/base/base_store.dart';
 import 'package:hlw/base/gen_custom_nav.dart';
 import 'package:hlw/base/request_api.dart';
 import 'package:hlw/util/desktop_extension.dart';
@@ -7,15 +9,15 @@ import 'package:hlw/util/easy_pull_refresh.dart';
 import 'package:hlw/util/load_status.dart';
 import 'package:hlw/util/style_theme.dart';
 import 'package:hlw/util/utils.dart';
+import 'package:provider/provider.dart';
+
+import '../model/config_model.dart';
 
 class WatchContentPage extends StatefulWidget {
   final int id;
-  final dynamic banners;
-
   const WatchContentPage({
     super.key,
-    this.id = 0,
-    this.banners,
+    required this.id,
   });
 
   @override
@@ -30,27 +32,29 @@ class _WatchContentPageState extends State<WatchContentPage> {
   List tps = [];
   List banners = [];
 
+  late final ConfigModel? cf = Provider.of<BaseStore>(context, listen: false).config;
+  late final List sortNavis = cf?.config?.sort_video ?? [];
+
   @override
   void initState() {
     super.initState();
-    banners = widget.banners;
-    getData();
+    getData(sort: sortNavis.first['sort']);
   }
 
-  Future<bool> getData() {
-    return reqHomeCategoryList(id: widget.id, page: page).then((value) {
+  Future<bool> getData({required String sort}) async {
+    return reqVideoCategoryList(id: widget.id, sort: sort, page: page).then((value) {
       if (value?.data == null) {
         netError = true;
         if (mounted) setState(() {});
         return false;
       }
-      List tmp = value?.data["article"]["list"] ?? [];
+      List tmp = value?.data?["list"] ?? [];
       if (page == 1) {
+        banners = List.from(value?.data?['banner'] ?? []);
         noMore = false;
         tps = tmp;
       } else if (page > 1 && tmp.isNotEmpty) {
         tps.addAll(tmp);
-        tps = Utils.listMapNoDuplicate(tps);
       } else {
         noMore = true;
       }
@@ -61,109 +65,49 @@ class _WatchContentPageState extends State<WatchContentPage> {
   }
 
   @override
-  void didUpdateWidget(covariant WatchContentPage oldWidget) {
-    if (oldWidget.banners != widget.banners) {
-      setState(() {
-        banners = widget.banners;
-      });
-    }
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
   void dispose() {
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (netError) {
-      return LoadStatus.netErrorWork(onTap: () {
-        netError = false;
-        getData();
-      });
-    }
-    if (isHud) return LoadStatus.showLoading(mounted);
-    if (tps.isEmpty) return LoadStatus.noData();
-    return Builder(builder: (cx) {
-      return Column(
-        children: [
-          Expanded(
-            child: EasyPullRefresh(
-              onRefresh: () {
-                page = 1;
-                return getData();
-              },
-              onLoading: () {
-                page++;
-                return getData();
-              },
-              sameChild: _buildContainerWidget(),
-            ),
+    return NestedScrollView(
+      headerSliverBuilder: (cx, innerBoxIsScrolled) {
+        return [
+          SliverToBoxAdapter(
+            child: _buildBannerWidget()
           ),
-          SizedBox(height: 20.w),
-        ],
-      );
-    });
-  }
-
-  Widget _buildContainerWidget() {
-    return ListView(
-        padding: EdgeInsets.symmetric(horizontal: 30.w),
-        children: [
-          _buildBannerWidget(),
-          _buildFilterWidget(),
-          _buildGridViewWidget(),
-        ]);
-  }
-
-  Widget _buildFilterWidget() {
-    return Padding(
-      padding: EdgeInsets.only(top: 5.w, bottom: 30.w),
-      child: GenCustomNav(
-        tabPadding: 0,
-        defaultStyle: StyleTheme.font_gray_161_20_bold,
-        selectStyle: StyleTheme.font_orange_244_20_600,
-        isCenter: false,
+        ];
+      },
+      body: GenCustomNav(
+        titles: sortNavis.map((e) => (e["name"] ?? "") as String).toList(),
+        pages: sortNavis.asMap().keys.map((index) {
+          return Container();
+        }).toList(),
+        tabPadding: 40.w,
         isCover: true,
-        titles: ["热门推荐", "本周最新", "最多观看"],
-        pages: [],
+        selectStyle: StyleTheme.font_orange_255_20,
+        defaultStyle: StyleTheme.font_gray_153_20,
       ),
     );
   }
 
   Widget _buildBannerWidget() {
     return Visibility(
-        visible: banners.isNotEmpty,
-        child: Utils.bannerScaleExtSwiper(
-          data: banners,
-          padding: EdgeInsets.symmetric(horizontal: 29.5.w),
-          itemWidth: 710.w,
-          // 图片宽
-          itemHeight: 400.w,
-          // 图片高(240) + 23 + 10
-          viewportFraction: 0.777,
-          // （710 + 5）/ 920 // 1040 - 120
-          scale: 1,
-          spacing: 5.w,
-          lineWidth: 20.w,
-        ));
-  }
-
-  Widget _buildGridViewWidget() {
-    return GridView.count(
-      padding: EdgeInsets.symmetric(horizontal: 30.w),
-      addRepaintBoundaries: false,
-      addAutomaticKeepAlives: false,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      cacheExtent: ScreenHeight * 3,
-      crossAxisCount: 4,
-      mainAxisSpacing: 20.w,
-      crossAxisSpacing: 20.w,
-      childAspectRatio: 374.w / 353.w,
-      children:
-          tps.map((e) => Utils.newsModuleUI(context, e, style: 2)).toList(),
+      visible: banners.isNotEmpty,
+      child: Utils.bannerScaleExtSwiper(
+        data: banners,
+        itemWidth: 700.w,
+        // 图片宽
+        itemHeight: 300.w,
+        // 图片高(240) + 23 + 10
+        viewportFraction: 700 / 1508,
+        // 1548 - 20 * 2
+        scale: 1,
+        spacing: 20.w,
+        lineWidth: 20.w,
+        autoplay: false,
+      ),
     );
   }
 }
