@@ -72,34 +72,43 @@ class _VideoSubChildPageState extends State<VideoSubChildPage> {
               })
             : array.isEmpty
                 ? LoadStatus.noData()
-                : EasyPullRefresh(
-                    onRefresh: () {
-                      page = 1;
-                      return getData();
-                    },
-                    onLoading: () {
-                      page++;
-                      return getData();
-                    },
-                    child: GridView.builder(
-                      padding: EdgeInsets.only(
-                          left: StyleTheme.margin,
-                          right: StyleTheme.margin,
-                          bottom: 50.w),
-                      shrinkWrap: true,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
-                        mainAxisSpacing: 20.w,
-                        crossAxisSpacing: 20.w,
-                        childAspectRatio: 335 / 277,
-                      ),
-                      scrollDirection: Axis.vertical,
-                      itemCount: array.length,
-                      itemBuilder: (context, index) {
-                        dynamic data = array[index];
-                        return Utils.videoModuleUI(context, e: data);
-                      },
-                    ),
-                  );
+                : Builder(builder: (cx) {
+                    return Column(
+                      children: [
+                        Expanded(
+                          child: EasyPullRefresh(
+                            onRefresh: () {
+                              page = 1;
+                              return getData();
+                            },
+                            onLoading: () {
+                              page++;
+                              return getData();
+                            },
+                            sameChild: GridView.builder(
+                              padding: EdgeInsets.only(
+                                  left: StyleTheme.margin,
+                                  right: StyleTheme.margin,
+                                  bottom: 50.w),
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                                mainAxisSpacing: 20.w,
+                                crossAxisSpacing: 20.w,
+                                childAspectRatio: 335 / 277,
+                              ),
+                              scrollDirection: Axis.vertical,
+                              itemCount: array.length,
+                              itemBuilder: (context, index) {
+                                dynamic data = array[index];
+                                return Utils.videoModuleUI(context, e: data);
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  });
   }
 }

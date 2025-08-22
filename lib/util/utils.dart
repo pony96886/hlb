@@ -198,6 +198,7 @@ class Utils {
     String timeStr(int numb) {
       return numb < 10 ? '0$numb' : numb.toString();
     }
+
     return '${timeStr(s)}:${timeStr(h)}';
   }
 
@@ -242,7 +243,7 @@ class Utils {
 
   static void checkline({Function? onSuccess, Function? onFailed}) async {
     Box? box = AppGlobal.appBox;
-    List<String> unChecklines = AppGlobal.apiLines;//todo：需要恢复以下代码
+    List<String> unChecklines = AppGlobal.apiLines; //todo：需要恢复以下代码
     // List<String> unChecklines = box?.get('lines_url') == null
     //     ? AppGlobal.apiLines
     //     : List<String>.from(box?.get('lines_url'));
@@ -495,7 +496,7 @@ class Utils {
           urlList[1].split("&").forEach((item) {
             List stringText = item.split('=');
             pramas[stringText[0]] =
-            stringText.length > 1 ? stringText[1] : null;
+                stringText.length > 1 ? stringText[1] : null;
           });
         }
         String pramasStrs = "";
@@ -1035,8 +1036,8 @@ class Utils {
   static Widget newsModuleUI(BuildContext context, dynamic e,
       {int style = 1, int state = 1}) {
     String JsonStr = e.toString();
-    String plates =
-        DateUtil.formatDateStr(e["created_date"], format: "yyyy年MM日dd");
+    String plates = DateUtil.formatDateStr(e["created_date"] ?? e["created"],
+        format: "yyyy年MM日dd");
     if (e["plates"] is Map && (e["plates"] as Map).isNotEmpty) {
       plates += ' · ${(e["plates"] as Map).values.toList().join(' ')}';
     }
@@ -1197,7 +1198,8 @@ class Utils {
                             style: StyleTheme.font_white_255_22_bold,
                           ),
                           SizedBox(width: 3.w),
-                          LocalPNG(name: "hlw_coin_icon", width: 28.w, height: 28.w),
+                          LocalPNG(
+                              name: "hlw_coin_icon", width: 28.w, height: 28.w),
                         ],
                       ),
                     )
@@ -1212,9 +1214,9 @@ class Utils {
           height: 60.w,
           child: Text(
             e['is_ad'] == 1 &&
-                e['ad'] is Map &&
-                e['ad']['name'] != null &&
-                e['ad']['name'] != ''
+                    e['ad'] is Map &&
+                    e['ad']['name'] != null &&
+                    e['ad']['name'] != ''
                 ? '${e['ad']['name']}'
                 : '${e["title"]}',
             style: StyleTheme.font_white_255_20,
@@ -1380,7 +1382,7 @@ class Utils {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        Utils.navTo(context, "/homecontentdetailpage/${e["id"]}");
+        Utils.navTo(context, "/homevideocontentdetailpage/${e["id"]}");
       },
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Expanded(
@@ -1420,8 +1422,8 @@ class Utils {
                         SizedBox(
                           width: 8.w,
                         ),
-                        Text(Utils.renderFixedNumber(
-                            e["play_count"] ?? 0),
+                        Text(
+                          Utils.renderFixedNumber(e["play_count"] ?? 0),
                           style: StyleTheme.font_white_255_20,
                           maxLines: 1,
                         )
@@ -1439,58 +1441,57 @@ class Utils {
             Positioned(
                 child: e['isfree'] == 1
                     ? Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 8.w,
-                    ),
-                    decoration: BoxDecoration(
-                        gradient: StyleTheme.gradient129,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(5.w),
-                            bottomRight: Radius.circular(5.w))),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          "VIP",
-                          style: StyleTheme.font(
-                              color: Colors.white,
-                              size: 20,
-                              weight: FontWeight.w600),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.w,
                         ),
-                      ],
-                    ))
+                        decoration: BoxDecoration(
+                            gradient: StyleTheme.gradient129,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(5.w),
+                                bottomRight: Radius.circular(5.w))),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "VIP",
+                              style: StyleTheme.font(
+                                  color: Colors.white,
+                                  size: 20,
+                                  weight: FontWeight.w600),
+                            ),
+                          ],
+                        ))
                     : e['isfree'] == 2
-                    ? Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w),
-                    decoration: BoxDecoration(
-                        gradient:
-                        StyleTheme.gradient129,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(5.w),
-                            bottomRight: Radius.circular(5.w))),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text("${e['coins']}",
-                            style: StyleTheme
-                                .font_white_255_20),
-                        SizedBox(width: 5.w),
-                        LocalPNG(
-                          name: 'hlw_coin_icon',
-                          width: 22.w,
-                          height: 22.w,
-                        ),
-                      ],
-                    ))
-                    : Container())
+                        ? Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8.w),
+                            decoration: BoxDecoration(
+                                gradient: StyleTheme.gradient129,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(5.w),
+                                    bottomRight: Radius.circular(5.w))),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("${e['coins']}",
+                                    style: StyleTheme.font_white_255_20),
+                                SizedBox(width: 5.w),
+                                LocalPNG(
+                                  name: 'hlw_coin_icon',
+                                  width: 22.w,
+                                  height: 22.w,
+                                ),
+                              ],
+                            ))
+                        : Container())
           ]),
         ),
         SizedBox(height: 16.w),
         SizedBox(
           height: 60.w,
-          child: Text('${e["title"]}',
+          child: Text(
+            '${e["title"]}',
             style: StyleTheme.font_white_255_20,
             maxLines: 2,
           ),
@@ -1501,8 +1502,7 @@ class Utils {
           children: [
             Text(
               (e['created_at'] != null
-                  ? format(
-                  DateTime.parse(e["created_at"] ?? ""))
+                  ? format(DateTime.parse(e["created_at"] ?? ""))
                   : ''),
               style: StyleTheme.font_gray_153_18,
               maxLines: 1,

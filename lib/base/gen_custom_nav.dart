@@ -159,8 +159,9 @@ class _GenCustomNavState extends State<GenCustomNav>
       _selectStyle = widget.selectStyle!;
     }
     _selectIndex = widget.defaultSelectIndex;
-    _tabController = TabController(length: widget.titles.length, vsync: this);
-    _pageController = PageController();
+    _tabController = TabController(
+        length: widget.titles.length, initialIndex: _selectIndex, vsync: this);
+    _pageController = PageController(initialPage: _selectIndex);
     setState(() {});
   }
 

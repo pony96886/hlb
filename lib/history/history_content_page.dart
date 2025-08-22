@@ -1,3 +1,4 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -11,8 +12,9 @@ import 'package:hlw/util/utils.dart';
 
 class HistoryContentPage extends StatefulWidget {
   final int index;
+  DateTime selectedDate = DateTime.now();
 
-  const HistoryContentPage({super.key, this.index = 0});
+  HistoryContentPage({super.key, required this.selectedDate, this.index = 0});
 
   @override
   State createState() => _HistoryContentPageState();
@@ -23,28 +25,89 @@ class _HistoryContentPageState extends State<HistoryContentPage> {
   bool netError = false;
   bool noMore = false;
   int page = 1;
-  List tps = [];
+  List array = [];
+
+  dynamic? historyCategories;
 
   @override
   void initState() {
     super.initState();
+    getData();
+  }
+
+  Future<bool> getData() async {
+    if (widget.index == 0 && historyCategories == null) {
+      dynamic res = await reqHistoryCategories();
+      if (res?.status == 0) {
+        netError = true;
+        isHud = false;
+        if (mounted) setState(() {});
+        return false;
+      }
+
+      historyCategories = res?.data;
+      noMore = true;
+      isHud = false;
+      if (mounted) setState(() {});
+    } else {
+      dynamic res = widget.index == 1
+          ? await reqHistoryRanking()
+          : await reqHistoryCalendar(
+              date: DateUtil.formatDate(widget.selectedDate,
+                  format: "yyyy-MM-dd"),
+              page: page);
+      if (res != null) {
+        if (res?.status == 0) {
+          netError = true;
+          isHud = false;
+          if (mounted) setState(() {});
+          return false;
+        }
+        List tp = res?.data?['list'] ?? [];
+        if (page == 1) {
+          noMore = false;
+          array = tp;
+        } else if (tp.isNotEmpty) {
+          array.addAll(tp);
+        } else {
+          noMore = true;
+        }
+        isHud = false;
+        if (mounted) setState(() {});
+        return noMore;
+      }
+    }
+    return noMore;
   }
 
   bool showFilter = true;
 
   @override
   Widget build(BuildContext context) {
-    return widget.index == 0 && showFilter
-        ? _filterWidget()
-        : EasyPullRefresh(
-            onRefresh: () async {
-              return true;
-            },
-            onLoading: () async {
-              return true;
-            },
-            sameChild: _buildGridViewWidget(),
-          );
+    return isHud
+        ? LoadStatus.showLoading(mounted)
+        : netError
+            ? LoadStatus.netErrorWork(onTap: () {
+                netError = false;
+                getData();
+              })
+            : widget.index != 0 && array.isEmpty
+                ? LoadStatus.noData()
+                : widget.index == 0 && showFilter
+                    ? _filterWidget()
+                    : SingleChildScrollView(
+                        child: EasyPullRefresh(
+                          onRefresh: () {
+                            page = 1;
+                            return getData();
+                          },
+                          onLoading: () {
+                            page++;
+                            return getData();
+                          },
+                          sameChild: _buildGridViewWidget(),
+                        ),
+                      );
   }
 
   int filter1Index = 0;
@@ -75,32 +138,9 @@ class _HistoryContentPageState extends State<HistoryContentPage> {
           SizedBox(
             height: 28.w,
           ),
-          _buildFilterButtons([
-            "首页",
-            "今日看料",
-            "反差女神",
-            "看片",
-            "每日比赛",
-            "每日大赛",
-            "首页",
-            "今日看料",
-            "反差女神",
-            "看片",
-            "每日比赛",
-            "每日大赛",
-            "首页",
-            "今日看料",
-            "反差女神",
-            "看片",
-            "每日比赛",
-            "每日大赛",
-            "首页",
-            "今日看料",
-            "反差女神",
-            "看片",
-            "每日比赛",
-            "每日大赛"
-          ], filter1Index, onTap: (index) {
+          _buildFilterButtons(
+              historyCategories["categories"] as List, filter1Index,
+              onTap: (index) {
             filter1Index = index;
             setState(() {});
           }),
@@ -118,12 +158,8 @@ class _HistoryContentPageState extends State<HistoryContentPage> {
           SizedBox(
             height: 28.w,
           ),
-          _buildFilterButtons([
-            "一个月以前",
-            "半年以前",
-            "一年以前",
-            "全部",
-          ], filter2Index, onTap: (index) {
+          _buildFilterButtons(historyCategories["times"] as List, filter2Index,
+              onTap: (index) {
             filter2Index = index;
             setState(() {});
           }),
@@ -162,7 +198,7 @@ class _HistoryContentPageState extends State<HistoryContentPage> {
     );
   }
 
-  Widget _buildFilterButtons(List<String> items, int selectedIndex,
+  Widget _buildFilterButtons(List<dynamic> items, int selectedIndex,
       {void Function(int)? onTap}) {
     return GridView.count(
       addRepaintBoundaries: false,
@@ -175,7 +211,8 @@ class _HistoryContentPageState extends State<HistoryContentPage> {
       crossAxisSpacing: 20.w,
       childAspectRatio: 200.w / 61.w,
       children: items.asMap().entries.map((entry) {
-        String e = entry.value;
+        dynamic e = entry.value;
+
         int index = entry.key;
         return InkWell(
           onTap: () {
@@ -192,7 +229,7 @@ class _HistoryContentPageState extends State<HistoryContentPage> {
               borderRadius: BorderRadius.circular(15.w),
             ),
             child: Text(
-              e,
+              e['name'],
               style: index == selectedIndex
                   ? StyleTheme.font_orange_244_22_bold
                   : StyleTheme.font_white_255_22_bold,
@@ -202,16 +239,6 @@ class _HistoryContentPageState extends State<HistoryContentPage> {
       }).toList(),
     );
   }
-
-  dynamic defaultItemData = {
-    "id": 39668,
-    "title": "黑料网最新入口，黑料回家路，黑料合集每日更新，回家路合集页",
-    "plates": {},
-    "created_date": "2025-05-01 00:00:00",
-    "is_ad": 0,
-    "thumb":
-        "https://new.fwvkjw.cn/upload_01/upload/20250813/2025081312034176716.png",
-  };
 
   Widget _buildGridViewWidget() {
     return GridView.count(
@@ -225,13 +252,8 @@ class _HistoryContentPageState extends State<HistoryContentPage> {
       crossAxisSpacing: 20.w,
       childAspectRatio: 505.w / 368.w,
       padding: EdgeInsets.symmetric(horizontal: 29.5.w),
-      children: [
-        defaultItemData,
-        defaultItemData,
-        defaultItemData,
-        defaultItemData,
-        defaultItemData,
-      ].map((e) => Utils.newsModuleUI(context, e, style: 2)).toList(),
+      children:
+          array.map((e) => Utils.newsModuleUI(context, e, style: 2)).toList(),
     );
   }
 }
