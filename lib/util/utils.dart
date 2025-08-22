@@ -805,8 +805,8 @@ class Utils {
       toastBuilder: ((cancelFunc) =>
           Column(mainAxisSize: MainAxisSize.min, children: [
             SizedBox(
-                height: 20.w,
-                width: 20.w,
+                height: 30.w,
+                width: 30.w,
                 child: CircularProgressIndicator(
                   color: StyleTheme.orange255Color,
                   strokeWidth: 2,
@@ -814,7 +814,7 @@ class Utils {
             SizedBox(
               height: 12.w,
             ),
-            Text(tip, style: StyleTheme.font_orange_255_12)
+            Text(tip, style: StyleTheme.font_orange_255_20)
           ])),
     );
   }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hlw/mine/mine_collect_page.dart';
 import 'package:hlw/model/config_model.dart';
 import 'package:hlw/util/app_global.dart';
 import 'package:hlw/util/local_png.dart';
@@ -66,17 +67,45 @@ class _MineMenuState extends State<MineMenu> {
       children: [
         SizedBox(height: 15.w),
         _UserInfoWidget(user: userModel),
+        SizedBox(height: 5.w),
+        const _VipCoinsWidget(),
         SizedBox(height: 15.w),
-        _VipCoinsWidget(),
+        const _MidWidget(),
         SizedBox(height: 15.w),
-        _MidWidget(),
-        SizedBox(height: 15.w),
-        _ListButtonWidget(),
+        const _ListButtonWidget(),
         Divider(
           height: 1.w,
           color: StyleTheme.white10,
         ),
         //退出登录
+        GestureDetector(
+          onTap: () {
+            //退出登录
+            Utils.startGif(tip: Utils.txt('tuichz'));
+            reqClearCached().then((_) {
+              AppGlobal.apiToken = '';
+              AppGlobal.appBox?.delete('hlw_token');
+              reqUserInfo(context).then((_) {
+                Utils.closeGif();
+                UtilEventbus().fire(EventbusClass({"login": "login"}));
+                Navigator.pop(context);
+                // UtilEventbus().fire(EventbusClass({"name": "rightBanner"}));
+              });
+            });
+          },
+          child: SizedBox(
+            height: 78.w,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                LocalPNG(name: 'hlw_mine_out_login', width: 28.w, height: 28.w),
+                SizedBox(width: 15.w),
+                Text('退出登录', style: StyleTheme.font_white_255_17),
+              ],
+            ),
+          ),
+        )
       ],
     );
 
@@ -167,15 +196,68 @@ class _VipCoinsWidget extends StatelessWidget {
           children: [
         Expanded(
           child: Container(
+            decoration: BoxDecoration(
+              gradient: StyleTheme.gradient45,
+              borderRadius: BorderRadius.all(Radius.circular(5.w)),
+            ),
             height: 80.w,
-            color: StyleTheme.white10,
+            padding: EdgeInsets.symmetric(horizontal: 13.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('会员特权', style: StyleTheme.font_white_255_17),
+                Row(
+                  children: [
+                    Container(
+                        decoration: BoxDecoration(
+                          gradient: StyleTheme.gradientLinarYellow,
+                          borderRadius: BorderRadius.all(Radius.circular(5.w)),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 10.w),
+                        child: Text('开通', style: StyleTheme.font_brown_103_18_bold)),
+                    const Spacer(),
+                    LocalPNG(name: 'hlw_mine_vip', width: 36.w, height: 36.w),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
         SizedBox(width: 20.w),
             Expanded(
           child: Container(
+            decoration: BoxDecoration(
+              gradient: StyleTheme.gradient45,
+              borderRadius: BorderRadius.all(Radius.circular(5.w)),
+            ),
             height: 80.w,
-            color: StyleTheme.white10,
+            padding: EdgeInsets.symmetric(horizontal: 13.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    Text('金币充值', style: StyleTheme.font_white_255_17),
+                    Text('(余额:0)', style: StyleTheme.font_white_255_15),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                        decoration: BoxDecoration(
+                          gradient: StyleTheme.gradientLinarYellow,
+                          borderRadius: BorderRadius.all(Radius.circular(5.w)),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 10.w),
+                        child: Text('开通', style: StyleTheme.font_brown_103_18_bold)),
+                    const Spacer(),
+                    LocalPNG(name: 'hlw_coin_icon', width: 36.w, height: 36.w),
+                  ],
+                ),
+              ],
+            ),
           ),
         )
       ]),
@@ -183,6 +265,7 @@ class _VipCoinsWidget extends StatelessWidget {
   }
 }
 
+//立即领取，投稿，求瓜文章
 class _MidWidget extends StatelessWidget {
   const _MidWidget({Key? key}) : super(key: key);
 
@@ -213,21 +296,90 @@ class _ListButtonWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 15.w),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: () {
             //我的主页
+            Utils.navTo(context, '/');
           },
           child: Row(
             children: [
               LocalPNG(name: 'hlw_mine_center', width: 32.w, height: 32.w),
               SizedBox(width: 15.w),
               Text('我的主页', style: StyleTheme.font_white_255_17),
-              Spacer(),
-              LocalPNG(name: '51_mine_arrow', width: 22.w, height: 20.w, color: Colors.grey),
+              const Spacer(),
+              LocalPNG(name: '51_mine_arrow', width: 18.w, height: 20.w, color: Colors.grey),
             ],
           ),
         ),
         SizedBox(height: 10.w),
-
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            //我的勋章
+            Utils.navTo(context, '/');
+          },
+          child: Row(
+            children: [
+              LocalPNG(name: 'hlw_mine_xz', width: 32.w, height: 32.w),
+              SizedBox(width: 15.w),
+              Text('我的勋章', style: StyleTheme.font_white_255_17),
+              const Spacer(),
+              LocalPNG(name: '51_mine_arrow', width: 18.w, height: 20.w, color: Colors.grey),
+            ],
+          ),
+        ),
+        SizedBox(height: 15.w),
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            //评论回复
+            Utils.navTo(context, '/minerepliedcomments_page');
+          },
+          child: Row(
+            children: [
+              LocalPNG(name: 'hlw_mine_pl', width: 32.w, height: 32.w),
+              SizedBox(width: 15.w),
+              Text('评论回复', style: StyleTheme.font_white_255_17),
+              const Spacer(),
+              LocalPNG(name: '51_mine_arrow', width: 18.w, height: 20.w, color: Colors.grey),
+            ],
+          ),
+        ),
+        SizedBox(height: 15.w),
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            //我的悬赏
+            Utils.navTo(context, '/minecontributionpage');
+          },
+          child: Row(
+            children: [
+              LocalPNG(name: 'hlw_mine_xs', width: 32.w, height: 32.w),
+              SizedBox(width: 15.w),
+              Text('我的悬赏', style: StyleTheme.font_white_255_17),
+              const Spacer(),
+              LocalPNG(name: '51_mine_arrow', width: 18.w, height: 20.w, color: Colors.grey),
+            ],
+          ),
+        ),
+        SizedBox(height: 15.w),
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            //我的收藏
+            Utils.navTo(context, '/minecollectpage');
+          },
+          child: Row(
+            children: [
+              LocalPNG(name: 'hlw_mine_sc', width: 32.w, height: 32.w),
+              SizedBox(width: 15.w),
+              Text('我的收藏', style: StyleTheme.font_white_255_17),
+              const Spacer(),
+              LocalPNG(name: '51_mine_arrow', width: 18.w, height: 20.w, color: Colors.grey),
+            ],
+          ),
+        ),
+        SizedBox(height: 15.w),
       ]),
     );
   }

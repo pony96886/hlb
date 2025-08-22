@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
@@ -11,6 +12,7 @@ import 'package:hlw/mine/mine_norquestion_page.dart';
 import 'package:hlw/mine/mine_share_page.dart';
 import 'package:hlw/model/config_model.dart';
 import 'package:hlw/util/app_global.dart';
+import 'package:hlw/util/eventbus_class.dart';
 import 'package:hlw/util/image_request_async.dart';
 import 'package:hlw/util/load_status.dart';
 import 'package:hlw/util/local_png.dart';
@@ -260,9 +262,23 @@ class _MainPageState extends State<MainPage> {
   int _selectIndex = 0;
   ConfigModel? config;
 
+  StreamSubscription? _streamSubscription;
+
+  _eventBus() {
+    _streamSubscription = UtilEventbus().on<EventbusClass>().listen((event) {
+      if (event.arg["login"] != null && event.arg["login"] == 'login') {
+        setState(() {
+          _selectIndex = 0;
+          SplitView.of(context).setSecondary(customWidget(context));
+        });
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    _eventBus();
     //等待500毫秒初始化
     Future.delayed(const Duration(milliseconds: 500), () {
       SplitView.of(context).setSecondary(customWidget(context));

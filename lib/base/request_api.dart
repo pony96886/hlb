@@ -148,10 +148,10 @@ Future<ResponseModel<dynamic>?> reqAdClickCount({int? id, int? type}) async {
 
 /// 首页-分类列表
 Future<ResponseModel<dynamic>?> reqHomeCategoryList(
-    {int id = 0, int page = 1}) async {
+    {int id = 0, int page = 1, int pageSize = 18}) async {
   try {
     Response<dynamic> res = await NetworkHttp.post('/api/contents/list_contents',
-        data: {"mid": id, "page": page});
+        data: {"mid": id, "page": page, 'limit': pageSize});
     Utils.log(res.data);
     return ResponseModel<dynamic>.fromJson(res.data, (json) => json);
   } catch (e) {

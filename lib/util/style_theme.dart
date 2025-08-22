@@ -116,6 +116,14 @@ class StyleTheme {
     end: Alignment.centerRight,
   );
 
+  static LinearGradient gradient45 = const LinearGradient(
+    colors: [
+      Color.fromRGBO(45, 43, 61, 1),
+      Color.fromRGBO(25, 25, 44, 1)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  );
+
   //字体
   static TextStyle nav_title_font =
       font(size: 18, weight: FontWeight.normal, color: Colors.white);
@@ -256,6 +264,9 @@ class StyleTheme {
 
   static TextStyle font_brown_103_20_bold =
       font(size: 20, weight: FontWeight.bold, color: brown103Color);
+
+  static TextStyle font_brown_103_18_bold =
+  font(size: 18, weight: FontWeight.bold, color: brown103Color);
 
   static TextStyle font_gray_204_13 =
       font(size: 13, weight: FontWeight.normal, color: gray204Color);
