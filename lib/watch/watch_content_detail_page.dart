@@ -183,8 +183,7 @@ class _WatchContentDetailPageState
   void showActivity(AlertAdsModel? ad) {
     if (ad == null) return;
     UpdateSysAlert.showAvtivetysAlert(
-      ad: AlertAdsModel(
-          width: ad.show_width, height: ad.show_height, img_url: ad.thumb),
+      ad: ad,
       confirm: () => Utils.openRoute(context, ad),
     );
   }
