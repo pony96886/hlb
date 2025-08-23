@@ -172,6 +172,21 @@ Future<ResponseModel<dynamic>?> reqHistoryCalendar(
   }
 }
 
+/// 尘封列表
+Future<ResponseModel<dynamic>?> reqHistoryArchive(
+    {String mid = '', int tid = 0, int page = 1, int limit = 20}) async {
+  try {
+    Response<dynamic> res = await NetworkHttp.post('/api/history/archive',
+        data: {"mid": mid, 'tid': tid, "page": page, "limit": limit});
+
+    Utils.log(res.data);
+    return ResponseModel<dynamic>.fromJson(res.data, (json) => json);
+  } catch (e) {
+    Utils.log(e);
+    return null;
+  }
+}
+
 /// 历史榜单
 Future<ResponseModel<dynamic>?> reqHistoryRanking(
     {String type = 'view', String during = 'all'}) async {

@@ -119,17 +119,13 @@ class StyleTheme {
   );
 
   static LinearGradient gradient45 = const LinearGradient(
-    colors: [
-      Color.fromRGBO(45, 43, 61, 1),
-      Color.fromRGBO(25, 25, 44, 1)],
+    colors: [Color.fromRGBO(45, 43, 61, 1), Color.fromRGBO(25, 25, 44, 1)],
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
   );
 
   static LinearGradient gradient129 = const LinearGradient(
-    colors: [
-      Color.fromRGBO(129, 0, 181, 1),
-      Color.fromRGBO(66, 134, 255, 1)],
+    colors: [Color.fromRGBO(129, 0, 181, 1), Color.fromRGBO(66, 134, 255, 1)],
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
   );
@@ -276,7 +272,7 @@ class StyleTheme {
       font(size: 20, weight: FontWeight.bold, color: brown103Color);
 
   static TextStyle font_brown_103_18_bold =
-  font(size: 18, weight: FontWeight.bold, color: brown103Color);
+      font(size: 18, weight: FontWeight.bold, color: brown103Color);
 
   static TextStyle font_gray_204_13 =
       font(size: 13, weight: FontWeight.normal, color: gray204Color);
@@ -603,6 +599,9 @@ class StyleTheme {
 
   static TextStyle font_orange_255_20 =
       font(size: 20, weight: FontWeight.normal, color: orange255Color);
+
+  static TextStyle font_orange_255_20_500 =
+      font(size: 20, weight: FontWeight.w500, color: orange255Color);
 
   static TextStyle font_orange_229_18_500 =
       font(size: 18, weight: FontWeight.w500, color: orange229Color);

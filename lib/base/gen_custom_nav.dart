@@ -203,6 +203,7 @@ class _GenCustomNavState extends State<GenCustomNav>
         SizedBox(height: 28.w),
         Expanded(
           child: PageView(
+            clipBehavior: Clip.none,
             physics: const BouncingScrollPhysics(),
             onPageChanged: (index) {
               if (!_isOnTab) _onTabPageChange(index, isOnTab: false);

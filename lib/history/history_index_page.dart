@@ -20,19 +20,11 @@ class HistoryIndexPage extends StatefulWidget {
 }
 
 class _HistoryIndexPageState extends State<HistoryIndexPage> {
-  DateTime? selectedDate = DateTime.now();
-
   int tabSelectIndex = 2;
 
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      const LocalPNG(
-        name: "history_bg",
-        height: double.infinity,
-        width: double.infinity,
-        fit: BoxFit.cover,
-      ),
       Positioned(
         top: 90.w,
         bottom: 0,
@@ -58,51 +50,17 @@ class _HistoryIndexPageState extends State<HistoryIndexPage> {
         },
         titles: const ["尘封", "榜单", "往期"],
         pages: [
-          HistoryContentPage(index: 0, selectedDate: selectedDate!),
-          HistoryContentPage(index: 1, selectedDate: selectedDate!),
-          HistoryContentPage(index: 2, selectedDate: selectedDate!),
+          HistoryContentPage(
+            index: 0,
+          ),
+          HistoryContentPage(
+            index: 1,
+          ),
+          HistoryContentPage(
+            index: 2,
+          ),
         ],
-        rightWidget: tabSelectIndex == 0
-            ? null
-            : InkWell(
-                onTap: _pickDate,
-                child: Padding(
-                  padding: EdgeInsets.only(right: 30.w),
-                  child: Row(
-                    children: [
-                      Text(
-                        "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}",
-                        style: StyleTheme.font_gray_194_20_bold,
-                      ),
-                      SizedBox(
-                        width: 12.w,
-                      ),
-                      LocalPNG(
-                        name: "icon_calendar",
-                        width: 30.w,
-                        height: 30.w,
-                        fit: BoxFit.contain,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
       ),
     );
-  }
-
-  void _pickDate() async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-
-    if (picked != null) {
-      setState(() {
-        selectedDate = picked;
-      });
-    }
   }
 }
