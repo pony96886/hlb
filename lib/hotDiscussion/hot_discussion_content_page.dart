@@ -32,17 +32,7 @@ class _HotDiscussionContentPageState extends State<HotDiscussionContentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.index == 0
-        ? _todayWidget()
-        : EasyPullRefresh(
-            onRefresh: () async {
-              return true;
-            },
-            onLoading: () async {
-              return true;
-            },
-            sameChild: _buildContainerWidget(),
-          );
+    return widget.index == 0 ? _todayWidget() : _buildContainerWidget();
   }
 
   dynamic defaultItemData = {
@@ -113,49 +103,48 @@ class _HotDiscussionContentPageState extends State<HotDiscussionContentPage> {
   }
 
   Widget _buildContainerWidget() {
-    return ListView(children: [
-      _buildFilterWidget(),
-      SizedBox(
-        height: 28.w,
+    return NestedScrollView(
+      headerSliverBuilder: (cx, innerBoxIsScrolled) {
+        return [];
+      },
+      body: GenCustomNav(
+        defaultStyle: StyleTheme.font_gray_161_20_bold,
+        selectStyle: StyleTheme.font_orange_244_20_600,
+        isCenter: false,
+        isCover: true,
+        titles: ["热门推荐", "本周最新", "最多观看"],
+        pages: [
+          _buildGridViewWidget(),
+          _buildGridViewWidget(),
+          _buildGridViewWidget()
+        ],
       ),
-      _buildGridViewWidget(),
-    ]);
-  }
-
-  Widget _buildFilterWidget() {
-    return Column(
-      children: [
-        GenCustomNav(
-          defaultStyle: StyleTheme.font_gray_161_20_bold,
-          selectStyle: StyleTheme.font_orange_244_20_600,
-          isCenter: false,
-          isCover: true,
-          titles: ["热门推荐", "本周最新", "最多观看"],
-          pages: [],
-        ),
-      ],
     );
   }
 
   Widget _buildGridViewWidget() {
-    return GridView.count(
-      addRepaintBoundaries: false,
-      addAutomaticKeepAlives: false,
-      padding: EdgeInsets.symmetric(horizontal: 29.5.w),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      cacheExtent: ScreenHeight * 3,
-      crossAxisCount: 4,
-      mainAxisSpacing: 52.w,
-      crossAxisSpacing: 20.w,
-      childAspectRatio: 374.w / 664.w,
-      children: [
-        defaultItemData,
-        defaultItemData,
-        defaultItemData,
-        defaultItemData,
-        defaultItemData,
-      ].map((e) => Utils.newsModuleUI(context, e, style: 3)).toList(),
-    );
+    return Builder(builder: (cx) {
+      return Column(children: [
+        Expanded(
+            child: EasyPullRefresh(
+                sameChild: GridView.count(
+          padding: EdgeInsets.only(
+              left: StyleTheme.margin, right: StyleTheme.margin, bottom: 50.w),
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          crossAxisCount: 4,
+          mainAxisSpacing: 52.w,
+          crossAxisSpacing: 20.w,
+          childAspectRatio: 374.w / 664.w,
+          children: [
+            defaultItemData,
+            defaultItemData,
+            defaultItemData,
+            defaultItemData,
+            defaultItemData,
+          ].map((e) => Utils.newsModuleUI(context, e, style: 3)).toList(),
+        )))
+      ]);
+    });
   }
 }
