@@ -1036,7 +1036,8 @@ class Utils {
   static Widget newsModuleUI(BuildContext context, dynamic e,
       {int style = 1, int state = 1}) {
     String JsonStr = e.toString();
-    String plates = DateUtil.formatDateStr(e["created_date"] ?? e["created"],
+    String plates = DateUtil.formatDateStr(
+        e["created_date"] ?? e["created"] ?? e["created_at"],
         format: "yyyy年MM日dd");
     if (e["plates"] is Map && (e["plates"] as Map).isNotEmpty) {
       plates += ' · ${(e["plates"] as Map).values.toList().join(' ')}';
@@ -1048,6 +1049,7 @@ class Utils {
         return ''; // 未知类型
       }).join(' ')}';
     }
+
     Widget current = Container();
     if (style == 1) {
       current = Column(children: [
@@ -1063,7 +1065,7 @@ class Utils {
                 // height: StyleTheme.contentWidth / 2 / 375 * 130,
                 child: NetImageTool(
                   radius: BorderRadius.all(Radius.circular(3.w)),
-                  url: e['thumb'] ?? '',
+                  url: e['thumb'] ?? e["image_full"] ?? '',
                 ),
               ),
               Positioned(
@@ -1249,7 +1251,7 @@ class Utils {
           child: Stack(children: [
             NetImageTool(
               radius: BorderRadius.circular(12.w),
-              url: e['thumb'] ?? '',
+              url: e['thumb'] ?? e['image_full'] ?? '',
             ),
             Positioned(
               left: 0,
@@ -1333,6 +1335,7 @@ class Utils {
             ),
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 height: 60.w,

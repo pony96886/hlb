@@ -187,6 +187,45 @@ Future<ResponseModel<dynamic>?> reqHistoryArchive(
   }
 }
 
+/// 换一个话题 【新】
+Future<ResponseModel<dynamic>?> reqDaytopicListHyh() async {
+  try {
+    Response<dynamic> res =
+        await NetworkHttp.post('/api/daytopic/list_hyh', data: {});
+    Utils.log(res.data);
+    return ResponseModel<dynamic>.fromJson(res.data, (json) => json);
+  } catch (e) {
+    Utils.log(e);
+    return null;
+  }
+}
+
+/// 热议 今日话题
+Future<ResponseModel<dynamic>?> reqDaytopicToday() async {
+  try {
+    Response<dynamic> res =
+        await NetworkHttp.post('/api/daytopic/today', data: {});
+    Utils.log(res.data);
+    return ResponseModel<dynamic>.fromJson(res.data, (json) => json);
+  } catch (e) {
+    Utils.log(e);
+    return null;
+  }
+}
+
+/// 历史榜单
+Future<ResponseModel<dynamic>?> reqDaytopicHistory({String order = ''}) async {
+  try {
+    Response<dynamic> res =
+        await NetworkHttp.post('/api/daytopic/history', data: {"order": order});
+    Utils.log(res.data);
+    return ResponseModel<dynamic>.fromJson(res.data, (json) => json);
+  } catch (e) {
+    Utils.log(e);
+    return null;
+  }
+}
+
 /// 历史榜单
 Future<ResponseModel<dynamic>?> reqHistoryRanking(
     {String type = 'view', String during = 'all'}) async {

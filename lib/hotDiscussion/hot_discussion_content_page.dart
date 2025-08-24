@@ -6,6 +6,7 @@ import 'package:hlw/base/request_api.dart';
 import 'package:hlw/util/desktop_extension.dart';
 import 'package:hlw/util/easy_pull_refresh.dart';
 import 'package:hlw/util/load_status.dart';
+import 'package:hlw/util/netimage_tool.dart';
 import 'package:hlw/util/style_theme.dart';
 import 'package:hlw/util/utils.dart';
 
@@ -28,11 +29,50 @@ class _HotDiscussionContentPageState extends State<HotDiscussionContentPage> {
   @override
   void initState() {
     super.initState();
+    this.getData();
+  }
+
+  Future<bool> getData() async {
+    dynamic res = widget.index == 0
+        ? await reqDaytopicListHyh()
+        : await reqDaytopicHistory(order: "");
+    if (res != null) {
+      if (res?.status == 0) {
+        netError = true;
+        isHud = false;
+        if (mounted) setState(() {});
+        return false;
+      }
+      List tp = res?.data?['list'] ?? [];
+      if (page == 1) {
+        noMore = false;
+        tps = tp;
+      } else if (tp.isNotEmpty) {
+        tps.addAll(tp);
+      } else {
+        noMore = true;
+      }
+      isHud = false;
+      if (mounted) setState(() {});
+      return noMore;
+    }
+    return noMore;
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.index == 0 ? _todayWidget() : _buildContainerWidget();
+    return isHud
+        ? LoadStatus.showLoading(mounted)
+        : netError
+            ? LoadStatus.netErrorWork(onTap: () {
+                netError = false;
+                getData();
+              })
+            : tps.isEmpty
+                ? LoadStatus.noData()
+                : widget.index == 0
+                    ? _todayWidget()
+                    : _buildContainerWidget();
   }
 
   dynamic defaultItemData = {
@@ -61,19 +101,22 @@ class _HotDiscussionContentPageState extends State<HotDiscussionContentPage> {
             mainAxisSpacing: 52.w,
             crossAxisSpacing: 20.w,
             childAspectRatio: 374.w / 664.w,
-            children: [
-              Utils.newsModuleUI(context, defaultItemData, style: 3),
-              Utils.newsModuleUI(context, defaultItemData, style: 3),
-              Utils.newsModuleUI(context, defaultItemData, style: 3),
-              Utils.newsModuleUI(context, defaultItemData, style: 3)
-            ],
+            children: tps
+                .map((e) => Utils.newsModuleUI(context, e, style: 3))
+                .toList(),
           ),
           SizedBox(
             height: 52.w,
           ),
           InkWell(
             onTap: () {
+              isHud = true;
+              netError = false;
+              noMore = false;
+              page = 1;
+              tps = [];
               setState(() {});
+              getData();
             },
             borderRadius: BorderRadius.circular(15.w), // InkWell 圆角同步
             child: Container(
@@ -146,5 +189,16 @@ class _HotDiscussionContentPageState extends State<HotDiscussionContentPage> {
         )))
       ]);
     });
+  }
+
+  Widget _buildItemWidget(dynamic e) {
+    return Column(
+      children: [
+        NetImageTool(
+          radius: BorderRadius.all(Radius.circular(3.w)),
+          url: e['image'] ?? '',
+        )
+      ],
+    );
   }
 }
